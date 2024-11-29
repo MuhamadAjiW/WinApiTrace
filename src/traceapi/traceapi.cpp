@@ -78,17 +78,4 @@ VOID SyelogClose(BOOL fTerminate)
     (void)fTerminate;
 }
 
-//DWORD main(int argc, char** argv)
-//{
-//    (void)argc;
-//    (void)argv;
-//
-//    printf("testapi: Starting\n");
-//    ProcessAttach(NULL);
-//    Sleep(100);
-//    ProcessDetach(NULL);
-//
-//    return 0;
-//}
-//
 //////////////////////////////////////////////////////////////////////////////
