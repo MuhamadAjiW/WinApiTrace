@@ -15,13 +15,19 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="src\common\misc.cpp">
+    <ClCompile Include="..\src\common\misc.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\traceapi\traceapi.cpp">
+    <ClCompile Include="..\src\traceapi\traceapi-dll.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\WinApiTrace.cpp">
+    <ClCompile Include="..\src\traceapi\traceapi.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\traceapi\_win32_hooks.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\src\WinApiTrace.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -29,7 +35,7 @@
     <ClInclude Include="resource.h">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="include\misc.h">
+    <ClInclude Include="..\include\misc.h">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

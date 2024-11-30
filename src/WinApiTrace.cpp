@@ -3,7 +3,7 @@
 #include <misc.h>
 #include <traceapi/traceapi.cpp>
 
-DWORD main(int argc, char** argv)
+int main(int argc, char** argv)
 {
     something();
 
@@ -12,8 +12,10 @@ DWORD main(int argc, char** argv)
 
     printf("testapi: Starting\n");
     ProcessAttach(NULL);
-    Sleep(100);
+    Sleep(1000);
+    Sleep(1000);
     ProcessDetach(NULL);
+    printf("testapi: Program finished\n");
 
     return 0;
 }
