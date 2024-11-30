@@ -36565,10 +36565,7 @@ LONG AttachDetours(VOID)
     ATTACH(RegisterWindowMessageW);
     ATTACH(ReleaseCapture);
     ATTACH(ReleaseDC);
-
-// _TODO: Investigate, this causes the program to crash
-//    ATTACH(ReleaseMutex);
-
+    ATTACH(ReleaseMutex);
     ATTACH(ReleaseSemaphore);
     ATTACH(ReleaseStgMedium);
     ATTACH(RemoveDirectoryA);
@@ -36946,10 +36943,7 @@ LONG AttachDetours(VOID)
     ATTACH(WaitForMultipleObjects);
     ATTACH(WaitForMultipleObjectsEx);
     ATTACH(WaitForSingleObject);
-
-// _TODO: Investigate, this causes the program to crash
-//    ATTACH(WaitForSingleObjectEx);
-
+    ATTACH(WaitForSingleObjectEx);
     ATTACH(WaitMessage);
     ATTACH(WaitNamedPipeA);
     ATTACH(WaitNamedPipeW);

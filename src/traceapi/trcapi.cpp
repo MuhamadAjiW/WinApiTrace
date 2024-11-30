@@ -75,7 +75,7 @@ VOID _PrintExit(const CHAR* psz, ...);
 VOID _Print(const CHAR* psz, ...);
 //VOID _VPrint(PCSTR msg, va_list args, PCHAR pszBuf, LONG cbBuf);
 
-VOID AssertMessage(const CHAR* pszMsg, const CHAR* pszFile, ULONG nLine);
+VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
 //////////////////////////////////////////////////////////////////////////////
 //
@@ -247,7 +247,7 @@ VOID _Print(const CHAR* psz, ...)
     SetLastError(dwErr);
 }
 
-VOID AssertMessage(const CHAR* pszMsg, const CHAR* pszFile, ULONG nLine)
+VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine)
 {
     Syelog(SYELOG_SEVERITY_FATAL,
         "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
@@ -438,7 +438,7 @@ BOOL ProcessDetach(HMODULE hDll)
     return TRUE;
 }
 
-BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, PVOID lpReserved)
+__declspec(dllexport) BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, PVOID lpReserved)
 {
     (void)hModule;
     (void)lpReserved;
