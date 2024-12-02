@@ -96,13 +96,8 @@ VOID DetDetach(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 
 VOID DetAttachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 {
-    printf("Attaching NT: %s\n", psz);
-
     HMODULE hNtdll = LoadLibrary(L"ntdll.dll");
-    printf("Fetched address is: %p\n", (PVOID)GetProcAddress(hNtdll, psz));
     *ppvReal = (PVOID)GetProcAddress(hNtdll, psz);
-
-    printf("Address is: %p\n", *ppvReal);
 
     LONG l = DetourAttach(ppvReal, pvMine);
     if (l != 0) {

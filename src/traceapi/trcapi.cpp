@@ -110,6 +110,7 @@ extern "C" {
         = LeaveCriticalSection;
 }
 
+int proof_NT_works = 0;
 #include <traceapi/attach_hooks.cpp>
 
 ////////////////////////////////////////////////////////////// Logging System.
@@ -119,6 +120,7 @@ static LONG s_nTlsIndent = -1;
 static LONG s_nTlsThread = -1;
 static LONG s_nThreadCnt = 0;
 
+// _TODO: Change logging mechanism
 VOID _PrintEnter(const CHAR* psz, ...)
 {
     DWORD dwErr = GetLastError();
@@ -450,6 +452,7 @@ __declspec(dllexport) BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, P
 
     switch (dwReason) {
     case DLL_PROCESS_ATTACH:
+        printf("Initial value: %d\n", proof_NT_works);
         DetourRestoreAfterWith();
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
             " DllMain DLL_PROCESS_ATTACH\n");
@@ -458,6 +461,7 @@ __declspec(dllexport) BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, P
         ret = ProcessDetach(hModule);
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
             " DllMain DLL_PROCESS_DETACH\n");
+        printf("Final value: %d\n", proof_NT_works);
         return ret;
     case DLL_THREAD_ATTACH:
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"

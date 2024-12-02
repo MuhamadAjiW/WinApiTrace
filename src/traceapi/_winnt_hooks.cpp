@@ -27,10 +27,9 @@ NTSTATUS WINAPI Mine_NtWriteFile(HANDLE a0,
     PLARGE_INTEGER a7,
     PULONG a8)
 {
-    // TODO: There might be recursive calls within syelog's _PrintEnter since it works if it's replaced by print
-    // Print spams, however. So not a good Idea to do so.
-
     //_PrintEnter("NTWriteFile(%p,%p,%p,%p,%p,%p,%p,%p,%p,%p)\n", a0,a1,a2,a3,a4,a5,a6,a7,a8);
+
+    proof_NT_works = 999;
 
     int rv = 0;
     __try {
