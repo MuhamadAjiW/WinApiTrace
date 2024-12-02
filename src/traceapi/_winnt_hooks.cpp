@@ -6,34 +6,40 @@
 #include <winternl.h>
 #include <detours/detours.h>
 
-typedef NTSTATUS(*NtWriteFile_t)(
-    HANDLE FileHandle,
-    HANDLE Event,
-    PIO_APC_ROUTINE ApcRoutine,
-    PVOID ApcContext,
-    PIO_STATUS_BLOCK IoStatusBlock,
-    PVOID Buffer,
-    ULONG Length,
-    PLARGE_INTEGER ByteOffset,
-    PULONG Key
-    );
+NTSTATUS(__stdcall*Real_NtWriteFile)(HANDLE a0,
+    HANDLE a1,
+    PIO_APC_ROUTINE a2,
+    PVOID a3,
+    PIO_STATUS_BLOCK a4,
+    PVOID a5,
+    ULONG a6,
+    PLARGE_INTEGER a7,
+    PULONG a8)
+    = NULL;
 
-NtWriteFile_t Real_NtWriteFile = NULL;
-
-NTSTATUS WINAPI Mine_NtWriteFile(
-    HANDLE           FileHandle,
-    HANDLE           Event,
-    PIO_APC_ROUTINE  ApcRoutine,
-    PVOID            ApcContext,
-    PIO_STATUS_BLOCK IoStatusBlock,
-    PVOID            Buffer,
-    ULONG            Length,
-    PLARGE_INTEGER   ByteOffset,
-    PULONG           Key
-)
+NTSTATUS WINAPI Mine_NtWriteFile(HANDLE a0,
+    HANDLE a1,
+    PIO_APC_ROUTINE a2,
+    PVOID a3,
+    PIO_STATUS_BLOCK a4,
+    PVOID a5,
+    ULONG a6,
+    PLARGE_INTEGER a7,
+    PULONG a8)
 {
-    NTSTATUS tmp = Real_NtWriteFile(FileHandle, Event, ApcRoutine, ApcContext,
-        IoStatusBlock, Buffer, Length, ByteOffset, Key);
+    // TODO: There might be recursive calls within syelog's _PrintEnter since it works if it's replaced by print
+    // Print spams, however. So not a good Idea to do so.
+
+    //_PrintEnter("NTWriteFile(%p,%p,%p,%p,%p,%p,%p,%p,%p,%p)\n", a0,a1,a2,a3,a4,a5,a6,a7,a8);
+
+    int rv = 0;
+    __try {
+        rv = Real_NtWriteFile(a0, a1, a2, a3, a4, a5, a6, a7, a8);
+    }
+    __finally {
+        //_PrintExit("AbortDoc() -> %x\n", rv);
+    };
+    return rv;
 
     return 0;
 }

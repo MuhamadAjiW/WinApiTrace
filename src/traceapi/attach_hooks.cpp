@@ -96,13 +96,13 @@ VOID DetDetach(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 
 VOID DetAttachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 {
-    PVOID pvReal = NULL;
-    if (ppvReal == NULL) {
-        //ppvReal = &pvReal;
+    printf("Attaching NT: %s\n", psz);
 
-        HMODULE hNtdll = LoadLibrary(L"ntdll.dll");
-        *ppvReal = (PVOID)GetProcAddress(hNtdll, psz);
-    }
+    HMODULE hNtdll = LoadLibrary(L"ntdll.dll");
+    printf("Fetched address is: %p\n", (PVOID)GetProcAddress(hNtdll, psz));
+    *ppvReal = (PVOID)GetProcAddress(hNtdll, psz);
+
+    printf("Address is: %p\n", *ppvReal);
 
     LONG l = DetourAttach(ppvReal, pvMine);
     if (l != 0) {
@@ -141,6 +141,8 @@ LONG AttachDetours(VOID)
 
     // For this many APIs, we'll ignore one or two can't be detoured.
     DetourSetIgnoreTooSmall(TRUE);
+
+    ATTACH_NT(NtWriteFile);
 
     ATTACH(AbortDoc);
     ATTACH(AbortPath);
@@ -1822,6 +1824,8 @@ LONG DetachDetours(VOID)
 
     // For this many APIs, we'll ignore one or two can't be detoured.
     DetourSetIgnoreTooSmall(TRUE);
+
+    DETACH_NT(NtWriteFile);
 
     DETACH(AbortDoc);
     DETACH(AbortPath);
