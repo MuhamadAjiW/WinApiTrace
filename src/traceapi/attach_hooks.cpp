@@ -3461,11 +3461,43 @@ void DetachWin32Hooks()
 void AttachNTHooks()
 {
     ATTACH_NT(NtWriteFile);
+    ATTACH_NT(NtQueryVirtualMemory);
+    ATTACH_NT(NtFreeVirtualMemory);
+    ATTACH_NT(NtProtectVirtualMemory);
+    ATTACH_NT(NtReadVirtualMemory);
+    ATTACH_NT(NtQueryKey);
+    ATTACH_NT(NtDuplicateObject);
+    ATTACH_NT(NtFsControlFile);
+    ATTACH_NT(NtSetInformationFile);
+    ATTACH_NT(NtDelayExecution);
+    ATTACH_NT(NtOpenThread);
+    ATTACH_NT(NtResumeThread);
+    ATTACH_NT(LdrRegisterDllNotification);
+
+    // _TODO: Figure a better logging system, possibly static
+    // These hooks may break the program because logging is done within the memory
+    //ATTACH_NT(NtAllocateVirtualMemory);
 }
 
 void DetachNTHooks()
 {
     DETACH_NT(NtWriteFile);
+    DETACH_NT(NtQueryVirtualMemory);
+    DETACH_NT(NtFreeVirtualMemory);
+    DETACH_NT(NtProtectVirtualMemory);
+    DETACH_NT(NtReadVirtualMemory);
+    DETACH_NT(NtQueryKey);
+    DETACH_NT(NtDuplicateObject);
+    DETACH_NT(NtFsControlFile);
+    DETACH_NT(NtSetInformationFile);
+    DETACH_NT(NtDelayExecution);
+    DETACH_NT(NtOpenThread);
+    DETACH_NT(NtResumeThread);
+    DETACH_NT(LdrRegisterDllNotification);
+
+    // _TODO: Figure a better logging system, possibly static
+    // These hooks may break the program because logging is done within the memory
+    //DETACH_NT(NtAllocateVirtualMemory);
 }
 
 LONG AttachDetours(VOID)
