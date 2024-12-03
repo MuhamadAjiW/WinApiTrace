@@ -120,21 +120,13 @@ VOID DetDetachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 #include <traceapi/_win32_hooks.cpp>
 #include <traceapi/_winnt_hooks.cpp>
 
-#define ATTACH(x)       DetAttach(&(PVOID&)Real_##x,Mine_##x,#x)
-#define DETACH(x)       DetDetach(&(PVOID&)Real_##x,Mine_##x,#x)
-#define ATTACH_NT(x)       DetAttachNT(&(PVOID&)Real_##x,Mine_##x,#x)
-#define DETACH_NT(x)       DetDetachNT(&(PVOID&)Real_##x,Mine_##x,#x)
+#define ATTACH(x)           DetAttach(&(PVOID&)Real_##x,Mine_##x,#x)
+#define DETACH(x)           DetDetach(&(PVOID&)Real_##x,Mine_##x,#x)
+#define ATTACH_NT(x)        DetAttachNT(&(PVOID&)Real_##x,Mine_##x,#x)
+#define DETACH_NT(x)        DetDetachNT(&(PVOID&)Real_##x,Mine_##x,#x)
 
-LONG AttachDetours(VOID)
+void AttachWin32Hooks()
 {
-    DetourTransactionBegin();
-    DetourUpdateThread(GetCurrentThread());
-
-    // For this many APIs, we'll ignore one or two can't be detoured.
-    DetourSetIgnoreTooSmall(TRUE);
-
-    ATTACH_NT(NtWriteFile);
-
     ATTACH(AbortDoc);
     ATTACH(AbortPath);
     ATTACH(ActivateKeyboardLayout);
@@ -1797,26 +1789,10 @@ LONG AttachDetours(VOID)
     ATTACH(setsockopt);
     ATTACH(shutdown);
     ATTACH(socket);
-
-    PVOID* ppbFailedPointer = NULL;
-    LONG error = DetourTransactionCommitEx(&ppbFailedPointer);
-    if (error != 0) {
-        printf("traceapi.dll: Attach transaction failed to commit. Error %ld (%p/%p)",
-            error, ppbFailedPointer, *ppbFailedPointer);
-        return error;
-    }
-    return 0;
 }
 
-LONG DetachDetours(VOID)
+void DetachWin32Hooks()
 {
-    DetourTransactionBegin();
-    DetourUpdateThread(GetCurrentThread());
-
-    // For this many APIs, we'll ignore one or two can't be detoured.
-    DetourSetIgnoreTooSmall(TRUE);
-
-    DETACH_NT(NtWriteFile);
 
     DETACH(AbortDoc);
     DETACH(AbortPath);
@@ -3480,6 +3456,50 @@ LONG DetachDetours(VOID)
     DETACH(setsockopt);
     DETACH(shutdown);
     DETACH(socket);
+}
+
+void AttachNTHooks()
+{
+    ATTACH_NT(NtWriteFile);
+}
+
+void DetachNTHooks()
+{
+    DETACH_NT(NtWriteFile);
+}
+
+LONG AttachDetours(VOID)
+{
+    DetourTransactionBegin();
+    DetourUpdateThread(GetCurrentThread());
+
+    // For this many APIs, we'll ignore one or two can't be detoured.
+    DetourSetIgnoreTooSmall(TRUE);
+
+    // Attacher
+    //AttachWin32Hooks();
+    AttachNTHooks();
+
+    PVOID* ppbFailedPointer = NULL;
+    LONG error = DetourTransactionCommitEx(&ppbFailedPointer);
+    if (error != 0) {
+        printf("traceapi.dll: Attach transaction failed to commit. Error %ld (%p/%p)",
+            error, ppbFailedPointer, *ppbFailedPointer);
+        return error;
+    }
+    return 0;
+}
+
+LONG DetachDetours(VOID)
+{
+    DetourTransactionBegin();
+    DetourUpdateThread(GetCurrentThread());
+
+    // For this many APIs, we'll ignore one or two can't be detoured.
+    DetourSetIgnoreTooSmall(TRUE);
+
+    //DetachWin32Hooks();
+    DetachNTHooks();
 
     if (DetourTransactionCommit() != 0) {
         PVOID* ppbFailedPointer = NULL;

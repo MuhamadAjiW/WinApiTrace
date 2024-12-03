@@ -26,6 +26,8 @@
 #include <strsafe.h>
 #pragma warning(pop)
 #include <detours/detours.h>
+#include <string>
+#include <chrono>
 
 #if (_MSC_VER < 1299)
 #define LONG_PTR    LONG
@@ -78,17 +80,17 @@ VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
 //////////////////////////////////////////////////////////////////////////////
 
-int proof_NT_works = 0;
-#include <traceapi/attach_hooks.cpp>
-#include <string>
+BOOL s_bLog = FALSE;
+LONG s_nTlsIndent = -1;
+LONG s_nTlsThread = -1;
+LONG s_nThreadCnt = 0;
 std::string output_string = "";
+std::chrono::high_resolution_clock::time_point start_time;
+
+#include <traceapi/attach_hooks.cpp>
 
 ////////////////////////////////////////////////////////////// Logging System.
 //
-static BOOL s_bLog = FALSE;
-static LONG s_nTlsIndent = -1;
-static LONG s_nTlsThread = -1;
-static LONG s_nThreadCnt = 0;
 
 void str_concatf(std::string* str, const char* __restrict pattern, ...) {
     va_list args;
@@ -108,7 +110,6 @@ void str_concatf(std::string* str, const char* __restrict pattern, ...) {
     free(content);
 }
 
-// _TODO: Change logging mechanism
 VOID _PrintEnter(const CHAR* psz, ...)
 {
     DWORD dwErr = GetLastError();
@@ -124,76 +125,88 @@ VOID _PrintEnter(const CHAR* psz, ...)
     }
 
     if (s_bLog && psz) {
-        CHAR szBuf[1024];
-        PCHAR pszBuf = szBuf;
-        PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
-        LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
-        *pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
-        *pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
-        *pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
-        *pszBuf++ = ' ';
-        while (nLen-- > 0) {
-            *pszBuf++ = ' ';
-        }
-        *pszBuf++ = '+';
-        *pszBuf = '\0';
+        // _NOTE: Recursion data, uncomment if needed
+        
+        //CHAR szBuf[1024];
+        //PCHAR pszBuf = szBuf;
+        //PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
+        //LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
+        //*pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
+        //*pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
+        //*pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
+        //*pszBuf++ = ' ';
+        //while (nLen-- > 0) {
+        //    *pszBuf++ = ' ';
+        //}
+        //*pszBuf++ = '+';
+        //*pszBuf = '\0';
 
-        va_list  args;
+        //output_string.append(szBuf);
+
+        // Function data
+        va_list args;
         va_start(args, psz);
-
-        while ((*pszBuf++ = *psz++) != 0 && pszBuf < pszEnd) {
-            // Copy characters.
-        }
-        *pszEnd = '\0';
-        output_string.append(szBuf);
-
+        int len = vsnprintf(NULL, 0, psz, args) + 1;
         va_end(args);
+
+        char* content = (char*)malloc(len);
+        if (content == NULL) return;
+
+        va_start(args, psz);
+        vsnprintf(content, len, psz, args);
+        va_end(args);
+
+        output_string.append(content);
+
+        free(content);
     }
     SetLastError(dwErr);
 }
 
 VOID _PrintExit(const CHAR* psz, ...)
 {
-    DWORD dwErr = GetLastError();
+    // _NOTE: Return function data, uncomment if needed
 
-    LONG nIndent = 0;
-    LONG nThread = 0;
-    if (s_nTlsIndent >= 0) {
-        nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent) - 1;
-        ASSERT_ALWAYS(nIndent >= 0);
-        TlsSetValue(s_nTlsIndent, (PVOID)(LONG_PTR)nIndent);
-    }
-    if (s_nTlsThread >= 0) {
-        nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
-    }
+    //DWORD dwErr = GetLastError();
 
-    if (s_bLog && psz) {
-        CHAR szBuf[1024];
-        PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
-        PCHAR pszBuf = szBuf;
-        LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
-        *pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
-        *pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
-        *pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
-        *pszBuf++ = ' ';
-        while (nLen-- > 0) {
-            *pszBuf++ = ' ';
-        }
-        *pszBuf++ = '-';
-        *pszBuf = '\0';
+    //LONG nIndent = 0;
+    //LONG nThread = 0;
+    //if (s_nTlsIndent >= 0) {
+    //    nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent) - 1;
+    //    ASSERT_ALWAYS(nIndent >= 0);
+    //    TlsSetValue(s_nTlsIndent, (PVOID)(LONG_PTR)nIndent);
+    //}
+    //if (s_nTlsThread >= 0) {
+    //    nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
+    //}
 
-        va_list  args;
-        va_start(args, psz);
+    //if (s_bLog && psz) {
+    //    CHAR szBuf[1024];
+    //    PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
+    //    PCHAR pszBuf = szBuf;
+    //    LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
+    //    *pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
+    //    *pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
+    //    *pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
+    //    *pszBuf++ = ' ';
+    //    while (nLen-- > 0) {
+    //        *pszBuf++ = ' ';
+    //    }
+    //    *pszBuf++ = '-';
+    //    *pszBuf = '\0';
 
-        while ((*pszBuf++ = *psz++) != 0 && pszBuf < pszEnd) {
-            // Copy characters.
-        }
-        *pszEnd = '\0';
-        output_string.append(szBuf);
+    //    va_list  args;
+    //    va_start(args, psz);
 
-        va_end(args);
-    }
-    SetLastError(dwErr);
+    //    while ((*pszBuf++ = *psz++) != 0 && pszBuf < pszEnd) {
+    //        // Copy characters.
+    //    }
+    //    *pszEnd = '\0';
+    //    output_string.append(szBuf);
+
+    //    va_end(args);
+    //}
+    //SetLastError(dwErr);
 }
 
 VOID _Print(const CHAR* psz, ...)
@@ -278,7 +291,8 @@ BOOL InstanceEnumerate(HINSTANCE hInst)
 
     PIMAGE_NT_HEADERS pinh = NtHeadersForInstance(hInst);
     if (pinh && Real_GetModuleFileNameW(hInst, wzDllName, ARRAYSIZE(wzDllName))) {
-        str_concatf(&output_string, "### %p: %ls\n", hInst, wzDllName);
+        // NOTE: Instance enumeration, uncomment str_concatf if necessary
+        //str_concatf(&output_string, "### %p: %ls\n", hInst, wzDllName);
         return TRUE;
     }
     return FALSE;
@@ -286,7 +300,8 @@ BOOL InstanceEnumerate(HINSTANCE hInst)
 
 BOOL ProcessEnumerate()
 {
-    str_concatf(&output_string, "######################################################### Binaries\n");
+    // NOTE: Process enumeration, uncomment str_concatf if necessary
+    //str_concatf(&output_string, "######################################################### Binaries\n");
 
     PBYTE pbNext;
     for (PBYTE pbRegion = (PBYTE)0x10000;; pbRegion = pbNext) {
@@ -329,18 +344,18 @@ BOOL ProcessEnumerate()
         if (pinh &&
             Real_GetModuleFileNameW((HINSTANCE)pbRegion, wzDllName, ARRAYSIZE(wzDllName))) {
 
-            str_concatf(&output_string, "### %p..%p: %ls\n", pbRegion, pbNext, wzDllName);
+            //str_concatf(&output_string, "### %p..%p: %ls\n", pbRegion, pbNext, wzDllName);
         }
         else {
-            str_concatf(&output_string,"### %p..%p: State=%04x, Protect=%08x\n",
-                pbRegion, pbNext, mbi.State, mbi.Protect);
+            //str_concatf(&output_string,"### %p..%p: State=%04x, Protect=%08x\n",
+            //    pbRegion, pbNext, mbi.State, mbi.Protect);
         }
     }
-    str_concatf(&output_string, "###\n");
+    //str_concatf(&output_string, "###\n");
 
     LPVOID lpvEnv = Real_GetEnvironmentStrings();
-    str_concatf(&output_string, "### Env= %08x [%08x %08x]\n",
-        lpvEnv, ((PVOID*)lpvEnv)[0], ((PVOID*)lpvEnv)[1]);
+    //str_concatf(&output_string, "### Env= %08x [%08x %08x]\n",
+    //    lpvEnv, ((PVOID*)lpvEnv)[0], ((PVOID*)lpvEnv)[1]);
 
     return TRUE;
 }
@@ -398,6 +413,7 @@ BOOL ProcessAttach(HMODULE hDll)
     }
 
     s_bLog = TRUE;
+    start_time = std::chrono::high_resolution_clock::now();
     return TRUE;
 }
 
@@ -434,7 +450,6 @@ __declspec(dllexport) BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, P
 
     switch (dwReason) {
     case DLL_PROCESS_ATTACH:
-        printf("Initial value: %d\n", proof_NT_works);
         DetourRestoreAfterWith();
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
             " DllMain DLL_PROCESS_ATTACH\n");
@@ -443,7 +458,6 @@ __declspec(dllexport) BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, P
         ret = ProcessDetach(hModule);
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
             " DllMain DLL_PROCESS_DETACH\n");
-        printf("Final value: %d\n", proof_NT_works);
         std::cout << output_string << std::endl;
         return ret;
     case DLL_THREAD_ATTACH:
