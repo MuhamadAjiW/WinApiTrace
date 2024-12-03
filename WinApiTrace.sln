@@ -7,8 +7,6 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "sample", "projects\sample\s
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "traceapi", "projects\traceapi\traceapi.vcxproj", "{7770171B-A483-4F1D-B0E5-5A77840FFE82}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "syelogd", "projects\syelogd\syelogd.vcxproj", "{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}"
-EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "withdll", "projects\withdll\withdll.vcxproj", "{4828FABE-34BB-4239-9D98-BFA9BFE5FBF2}"
 EndProject
 Global
@@ -35,14 +33,6 @@ Global
 		{7770171B-A483-4F1D-B0E5-5A77840FFE82}.Release|x64.Build.0 = Release|x64
 		{7770171B-A483-4F1D-B0E5-5A77840FFE82}.Release|x86.ActiveCfg = Release|Win32
 		{7770171B-A483-4F1D-B0E5-5A77840FFE82}.Release|x86.Build.0 = Release|Win32
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Debug|x64.ActiveCfg = Debug|x64
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Debug|x64.Build.0 = Debug|x64
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Debug|x86.ActiveCfg = Debug|Win32
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Debug|x86.Build.0 = Debug|Win32
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Release|x64.ActiveCfg = Release|x64
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Release|x64.Build.0 = Release|x64
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Release|x86.ActiveCfg = Release|Win32
-		{943573F0-05BF-4A02-A6FD-1D2888FDC9B8}.Release|x86.Build.0 = Release|Win32
 		{4828FABE-34BB-4239-9D98-BFA9BFE5FBF2}.Debug|x64.ActiveCfg = Debug|x64
 		{4828FABE-34BB-4239-9D98-BFA9BFE5FBF2}.Debug|x64.Build.0 = Debug|x64
 		{4828FABE-34BB-4239-9D98-BFA9BFE5FBF2}.Debug|x86.ActiveCfg = Debug|Win32

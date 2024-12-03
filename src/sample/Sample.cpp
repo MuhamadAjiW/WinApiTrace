@@ -32,4 +32,6 @@ int main()
         std::cout << "Data written to the file." << std::endl;
         CloseHandle(hFile);
     }
+
+    return 0;
 }

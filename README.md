@@ -6,15 +6,15 @@ Simple suite of Microsoft [Detour](https://github.com/microsoft/Detours)'s sampl
 
 Get the executables on the github [releases](https://github.com/MuhamadAjiW/WinApiTrace/releases).
 1. Unzipped the downloaded file go to the unzipped folder
-2. Run `.\syelogd.exe` on a terminal
-3. Start tracing by calling `.\withdll.exe -d:traceapi.dll <path-to-executable>` on another terminal
-4. Traced API calls will be printed on the `syelogd` terminal 
+2. Open a powershell or terminal
+3. Start tracing by calling `.\withdll.exe -d:traceapi.dll <path-to-executable>`
+4. Traced API calls will be printed on the terminal 
 
 ## How to Build
 ### Prerequisite
 
 To build and run this program, you will need 
-- Windows 10/11
+- Windows 10/11 (64 bit)
 - [Visual Studio](https://visualstudio.microsoft.com/), any edition will do
 - C\C++ installed on the Visual Studio
 

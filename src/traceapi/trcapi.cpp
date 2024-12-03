@@ -26,7 +26,6 @@
 #include <strsafe.h>
 #pragma warning(pop)
 #include <detours/detours.h>
-#include <detours/syelog.h>
 
 #if (_MSC_VER < 1299)
 #define LONG_PTR    LONG
@@ -78,40 +77,11 @@ VOID _Print(const CHAR* psz, ...);
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
 //////////////////////////////////////////////////////////////////////////////
-//
-// Trampolines
-//
-extern "C" {
-    //  Trampolines for SYELOG library.
-    //
-    extern HANDLE(WINAPI* Real_CreateFileW)(LPCWSTR a0, DWORD a1, DWORD a2,
-        LPSECURITY_ATTRIBUTES a3, DWORD a4, DWORD a5,
-        HANDLE a6);
-    extern BOOL(WINAPI* Real_WriteFile)(HANDLE hFile,
-        LPCVOID lpBuffer,
-        DWORD nNumberOfBytesToWrite,
-        LPDWORD lpNumberOfBytesWritten,
-        LPOVERLAPPED lpOverlapped);
-    extern BOOL(WINAPI* Real_FlushFileBuffers)(HANDLE hFile);
-    extern BOOL(WINAPI* Real_CloseHandle)(HANDLE hObject);
-    extern BOOL(WINAPI* Real_WaitNamedPipeW)(LPCWSTR lpNamedPipeName, DWORD nTimeOut);
-    extern BOOL(WINAPI* Real_SetNamedPipeHandleState)(HANDLE hNamedPipe,
-        LPDWORD lpMode,
-        LPDWORD lpMaxCollectionCount,
-        LPDWORD lpCollectDataTimeout);
-    extern DWORD(WINAPI* Real_GetCurrentProcessId)(VOID);
-    extern VOID(WINAPI* Real_GetSystemTimeAsFileTime)(LPFILETIME lpSystemTimeAsFileTime);
-
-    VOID(WINAPI* Real_InitializeCriticalSection)(LPCRITICAL_SECTION lpSection)
-        = InitializeCriticalSection;
-    VOID(WINAPI* Real_EnterCriticalSection)(LPCRITICAL_SECTION lpSection)
-        = EnterCriticalSection;
-    VOID(WINAPI* Real_LeaveCriticalSection)(LPCRITICAL_SECTION lpSection)
-        = LeaveCriticalSection;
-}
 
 int proof_NT_works = 0;
 #include <traceapi/attach_hooks.cpp>
+#include <string>
+std::string output_string = "";
 
 ////////////////////////////////////////////////////////////// Logging System.
 //
@@ -119,6 +89,24 @@ static BOOL s_bLog = FALSE;
 static LONG s_nTlsIndent = -1;
 static LONG s_nTlsThread = -1;
 static LONG s_nThreadCnt = 0;
+
+void str_concatf(std::string* str, const char* __restrict pattern, ...) {
+    va_list args;
+    va_start(args, pattern);
+    int len = vsnprintf(NULL, 0, pattern, args) + 1;
+    va_end(args);
+
+    char* content = (char*)malloc(len);
+    if (content == NULL) return;
+
+    va_start(args, pattern);
+    vsnprintf(content, len, pattern, args);
+    va_end(args);
+
+    str->append(content);
+
+    free(content);
+}
 
 // _TODO: Change logging mechanism
 VOID _PrintEnter(const CHAR* psz, ...)
@@ -157,7 +145,7 @@ VOID _PrintEnter(const CHAR* psz, ...)
             // Copy characters.
         }
         *pszEnd = '\0';
-        SyelogV(SYELOG_SEVERITY_INFORMATION, szBuf, args);
+        output_string.append(szBuf);
 
         va_end(args);
     }
@@ -201,7 +189,7 @@ VOID _PrintExit(const CHAR* psz, ...)
             // Copy characters.
         }
         *pszEnd = '\0';
-        SyelogV(SYELOG_SEVERITY_INFORMATION, szBuf, args);
+        output_string.append(szBuf);
 
         va_end(args);
     }
@@ -242,7 +230,7 @@ VOID _Print(const CHAR* psz, ...)
             // Copy characters.
         }
         *pszEnd = '\0';
-        SyelogV(SYELOG_SEVERITY_INFORMATION, szBuf, args);
+        output_string.append(szBuf);
 
         va_end(args);
     }
@@ -251,8 +239,7 @@ VOID _Print(const CHAR* psz, ...)
 
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine)
 {
-    Syelog(SYELOG_SEVERITY_FATAL,
-        "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
+    str_concatf(&output_string, "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -291,7 +278,7 @@ BOOL InstanceEnumerate(HINSTANCE hInst)
 
     PIMAGE_NT_HEADERS pinh = NtHeadersForInstance(hInst);
     if (pinh && Real_GetModuleFileNameW(hInst, wzDllName, ARRAYSIZE(wzDllName))) {
-        Syelog(SYELOG_SEVERITY_INFORMATION, "### %p: %ls\n", hInst, wzDllName);
+        str_concatf(&output_string, "### %p: %ls\n", hInst, wzDllName);
         return TRUE;
     }
     return FALSE;
@@ -299,8 +286,7 @@ BOOL InstanceEnumerate(HINSTANCE hInst)
 
 BOOL ProcessEnumerate()
 {
-    Syelog(SYELOG_SEVERITY_INFORMATION,
-        "######################################################### Binaries\n");
+    str_concatf(&output_string, "######################################################### Binaries\n");
 
     PBYTE pbNext;
     for (PBYTE pbRegion = (PBYTE)0x10000;; pbRegion = pbNext) {
@@ -343,19 +329,17 @@ BOOL ProcessEnumerate()
         if (pinh &&
             Real_GetModuleFileNameW((HINSTANCE)pbRegion, wzDllName, ARRAYSIZE(wzDllName))) {
 
-            Syelog(SYELOG_SEVERITY_INFORMATION,
-                "### %p..%p: %ls\n", pbRegion, pbNext, wzDllName);
+            str_concatf(&output_string, "### %p..%p: %ls\n", pbRegion, pbNext, wzDllName);
         }
         else {
-            Syelog(SYELOG_SEVERITY_INFORMATION,
-                "### %p..%p: State=%04x, Protect=%08x\n",
+            str_concatf(&output_string,"### %p..%p: State=%04x, Protect=%08x\n",
                 pbRegion, pbNext, mbi.State, mbi.Protect);
         }
     }
-    Syelog(SYELOG_SEVERITY_INFORMATION, "###\n");
+    str_concatf(&output_string, "###\n");
 
     LPVOID lpvEnv = Real_GetEnvironmentStrings();
-    Syelog(SYELOG_SEVERITY_INFORMATION, "### Env= %08x [%08x %08x]\n",
+    str_concatf(&output_string, "### Env= %08x [%08x %08x]\n",
         lpvEnv, ((PVOID*)lpvEnv)[0], ((PVOID*)lpvEnv)[1]);
 
     return TRUE;
@@ -406,12 +390,11 @@ BOOL ProcessAttach(HMODULE hDll)
     Real_GetModuleFileNameW(NULL, wzExeName, ARRAYSIZE(wzExeName));
     StringCchPrintfA(s_szDllPath, ARRAYSIZE(s_szDllPath), "%ls", s_wzDllPath);
 
-    SyelogOpen("trcapi" DETOURS_STRINGIFY(DETOURS_BITS), SYELOG_FACILITY_APPLICATION);
     ProcessEnumerate();
 
     LONG error = AttachDetours();
     if (error != NO_ERROR) {
-        Syelog(SYELOG_SEVERITY_FATAL, "### Error attaching detours: %d\n", error);
+        str_concatf(&output_string, "### Error attaching detours: %d\n", error);
     }
 
     s_bLog = TRUE;
@@ -425,11 +408,10 @@ BOOL ProcessDetach(HMODULE hDll)
 
     LONG error = DetachDetours();
     if (error != NO_ERROR) {
-        Syelog(SYELOG_SEVERITY_FATAL, "### Error detaching detours: %d\n", error);
+        str_concatf(&output_string, "### Error detaching detours: %d\n", error);
     }
 
-    Syelog(SYELOG_SEVERITY_NOTICE, "### Closing.\n");
-    SyelogClose(FALSE);
+    str_concatf(&output_string, "### Closing.\n");
 
     if (s_nTlsIndent >= 0) {
         TlsFree(s_nTlsIndent);
@@ -462,6 +444,7 @@ __declspec(dllexport) BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, P
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
             " DllMain DLL_PROCESS_DETACH\n");
         printf("Final value: %d\n", proof_NT_works);
+        std::cout << output_string << std::endl;
         return ret;
     case DLL_THREAD_ATTACH:
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"

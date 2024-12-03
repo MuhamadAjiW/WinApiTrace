@@ -45,7 +45,7 @@ static VOID Dump(PBYTE pbBytes, LONG nBytes, PBYTE pbTarget)
         pszBuffer += StringCchPrintfA(pszBuffer, sizeof(szBuffer), "\n");
     }
 
-    Syelog(SYELOG_SEVERITY_INFORMATION, "%s", szBuffer);
+    printf("%s", szBuffer);
 }
 
 static VOID Decode(PBYTE pbCode, LONG nInst)
@@ -74,8 +74,7 @@ VOID DetAttach(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 
     LONG l = DetourAttach(ppvReal, pvMine);
     if (l != 0) {
-        Syelog(SYELOG_SEVERITY_NOTICE,
-            "Attach failed: `%s': error %d\n", DetRealName(psz), l);
+        printf("Attach failed: `%s': error %d\n", DetRealName(psz), l);
 
         Decode((PBYTE)*ppvReal, 3);
     }
@@ -86,8 +85,7 @@ VOID DetDetach(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
     LONG l = DetourDetach(ppvReal, pvMine);
     if (l != 0) {
 #if 0
-        Syelog(SYELOG_SEVERITY_NOTICE,
-            "Detach failed: `%s': error %d\n", DetRealName(psz), l);
+        printf("Detach failed: `%s': error %d\n", DetRealName(psz), l);
 #else
         (void)psz;
 #endif
@@ -101,8 +99,7 @@ VOID DetAttachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 
     LONG l = DetourAttach(ppvReal, pvMine);
     if (l != 0) {
-        Syelog(SYELOG_SEVERITY_NOTICE,
-            "Attach failed: `%s': error %d\n", DetRealName(psz), l);
+        printf("Attach failed: `%s': error %d\n", DetRealName(psz), l);
 
         Decode((PBYTE)*ppvReal, 3);
     }
@@ -113,8 +110,7 @@ VOID DetDetachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
     LONG l = DetourDetach(ppvReal, pvMine);
     if (l != 0) {
 #if 0
-        Syelog(SYELOG_SEVERITY_NOTICE,
-            "Detach failed: `%s': error %d\n", DetRealName(psz), l);
+        printf("Detach failed: `%s': error %d\n", DetRealName(psz), l);
 #else
         (void)psz;
 #endif

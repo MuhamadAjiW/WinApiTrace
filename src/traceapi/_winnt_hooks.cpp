@@ -27,20 +27,18 @@ NTSTATUS WINAPI Mine_NtWriteFile(HANDLE a0,
     PLARGE_INTEGER a7,
     PULONG a8)
 {
-    //_PrintEnter("NTWriteFile(%p,%p,%p,%p,%p,%p,%p,%p,%p,%p)\n", a0,a1,a2,a3,a4,a5,a6,a7,a8);
+    _PrintEnter("NtWriteFile(%p,%p,%p,%p,%p,%p,%p,%p,%p,%p)\n", a0,a1,a2,a3,a4,a5,a6,a7,a8);
 
-    proof_NT_works = 999;
+    proof_NT_works++;
 
     int rv = 0;
     __try {
         rv = Real_NtWriteFile(a0, a1, a2, a3, a4, a5, a6, a7, a8);
     }
     __finally {
-        //_PrintExit("AbortDoc() -> %x\n", rv);
+        _PrintExit("NtWriteFile() -> %x\n", rv);
     };
     return rv;
-
-    return 0;
 }
 
 //

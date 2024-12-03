@@ -21,5 +21,11 @@
     <ClCompile Include="..\..\src\traceapi\trcapi.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="..\..\src\traceapi\attach_hooks.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\traceapi\_winnt_hooks.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
