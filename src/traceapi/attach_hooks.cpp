@@ -130,10 +130,7 @@ void AttachNTHooks()
     ATTACH(DrawTextExW);
     ATTACH_NT(CoInitializeEx, L"ole32.dll");
     ATTACH_NT(NtDeleteKey, L"ntdll.dll");
-
-    // _TODO: investigate proper return value
-    // ATTACH(SHGetFolderPathW);
-
+    ATTACH(SHGetFolderPathW);
     ATTACH_NT(GetFileInformationByHandleEx, L"kernel32.dll");
     ATTACH(GetForegroundWindow);
     ATTACH_NT(NtQueryAttributesFile, L"ntdll.dll");
@@ -186,10 +183,7 @@ void DetachNTHooks()
     DETACH(DrawTextExW);
     DETACH(CoInitializeEx);
     DETACH(NtDeleteKey);
-
-    // _TODO: investigate proper return value
-    // DETACH(SHGetFolderPathW);
-
+    DETACH(SHGetFolderPathW);
     DETACH(GetFileInformationByHandleEx);
     DETACH(GetForegroundWindow);
     DETACH(NtQueryAttributesFile);

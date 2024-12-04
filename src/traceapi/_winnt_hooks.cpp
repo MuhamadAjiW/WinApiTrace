@@ -321,13 +321,12 @@ HRESULT(__stdcall* Real_CoInitializeEx)(
 NTSTATUS(__stdcall* Real_NtDeleteKey)(
     HANDLE KeyHandle);
 
-// _TODO: investigate proper return value
-//SHFOLDERAPI(__stdcall* Real_SHGetFolderPathW)(
-//    HWND hwnd,
-//    int csidl,
-//    HANDLE hToken,
-//    DWORD dwFlags,
-//    LPWSTR pszPath) = SHGetFolderPathW;
+HRESULT(__stdcall* Real_SHGetFolderPathW)(
+    HWND hwnd,
+    int csidl,
+    HANDLE hToken,
+    DWORD dwFlags,
+    LPWSTR pszPath) = SHGetFolderPathW;
 
 BOOL(__stdcall* Real_GetFileInformationByHandleEx)(
     HANDLE hFile,
@@ -637,24 +636,23 @@ NTSTATUS Mine_NtDeleteKey(
     );
 }
 
-// _TODO: investigate proper return value
-//SHFOLDERAPI Mine_SHGetFolderPathW(
-//    HWND hwnd,
-//    int csidl,
-//    HANDLE hToken,
-//    DWORD dwFlags,
-//    LPWSTR pszPath)
-//{
-//    LOG_HOOK_INT(
-//        SHGetFolderPathW,
-//        "pdpLp",
-//        hwnd,
-//        csidl,
-//        hToken,
-//        dwFlags,
-//        pszPath
-//    );
-//}
+HRESULT Mine_SHGetFolderPathW(
+    HWND hwnd,
+    int csidl,
+    HANDLE hToken,
+    DWORD dwFlags,
+    LPWSTR pszPath)
+{
+    LOG_HOOK_INT(
+        SHGetFolderPathW,
+        "pdpLp",
+        hwnd,
+        csidl,
+        hToken,
+        dwFlags,
+        pszPath
+    );
+}
 
 BOOL Mine_GetFileInformationByHandleEx(
     HANDLE hFile,
