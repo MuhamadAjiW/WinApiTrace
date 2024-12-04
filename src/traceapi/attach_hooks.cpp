@@ -92,9 +92,9 @@ VOID DetDetach(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
     }
 }
 
-VOID DetAttachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
+VOID DetAttachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz, const WCHAR* lib)
 {
-    HMODULE hNtdll = LoadLibrary(L"ntdll.dll");
+    HMODULE hNtdll = LoadLibrary(lib);
     *ppvReal = (PVOID)GetProcAddress(hNtdll, psz);
 
     LONG l = DetourAttach(ppvReal, pvMine);
@@ -120,79 +120,133 @@ VOID DetDetachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
 #include <traceapi/_winnt_hooks.cpp>
 
 #define ATTACH(x)           DetAttach(&(PVOID&)Real_##x,Mine_##x,#x)
+#define ATTACH_NT(x, lib)   DetAttachNT(&(PVOID&)Real_##x,Mine_##x,#x, lib)
 #define DETACH(x)           DetDetach(&(PVOID&)Real_##x,Mine_##x,#x)
-#define ATTACH_NT(x)        DetAttachNT(&(PVOID&)Real_##x,Mine_##x,#x)
-#define DETACH_NT(x)        DetDetachNT(&(PVOID&)Real_##x,Mine_##x,#x)
 
 void AttachNTHooks()
 {
+    ATTACH(RegEnumKeyExW);
+    ATTACH(CreateDirectoryW);
+    ATTACH(DrawTextExW);
 
-    ATTACH_NT(NtWriteFile);
-    ATTACH_NT(NtFreeVirtualMemory);
-    ATTACH_NT(NtProtectVirtualMemory);
-    ATTACH_NT(NtQueryKey);
-
-    // ATTACH(RegEnumKeyExW);
-    // ATTACH(CreateDirectoryW);
-    // ATTACH(DrawTextExW);
+    // _TODO: investigate failed attachment
     // ATTACH(CoInitializeEx);
     // ATTACH(NtDeleteKey);
 
-    // // _TODO: investigate proper return value
-    // //ATTACH(SHGetFolderPathW);
+    // _TODO: investigate proper return value
+    // ATTACH(SHGetFolderPathW);
 
-    // ATTACH(GetFileInformationByHandleEx);
+    // _TODO: investigate failed attachment
+    // ATTACH_NT(GetFileInformationByHandleEx, L"ntdll.dll");
     // ATTACH(GetForegroundWindow);
-    // ATTACH(NtQueryAttributesFile);
-    // ATTACH(DeviceIoControl);
-    // ATTACH(SearchPathW);
-    // ATTACH(SetFileTime);
-    // ATTACH(SendNotifyMessageW);
-    // ATTACH(GetSystemMetrics);
-    // ATTACH(GetKeyState);
-    // ATTACH(NtCreateKey);
-    // ATTACH(LoadResource);
-    // ATTACH(GetDiskFreeSpaceExW);
-    // ATTACH(EnumWindows);
-    // ATTACH(RegOpenKeyExW);
-    // ATTACH(NtQueryKey);
-    // ATTACH(NtQueryValueKey);
-    // ATTACH(NtSetValueKey);
-    // ATTACH(CreateActCtxW);
-    // ATTACH(GetSystemTimeAsFileTime);
-    // ATTACH(GetSystemWindowsDirectoryW);
-    // ATTACH(SetErrorMode);
-    // ATTACH(GetFileVersionInfoSizeW);
-    // ATTACH(NtOpenMutant);
-    // ATTACH(NtOpenKey);
-    // ATTACH(NtClose);
-    // ATTACH(NtCreateFile);
-    // ATTACH(NtReadFile);
-    // ATTACH(NtWriteFile);
-    // ATTACH(LdrGetDllHandle);
-    // ATTACH(NtOpenFile);
-    // ATTACH(NtFreeVirtualMemory);
 
-    // // _TODO: Figure a better logging system, possibly static
-    // // These hooks may break the program because logging is done within the memory
-    // //ATTACH_NT(NtAllocateVirtualMemory);
+    ATTACH_NT(NtQueryAttributesFile, L"ntdll.dll");
+    ATTACH(DeviceIoControl);
+    ATTACH(SearchPathW);
+    ATTACH(SetFileTime);
+    ATTACH(SendNotifyMessageW);
+    ATTACH(GetSystemMetrics);
+    ATTACH(GetKeyState);
+    ATTACH_NT(NtCreateKey, L"ntdll.dll");
+    ATTACH(LoadResource);
+    ATTACH(GetDiskFreeSpaceExW);
+    ATTACH(EnumWindows);
+    ATTACH(RegOpenKeyExW);
+    ATTACH_NT(NtQueryKey, L"ntdll.dll");
+    ATTACH_NT(NtQueryValueKey, L"ntdll.dll");
+    ATTACH_NT(NtSetValueKey, L"ntdll.dll");
+    ATTACH(CreateActCtxW);
+    ATTACH(GetSystemTimeAsFileTime);
+    ATTACH(GetSystemWindowsDirectoryW);
+    ATTACH(SetErrorMode);
 
-    // ATTACH(NtProtectVirtualMemory);
-    // ATTACH(LdrLoadDll);
-    // ATTACH(NtQueryInformationFile);
-    // ATTACH(NtQueryDirectoryFile);
+    // _TODO: investigate failed attachment
+    // ATTACH_NT(GetFileVersionInfoSizeW, L"ntdll.dll");
+
+    ATTACH_NT(NtOpenMutant, L"ntdll.dll");
+    ATTACH_NT(NtOpenKey, L"ntdll.dll");
+    ATTACH_NT(NtClose, L"ntdll.dll");
+    ATTACH_NT(NtCreateFile, L"ntdll.dll");
+    ATTACH_NT(NtReadFile, L"ntdll.dll");
+    ATTACH_NT(NtWriteFile, L"ntdll.dll");
+    ATTACH_NT(LdrGetDllHandle, L"ntdll.dll");
+    ATTACH_NT(NtOpenFile, L"ntdll.dll");
+    ATTACH_NT(NtFreeVirtualMemory, L"ntdll.dll");
+
+    // _TODO: Figure a better logging system, possibly static
+    // These hooks may break the program because logging is done within the memory
+    // ATTACH_NT(NtAllocateVirtualMemory, L"ntdll.dll");
+
+    ATTACH_NT(NtProtectVirtualMemory, L"ntdll.dll");
+
+    // _TODO: investigate failed attachment
+    // ATTACH_NT(LdrLoadDll, L"ntdll.dll");
+
+    ATTACH_NT(NtQueryInformationFile, L"ntdll.dll");
+    ATTACH_NT(NtQueryDirectoryFile, L"ntdll.dll");
 }
 
 void DetachNTHooks()
 {
-    DETACH_NT(NtWriteFile);
-    DETACH_NT(NtFreeVirtualMemory);
-    DETACH_NT(NtProtectVirtualMemory);
-    DETACH_NT(NtQueryKey);
+    DETACH(RegEnumKeyExW);
+    DETACH(CreateDirectoryW);
+    DETACH(DrawTextExW);
+
+    // _TODO: investigate failed attachment
+    // DETACH(CoInitializeEx);
+    // DETACH(NtDeleteKey);
+
+    // _TODO: investigate proper return value
+    // DETACH(SHGetFolderPathW);
+
+    // _TODO: investigate failed attachment
+    // DETACH(GetFileInformationByHandleEx);
+    // DETACH(GetForegroundWindow);
+
+    DETACH(NtQueryAttributesFile);
+    DETACH(DeviceIoControl);
+    DETACH(SearchPathW);
+    DETACH(SetFileTime);
+    DETACH(SendNotifyMessageW);
+    DETACH(GetSystemMetrics);
+    DETACH(GetKeyState);
+    DETACH(NtCreateKey);
+    DETACH(LoadResource);
+    DETACH(GetDiskFreeSpaceExW);
+    DETACH(EnumWindows);
+    DETACH(RegOpenKeyExW);
+    DETACH(NtQueryKey);
+    DETACH(NtQueryValueKey);
+    DETACH(NtSetValueKey);
+    DETACH(CreateActCtxW);
+    DETACH(GetSystemTimeAsFileTime);
+    DETACH(GetSystemWindowsDirectoryW);
+    DETACH(SetErrorMode);
+
+    // _TODO: investigate failed attachment
+    // DETACH(GetFileVersionInfoSizeW);
+
+    DETACH(NtOpenMutant);
+    DETACH(NtOpenKey);
+    DETACH(NtClose);
+    DETACH(NtCreateFile);
+    DETACH(NtReadFile);
+    DETACH(NtWriteFile);
+    DETACH(LdrGetDllHandle);
+    DETACH(NtOpenFile);
+    DETACH(NtFreeVirtualMemory);
 
     // _TODO: Figure a better logging system, possibly static
     // These hooks may break the program because logging is done within the memory
-    //DETACH_NT(NtAllocateVirtualMemory);
+    // DETACH(NtAllocateVirtualMemory);
+
+    DETACH(NtProtectVirtualMemory);
+
+    // _TODO: investigate failed attachment
+    // DETACH(LdrLoadDll);
+
+    DETACH(NtQueryInformationFile);
+    DETACH(NtQueryDirectoryFile);
 }
 
 LONG AttachDetours(VOID)

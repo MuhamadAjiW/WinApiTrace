@@ -300,11 +300,11 @@ LSTATUS(__stdcall* Real_RegEnumKeyExW)(
     LPDWORD   lpReserved,
     LPWSTR    lpClass,
     LPDWORD   lpcchClass,
-    PFILETIME lpftLastWriteTime);
+    PFILETIME lpftLastWriteTime) = RegEnumKeyExW;
 
 BOOL(__stdcall* Real_CreateDirectoryW)(
     LPCWSTR lpPathName,
-    LPSECURITY_ATTRIBUTES lpSecurityAttributes);
+    LPSECURITY_ATTRIBUTES lpSecurityAttributes) = CreateDirectoryW;
 
 int(__stdcall* Real_DrawTextExW)(
     HDC hdc,
@@ -312,7 +312,7 @@ int(__stdcall* Real_DrawTextExW)(
     int cchText,
     LPRECT lprc,
     UINT format,
-    LPDRAWTEXTPARAMS lpdtp);
+    LPDRAWTEXTPARAMS lpdtp) = DrawTextExW;
 
 HRESULT(__stdcall* Real_CoInitializeEx)(
     LPVOID pvReserved,
@@ -327,7 +327,7 @@ NTSTATUS(__stdcall* Real_NtDeleteKey)(
 //    int csidl,
 //    HANDLE hToken,
 //    DWORD dwFlags,
-//    LPWSTR pszPath);
+//    LPWSTR pszPath) = SHGetFolderPathW;
 
 BOOL(__stdcall* Real_GetFileInformationByHandleEx)(
     HANDLE hFile,
@@ -349,7 +349,7 @@ BOOL(__stdcall* Real_DeviceIoControl)(
     LPVOID lpOutBuffer,
     DWORD nOutBufferSize,
     LPDWORD lpBytesReturned,
-    LPOVERLAPPED lpOverlapped);
+    LPOVERLAPPED lpOverlapped) = DeviceIoControl;
 
 DWORD(__stdcall* Real_SearchPathW)(
     LPCWSTR lpPath,
@@ -357,25 +357,25 @@ DWORD(__stdcall* Real_SearchPathW)(
     LPCWSTR lpExtension,
     DWORD nBufferLength,
     LPWSTR lpBuffer,
-    LPWSTR* lpFilePart);
+    LPWSTR* lpFilePart) = SearchPathW;
 
 BOOL(__stdcall* Real_SetFileTime)(
     HANDLE hFile,
     const FILETIME* lpCreationTime,
     const FILETIME* lpLastAccessTime,
-    const FILETIME* lpLastWriteTime);
+    const FILETIME* lpLastWriteTime) = SetFileTime;
 
 BOOL(__stdcall* Real_SendNotifyMessageW)(
     HWND hWnd,
     UINT Msg,
     WPARAM wParam,
-    LPARAM lParam);
+    LPARAM lParam) = SendNotifyMessageW;
 
 int(__stdcall* Real_GetSystemMetrics)(
-    int nIndex);
+    int nIndex) = GetSystemMetrics;
 
 SHORT(__stdcall* Real_GetKeyState)(
-    int nVirtKey);
+    int nVirtKey) = GetKeyState;
 
 NTSTATUS(__stdcall* Real_NtCreateKey)(
     PHANDLE pKeyHandle,
@@ -388,24 +388,24 @@ NTSTATUS(__stdcall* Real_NtCreateKey)(
 
 HGLOBAL(__stdcall* Real_LoadResource)(
     HMODULE hModule,
-    HRSRC hResInfo);
+    HRSRC hResInfo) = LoadResource;
 
 BOOL(__stdcall* Real_GetDiskFreeSpaceExW)(
     LPCWSTR lpDirectoryName,
     PULARGE_INTEGER lpFreeBytesAvailableToCaller,
     PULARGE_INTEGER lpTotalNumberOfBytes,
-    PULARGE_INTEGER lpTotalNumberOfFreeBytes);
+    PULARGE_INTEGER lpTotalNumberOfFreeBytes) = GetDiskFreeSpaceExW;
 
 BOOL(__stdcall* Real_EnumWindows)(
     WNDENUMPROC lpEnumFunc,
-    LPARAM lParam);
+    LPARAM lParam) = EnumWindows;
 
 LSTATUS(__stdcall* Real_RegOpenKeyExW)(
     HKEY hKey,
     LPCWSTR lpSubKey,
     DWORD ulOptions,
     REGSAM samDesired,
-    PHKEY phkResult);
+    PHKEY phkResult) = RegOpenKeyExW;
 
 NTSTATUS(__stdcall* Real_NtQueryKey)(
     HANDLE KeyHandle,
@@ -431,17 +431,17 @@ NTSTATUS(__stdcall* Real_NtSetValueKey)(
     ULONG DataSize);
 
 HANDLE(__stdcall* Real_CreateActCtxW)(
-    PCACTCTXW pActCtx);
+    PCACTCTXW pActCtx) = CreateActCtxW;
 
 void(__stdcall* Real_GetSystemTimeAsFileTime)(
-    LPFILETIME lpSystemTimeAsFileTime);
+    LPFILETIME lpSystemTimeAsFileTime) = GetSystemTimeAsFileTime;
 
 UINT(__stdcall* Real_GetSystemWindowsDirectoryW)(
     LPWSTR lpBuffer,
-    UINT uSize);
+    UINT uSize) = GetSystemWindowsDirectoryW;
 
 UINT(__stdcall* Real_SetErrorMode)(
-    UINT uMode);
+    UINT uMode) = SetErrorMode;
 
 DWORD(__stdcall* Real_GetFileVersionInfoSizeW)(
     LPCWSTR lptstrFilename,
