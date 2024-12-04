@@ -290,7 +290,7 @@ BOOL InstanceEnumerate(HINSTANCE hInst)
     WCHAR wzDllName[MAX_PATH];
 
     PIMAGE_NT_HEADERS pinh = NtHeadersForInstance(hInst);
-    if (pinh && Real_GetModuleFileNameW(hInst, wzDllName, ARRAYSIZE(wzDllName))) {
+    if (pinh && GetModuleFileNameW(hInst, wzDllName, ARRAYSIZE(wzDllName))) {
         // NOTE: Instance enumeration, uncomment str_concatf if necessary
         //str_concatf(&output_string, "### %p: %ls\n", hInst, wzDllName);
         return TRUE;
@@ -342,7 +342,7 @@ BOOL ProcessEnumerate()
         PIMAGE_NT_HEADERS pinh = NtHeadersForInstance((HINSTANCE)pbRegion);
 
         if (pinh &&
-            Real_GetModuleFileNameW((HINSTANCE)pbRegion, wzDllName, ARRAYSIZE(wzDllName))) {
+            GetModuleFileNameW((HINSTANCE)pbRegion, wzDllName, ARRAYSIZE(wzDllName))) {
 
             //str_concatf(&output_string, "### %p..%p: %ls\n", pbRegion, pbNext, wzDllName);
         }
@@ -353,7 +353,7 @@ BOOL ProcessEnumerate()
     }
     //str_concatf(&output_string, "###\n");
 
-    LPVOID lpvEnv = Real_GetEnvironmentStrings();
+    LPVOID lpvEnv = GetEnvironmentStrings();
     //str_concatf(&output_string, "### Env= %08x [%08x %08x]\n",
     //    lpvEnv, ((PVOID*)lpvEnv)[0], ((PVOID*)lpvEnv)[1]);
 
@@ -401,8 +401,8 @@ BOOL ProcessAttach(HMODULE hDll)
     WCHAR wzExeName[MAX_PATH];
 
     s_hInst = hDll;
-    Real_GetModuleFileNameW(hDll, s_wzDllPath, ARRAYSIZE(s_wzDllPath));
-    Real_GetModuleFileNameW(NULL, wzExeName, ARRAYSIZE(wzExeName));
+    GetModuleFileNameW(hDll, s_wzDllPath, ARRAYSIZE(s_wzDllPath));
+    GetModuleFileNameW(NULL, wzExeName, ARRAYSIZE(wzExeName));
     StringCchPrintfA(s_szDllPath, ARRAYSIZE(s_szDllPath), "%ls", s_wzDllPath);
 
     ProcessEnumerate();

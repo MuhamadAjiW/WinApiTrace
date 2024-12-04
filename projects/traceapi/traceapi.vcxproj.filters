@@ -15,9 +15,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\traceapi\_win32_hooks.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="..\..\src\traceapi\trcapi.cpp">
       <Filter>src</Filter>
     </ClCompile>
@@ -25,6 +22,9 @@
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="..\..\src\traceapi\_winnt_hooks.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="..\..\src\traceapi\_win32_hooks.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
