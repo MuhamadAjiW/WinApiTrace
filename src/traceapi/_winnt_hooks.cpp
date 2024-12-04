@@ -335,7 +335,7 @@ BOOL(__stdcall* Real_GetFileInformationByHandleEx)(
     LPVOID lpFileInformation,
     DWORD dwBufferSize);
 
-HWND(__stdcall* Real_GetForegroundWindow)(VOID);
+HWND(__stdcall* Real_GetForegroundWindow)(VOID) = GetForegroundWindow;
 
 NTSTATUS(__stdcall* Real_NtQueryAttributesFile)(
     POBJECT_ATTRIBUTES      ObjectAttributes,

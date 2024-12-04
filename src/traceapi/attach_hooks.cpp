@@ -128,18 +128,14 @@ void AttachNTHooks()
     ATTACH(RegEnumKeyExW);
     ATTACH(CreateDirectoryW);
     ATTACH(DrawTextExW);
-
-    // _TODO: investigate failed attachment
-    // ATTACH(CoInitializeEx);
-    // ATTACH(NtDeleteKey);
+    ATTACH_NT(CoInitializeEx, L"ole32.dll");
+    ATTACH_NT(NtDeleteKey, L"ntdll.dll");
 
     // _TODO: investigate proper return value
     // ATTACH(SHGetFolderPathW);
 
-    // _TODO: investigate failed attachment
-    // ATTACH_NT(GetFileInformationByHandleEx, L"ntdll.dll");
-    // ATTACH(GetForegroundWindow);
-
+    ATTACH_NT(GetFileInformationByHandleEx, L"kernel32.dll");
+    ATTACH(GetForegroundWindow);
     ATTACH_NT(NtQueryAttributesFile, L"ntdll.dll");
     ATTACH(DeviceIoControl);
     ATTACH(SearchPathW);
@@ -159,10 +155,7 @@ void AttachNTHooks()
     ATTACH(GetSystemTimeAsFileTime);
     ATTACH(GetSystemWindowsDirectoryW);
     ATTACH(SetErrorMode);
-
-    // _TODO: investigate failed attachment
-    // ATTACH_NT(GetFileVersionInfoSizeW, L"ntdll.dll");
-
+    ATTACH_NT(GetFileVersionInfoSizeW, L"version.dll");
     ATTACH_NT(NtOpenMutant, L"ntdll.dll");
     ATTACH_NT(NtOpenKey, L"ntdll.dll");
     ATTACH_NT(NtClose, L"ntdll.dll");
@@ -179,7 +172,7 @@ void AttachNTHooks()
 
     ATTACH_NT(NtProtectVirtualMemory, L"ntdll.dll");
 
-    // _TODO: investigate failed attachment
+    // _TODO: investigate infinite looping
     // ATTACH_NT(LdrLoadDll, L"ntdll.dll");
 
     ATTACH_NT(NtQueryInformationFile, L"ntdll.dll");
@@ -191,18 +184,14 @@ void DetachNTHooks()
     DETACH(RegEnumKeyExW);
     DETACH(CreateDirectoryW);
     DETACH(DrawTextExW);
-
-    // _TODO: investigate failed attachment
-    // DETACH(CoInitializeEx);
-    // DETACH(NtDeleteKey);
+    DETACH(CoInitializeEx);
+    DETACH(NtDeleteKey);
 
     // _TODO: investigate proper return value
     // DETACH(SHGetFolderPathW);
 
-    // _TODO: investigate failed attachment
-    // DETACH(GetFileInformationByHandleEx);
-    // DETACH(GetForegroundWindow);
-
+    DETACH(GetFileInformationByHandleEx);
+    DETACH(GetForegroundWindow);
     DETACH(NtQueryAttributesFile);
     DETACH(DeviceIoControl);
     DETACH(SearchPathW);
@@ -222,10 +211,7 @@ void DetachNTHooks()
     DETACH(GetSystemTimeAsFileTime);
     DETACH(GetSystemWindowsDirectoryW);
     DETACH(SetErrorMode);
-
-    // _TODO: investigate failed attachment
-    // DETACH(GetFileVersionInfoSizeW);
-
+    DETACH(GetFileVersionInfoSizeW);
     DETACH(NtOpenMutant);
     DETACH(NtOpenKey);
     DETACH(NtClose);
@@ -242,7 +228,7 @@ void DetachNTHooks()
 
     DETACH(NtProtectVirtualMemory);
 
-    // _TODO: investigate failed attachment
+    // _TODO: investigate infinite looping
     // DETACH(LdrLoadDll);
 
     DETACH(NtQueryInformationFile);
