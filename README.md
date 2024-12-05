@@ -7,7 +7,7 @@ Simple suite of Microsoft [Detour](https://github.com/microsoft/Detours)'s sampl
 Get the executables on the github [releases](https://github.com/MuhamadAjiW/WinApiTrace/releases).
 1. Unzipped the downloaded file go to the unzipped folder
 2. Open a powershell or terminal
-3. Start tracing by calling `.\withdll.exe -d:traceapi.dll <path-to-executable>`
+3. Start tracing by calling `.\withdll.exe /d:traceapi.dll <path-to-executable>`
 4. Traced API calls will be printed on the terminal 
 
 ## How to Build
