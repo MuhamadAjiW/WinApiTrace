@@ -28,15 +28,21 @@ NTSTATUS(__stdcall* ext_NtWriteFile)(
 NTSTATUS(__stdcall* ext_NtClose)(
     HANDLE Handle);
 
+NTSTATUS(__stdcall* ext_NtOpenEvent)(
+    PHANDLE EventHandle,
+    ACCESS_MASK DesiredAccess,
+    POBJECT_ATTRIBUTES ObjectAttributes);
+
+NTSTATUS(__stdcall* ext_NtSetEvent)(
+    HANDLE EventHandle,
+    PLONG PreviousState);
+
 VOID(__stdcall* ext_RtlInitUnicodeString)(
     PUNICODE_STRING         DestinationString,
-    __drv_aliasesMem PCWSTR SourceString
-    );
+    __drv_aliasesMem PCWSTR SourceString);
 
 #define PIPE_NAME L"\\Device\\NamedPipe\\ipc_pipe"
-#define FILE_PIPE_BYTE_STREAM_TYPE 0x00000000
-#define FILE_PIPE_BYTE_STREAM_MODE 0x00000000
-#define FILE_PIPE_COMPLETE_OPERATION 0x00000001
+#define EVENT_NAME L"\\BaseNamedObjects\\ipc_event"
 #define FILE_PIPE_MESSAGE_TYPE 0x00000001
 #define FILE_PIPE_MESSAGE_MODE 0x00000001
 #define FILE_PIPE_QUEUE_OPERATION 0x00000000
@@ -56,12 +62,15 @@ int main() {
     attachNT(&(PVOID&)ext_NtOpenFile, "NtOpenFile", L"ntdll.dll");
     attachNT(&(PVOID&)ext_NtWriteFile, "NtWriteFile", L"ntdll.dll");
     attachNT(&(PVOID&)ext_NtClose, "NtClose", L"ntdll.dll");
+    attachNT(&(PVOID&)ext_NtOpenEvent, "NtOpenEvent", L"ntdll.dll");
+    attachNT(&(PVOID&)ext_NtSetEvent, "NtSetEvent", L"ntdll.dll");
     attachNT(&(PVOID&)ext_RtlInitUnicodeString, "RtlInitUnicodeString", L"ntdll.dll");
 
     std::cout << "Initializing libraries [Success]..." << std::endl;
     std::cout << "Initializing attributes..." << std::endl;
 
     NTSTATUS status = { 0 };
+    HANDLE hEvent = { 0 };
     IO_STATUS_BLOCK ioStatusBlock = { 0 };
 
     // Open the communication pipe
@@ -101,42 +110,83 @@ int main() {
         return 1;
     }
     std::cout << "------------------------" << std::endl;
+    std::cout << "Initializing pipes [Success]..." << std::endl;
 
-    if (status == 0) {
-        std::cout << "Initializing pipes [Success]..." << std::endl;
-        std::cout << "Sending message to server..." << std::endl;
+    std::cout << "Initializing event..." << std::endl;
 
-        char buffer[512] = { 0 };
-        const char* message = "Hello World! [Hi!]";
-        ioStatusBlock = { 0 };
-        NTSTATUS writeStatus = ext_NtWriteFile(
-            hPipe,
-            NULL,
-            NULL,
-            NULL,
-            &ioStatusBlock,
-            (void*)message,
-            strlen(message) + 1,
-            NULL,
-            NULL
-        );
+    // Wait for connection
+    OBJECT_ATTRIBUTES eventAttr = { 0 };
+    UNICODE_STRING eventName = { 0 };
+    ext_RtlInitUnicodeString(&eventName, EVENT_NAME);
+    InitializeObjectAttributes(
+        &eventAttr,
+        &eventName,
+        OBJ_CASE_INSENSITIVE,
+        NULL,
+        NULL
+    );
 
-        std::cout << "------------------------" << std::endl;
-        std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
-        std::cout << "NtWriteFile Code: 0x" << std::hex << status << std::endl;
+    status = ext_NtOpenEvent(
+        &hEvent,
+        EVENT_ALL_ACCESS,
+        &eventAttr
+    );
 
-        if (writeStatus >= 0) {
-            std::cout << "Sending message to server [Success]..." << std::endl;
-        }
-        else {
-            std::cerr << "Failed to send message: " << std::hex << writeStatus << std::endl;
-        }
-
-        ext_NtClose(hPipe);
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Eventname: "; std::wcout << eventName.Buffer << std::endl;
+    std::cout << "NtOpenEvent Code: 0x" << std::hex << status << std::endl;
+    if (status < 0) {
+        std::cout << "Failed to open event. " << std::endl;
+        return 1;
     }
-    else {
-        std::cerr << "Failed to open named pipe: " << std::hex << status << std::endl;
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Initializing event [Success]..." << std::endl;
+
+    std::cout << "Sending message to server..." << std::endl;
+
+    char buffer[512] = { 0 };
+    const char* message = "Hello World! [Hi!]";
+    ioStatusBlock = { 0 };
+    status = ext_NtWriteFile(
+        hPipe,
+        NULL,
+        NULL,
+        NULL,
+        &ioStatusBlock,
+        (void*)message,
+        strlen(message) + 1,
+        NULL,
+        NULL
+    );
+
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
+    std::cout << "NtWriteFile Code: 0x" << std::hex << status << std::endl;
+
+    if (status != 0) {
+        std::cerr << "Failed to send message: " << std::endl;
+        return 1;
     }
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Sending message to server [Success]..." << std::endl;
+    std::cout << "Sending event to server..." << std::endl;
+
+    status = ext_NtSetEvent(
+        hEvent,
+        NULL
+    );
+    std::cout << "NtSetEvent Code: 0x" << std::hex << status << std::endl;
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Sending event to server [Success]..." << std::endl;
+
+    std::cout << "Closing pipe..." << std::endl;
+
+    status = ext_NtClose(hPipe);
+
+    std::cout << "------------------------" << std::endl;
+    std::cout << "NtClose Code: 0x" << std::hex << status << std::endl;
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Closing pipe [Success]..." << std::endl;
 
     std::cout << "Program finished" << std::endl;
 

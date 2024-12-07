@@ -72,17 +72,12 @@ VOID(__stdcall* ext_RtlInitUnicodeString)(
     );
 
 #define PIPE_NAME L"\\Device\\NamedPipe\\ipc_pipe"
-#define FILE_PIPE_BYTE_STREAM_TYPE 0x00000000
-#define FILE_PIPE_BYTE_STREAM_MODE 0x00000000
-#define FILE_PIPE_COMPLETE_OPERATION 0x00000001
+#define EVENT_NAME L"\\BaseNamedObjects\\ipc_event"
 #define FILE_PIPE_MESSAGE_TYPE 0x00000001
 #define FILE_PIPE_MESSAGE_MODE 0x00000001
 #define FILE_PIPE_QUEUE_OPERATION 0x00000000
 
 // FSCTL codes https://processhacker.sourceforge.io/doc/ntioapi_8h.html
-#define FSCTL_PIPE_LISTEN CTL_CODE(FILE_DEVICE_NAMED_PIPE, 2, METHOD_BUFFERED, FILE_ANY_ACCESS)
-#define FSCTL_PIPE_DISCONNECT CTL_CODE(FILE_DEVICE_NAMED_PIPE, 1, METHOD_BUFFERED, FILE_ANY_ACCESS)
-#define FSCTL_PIPE_TRANSCEIVE CTL_CODE(FILE_DEVICE_NAMED_PIPE, 5, METHOD_NEITHER,  FILE_READ_DATA | FILE_WRITE_DATA)
 
 // IO_STATUS_BLOCK Information codes:
 // FILE_SUPERSEDED = 0;
@@ -123,19 +118,20 @@ int main() {
     // Create the communication pipe
     HANDLE hPipe = { 0 };
     UNICODE_STRING pipeName = { 0 };
-    OBJECT_ATTRIBUTES objAttr = { 0 };
+    OBJECT_ATTRIBUTES pipeAttr = { 0 };
     LARGE_INTEGER pipeTimeout = { 0 };
 
     ioStatusBlock.Information = 99999;
     ext_RtlInitUnicodeString(&pipeName, PIPE_NAME);
     InitializeObjectAttributes(
-        &objAttr,
+        &pipeAttr,
         &pipeName,
         OBJ_CASE_INSENSITIVE,
         NULL,
         NULL
     );
-    pipeTimeout.QuadPart = -10000000LL;
+
+    pipeTimeout.QuadPart = -900000000LL;
 
     std::cout << "Initializing attributes [Success]..." << std::endl;
     std::cout << "Initializing pipes..." << std::endl;
@@ -143,7 +139,7 @@ int main() {
     status = ext_NtCreateNamedPipeFile(
         &hPipe,
         GENERIC_READ | GENERIC_WRITE | SYNCHRONIZE,
-        &objAttr,
+        &pipeAttr,
         &ioStatusBlock,
         FILE_SHARE_READ | FILE_SHARE_WRITE,
         FILE_OPEN_IF,
@@ -170,56 +166,34 @@ int main() {
     std::cout << "Waiting for client..." << std::endl;
 
     // Wait for connection
+    OBJECT_ATTRIBUTES eventAttr = { 0 };
+    UNICODE_STRING eventName = { 0 };
+    ext_RtlInitUnicodeString(&eventName, EVENT_NAME);
+    InitializeObjectAttributes(
+        &eventAttr,
+        &eventName,
+        OBJ_CASE_INSENSITIVE,
+        NULL,
+        NULL
+    );
+
     status = ext_NtCreateEvent(
         &hEvent,
         EVENT_ALL_ACCESS,
-        NULL,
+        &eventAttr,
         SynchronizationEvent,
         FALSE
     );
     std::cout << "------------------------" << std::endl;
+    std::cout << "Eventname: "; std::wcout << eventName.Buffer << std::endl;
     std::cout << "NtCreateEvent Code: 0x" << std::hex << status << std::endl;
 
-    ioStatusBlock = { 0 };
-    ioStatusBlock.Information = 99999;
-    status = ext_NtFsControlFile(
-        hPipe,
-        hEvent,
-        NULL,
-        NULL,
-        &ioStatusBlock,
-        FSCTL_PIPE_LISTEN,
-        NULL,
-        0,
-        NULL,
-        0
-    );
+    status = ext_NtWaitForSingleObject(hEvent, TRUE, NULL);
 
     std::cout << "------------------------" << std::endl;
-    std::cout << "NtFsControlFile Code: 0x" << std::hex << status << std::endl;
-    std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
-
-    if (status == STATUS_PENDING) {
-        // _TODO: Find better way to signal when the message been has received
-        status = ext_NtWaitForSingleObject(hEvent, FALSE, NULL);
-
-        std::cout << "------------------------" << std::endl;
-        std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
-        std::cout << "------------------------" << std::endl;
-        std::cout << "Waiting for client [Success]..." << std::endl;
-        std::cout << "Receiving data..." << std::endl;
-
-        LARGE_INTEGER waitTimeout = { 0 };
-        // 1 seconds window to send file
-        waitTimeout.QuadPart = -10000000LL;
-        status = ext_NtWaitForSingleObject(hEvent, FALSE, &waitTimeout);
-
-        std::cout << "------------------------" << std::endl;
-        std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
-        std::cout << "------------------------" << std::endl;
-        std::cout << "Receiving data [Success]..." << std::endl;
-    }
-
+    std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Waiting for client [Success]..." << std::endl;
     std::cout << "Reading from pipes..." << std::endl;
 
     // Read from the pipe
@@ -251,8 +225,15 @@ int main() {
     else {
         std::cout << "Message too large or invalid" << std::endl;
     }
+    std::cout << "Reading from pipes [Success]..." << std::endl;
+    std::cout << "Closing pipe..." << std::endl;
 
     ext_NtClose(hPipe);
+
+    std::cout << "------------------------" << std::endl;
+    std::cout << "NtClose Code: 0x" << std::hex << status << std::endl;
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Closing pipe [Success]..." << std::endl;
 
     std::cout << "Program finished" << std::endl;
 
