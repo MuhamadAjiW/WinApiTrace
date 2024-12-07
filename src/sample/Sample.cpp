@@ -1,108 +1,6 @@
 // Sample.cpp : This file contains the 'main' function. Program execution begins and ends there.
 //
 
-//#include <iostream>
-//#include <windows.h>
-//#include <synchapi.h>
-//
-//int main()
-//{
-//    const WCHAR* filePath = L"testfile.txt";
-//
-//    // Call CreateFile, which internally calls NtCreateFile
-//    HANDLE hFile = CreateFile(
-//        filePath,                    // File name
-//        GENERIC_WRITE,                // Desired access
-//        0,                            // Share mode
-//        NULL,                         // Security attributes
-//        CREATE_ALWAYS,                // Creation disposition
-//        FILE_ATTRIBUTE_NORMAL,        // Flags and attributes
-//        NULL                          // Template file
-//    );
-//
-//    if (hFile == INVALID_HANDLE_VALUE) {
-//        std::cerr << "Failed to create file. Error: " << GetLastError() << std::endl;
-//    }
-//    else {
-//        std::cout << "File created successfully." << std::endl;
-//        // Optionally, write to the file
-//        const char* data = "Hello, world!";
-//        DWORD written;
-//        WriteFile(hFile, data, strlen(data), &written, NULL);
-//        std::cout << "Data written to the file." << std::endl;
-//        CloseHandle(hFile);
-//    }
-//
-//    return 0;
-//}
-
-// #include <iostream>
-// #include <windows.h>
-// using namespace std;
-
-// int main(int argc, const char** argv)
-// {
-//     wcout << "Creating an instance of a named pipe..." << endl;
-
-//     // Create a pipe to send data
-//     HANDLE pipe = CreateNamedPipe(
-//         L"\\\\.\\pipe\\my_pipe", // name of the pipe
-//         PIPE_ACCESS_OUTBOUND, // 1-way pipe -- send only
-//         PIPE_TYPE_BYTE, // send data as a byte stream
-//         1, // only allow 1 instance of this pipe
-//         0, // no outbound buffer
-//         0, // no inbound buffer
-//         0, // use default wait time
-//         NULL // use default security attributes
-//     );
-
-//     if (pipe == NULL || pipe == INVALID_HANDLE_VALUE) {
-//         wcout << "Failed to create outbound pipe instance.";
-//         // look up error code here using GetLastError()
-//         system("pause");
-//         return 1;
-//     }
-
-//     wcout << "Waiting for a client to connect to the pipe..." << endl;
-
-//     // This call blocks until a client process connects to the pipe
-//     BOOL result = ConnectNamedPipe(pipe, NULL);
-//     if (!result) {
-//         wcout << "Failed to make connection on named pipe." << endl;
-//         // look up error code here using GetLastError()
-//         CloseHandle(pipe); // close the pipe
-//         return 1;
-//     }
-
-//     wcout << "Sending data to pipe..." << endl;
-
-//     // This call blocks until a client process reads all the data
-//     const wchar_t* data = L"*** Hello Pipe World ***";
-//     DWORD numBytesWritten = 0;
-//     result = WriteFile(
-//         pipe, // handle to our outbound pipe
-//         data, // data to send
-//         wcslen(data) * sizeof(wchar_t), // length of data to send (bytes)
-//         &numBytesWritten, // will store actual amount of data sent
-//         NULL // not using overlapped IO
-//     );
-
-//     if (result) {
-//         wcout << "Number of bytes sent: " << numBytesWritten << endl;
-//     }
-//     else {
-//         wcout << "Failed to send data." << endl;
-//         // look up error code here using GetLastError()
-//     }
-
-//     // Close the pipe (automatically disconnects client too)
-//     CloseHandle(pipe);
-
-//     wcout << "Done." << endl;
-
-//     return 0;
-// }
-
 #include <windows.h>
 #include <winternl.h>
 #include <iostream>
@@ -181,8 +79,10 @@ VOID(__stdcall* ext_RtlInitUnicodeString)(
 #define FILE_PIPE_MESSAGE_MODE 0x00000001
 #define FILE_PIPE_QUEUE_OPERATION 0x00000000
 
-// FSCTL codes https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/4dc02779-9d95-43f8-bba4-8d4ce4961458
-#define FSCTL_PIPE_WAIT 0X110018
+// FSCTL codes https://processhacker.sourceforge.io/doc/ntioapi_8h.html
+#define FSCTL_PIPE_LISTEN CTL_CODE(FILE_DEVICE_NAMED_PIPE, 2, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define FSCTL_PIPE_DISCONNECT CTL_CODE(FILE_DEVICE_NAMED_PIPE, 1, METHOD_BUFFERED, FILE_ANY_ACCESS)
+#define FSCTL_PIPE_TRANSCEIVE CTL_CODE(FILE_DEVICE_NAMED_PIPE, 5, METHOD_NEITHER,  FILE_READ_DATA | FILE_WRITE_DATA)
 
 // IO_STATUS_BLOCK Information codes:
 // FILE_SUPERSEDED = 0;
@@ -288,7 +188,7 @@ int main() {
         NULL,
         NULL,
         &ioStatusBlock,
-        FSCTL_PIPE_WAIT,
+        FSCTL_PIPE_LISTEN,
         NULL,
         0,
         NULL,
@@ -300,19 +200,25 @@ int main() {
     std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
 
     if (status == STATUS_PENDING) {
-        LARGE_INTEGER waitTimeout = { 0 };
+        // _TODO: Find better way to signal when the message been has received
+        status = ext_NtWaitForSingleObject(hEvent, FALSE, NULL);
 
-        // 10 seconds
-        waitTimeout.QuadPart = -100000000LL;
-
-        status = ext_NtWaitForSingleObject(hPipe, FALSE, &waitTimeout);
         std::cout << "------------------------" << std::endl;
         std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Waiting for client [Success]..." << std::endl;
+        std::cout << "Receiving data..." << std::endl;
+
+        LARGE_INTEGER waitTimeout = { 0 };
+        // 1 seconds window to send file
+        waitTimeout.QuadPart = -10000000LL;
+        status = ext_NtWaitForSingleObject(hEvent, FALSE, &waitTimeout);
+
+        std::cout << "------------------------" << std::endl;
+        std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Receiving data [Success]..." << std::endl;
     }
-
-    std::cout << "------------------------" << std::endl;
-
-    std::cout << "Waiting for client [Success]..." << std::endl;
 
     std::cout << "Reading from pipes..." << std::endl;
 
