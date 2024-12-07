@@ -107,22 +107,28 @@
 #include <winternl.h>
 #include <iostream>
 
+// ---Structs---
+typedef enum _EVENT_TYPE {
+    NotificationEvent,
+    SynchronizationEvent
+} EVENT_TYPE, * PEVENT_TYPE;
+
 // ---Function headers---
 NTSTATUS(__stdcall* ext_NtCreateNamedPipeFile)(
-    PHANDLE            FileHandle,
-    ULONG              DesiredAccess,
+    PHANDLE FileHandle,
+    ULONG DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes,
-    PIO_STATUS_BLOCK   IoStatusBlock,
-    ULONG              ShareAccess,
-    ULONG              CreateDisposition,
-    ULONG              CreateOptions,
-    ULONG              NamedPipeType,
-    ULONG              ReadMode,
-    ULONG              CompletionMode,
-    ULONG              MaximumInstances,
-    ULONG              InboundQuota,
-    ULONG              OutboundQuota,
-    PLARGE_INTEGER     DefaultTimeout);
+    PIO_STATUS_BLOCK IoStatusBlock,
+    ULONG ShareAccess,
+    ULONG CreateDisposition,
+    ULONG CreateOptions,
+    ULONG NamedPipeType,
+    ULONG ReadMode,
+    ULONG CompletionMode,
+    ULONG MaximumInstances,
+    ULONG InboundQuota,
+    ULONG OutboundQuota,
+    PLARGE_INTEGER DefaultTimeout);
 
 NTSTATUS(__stdcall* ext_NtReadFile)(
     HANDLE FileHandle,
@@ -135,29 +141,60 @@ NTSTATUS(__stdcall* ext_NtReadFile)(
     PLARGE_INTEGER ByteOffset,
     PULONG Key);
 
-NTSTATUS(__stdcall* ext_NtWriteFile)(
+NTSTATUS(__stdcall* ext_NtClose)(
+    HANDLE Handle);
+
+NTSTATUS(__stdcall* ext_NtFsControlFile)(
     HANDLE FileHandle,
     HANDLE Event,
     PIO_APC_ROUTINE ApcRoutine,
     PVOID ApcContext,
     PIO_STATUS_BLOCK IoStatusBlock,
-    PVOID Buffer,
-    ULONG Length,
-    PLARGE_INTEGER ByteOffset,
-    PULONG Key);
+    ULONG FsControlCode,
+    PVOID InputBuffer,
+    ULONG InputBufferLength,
+    PVOID OutputBuffer,
+    ULONG OutputBufferLength);
+
+NTSTATUS(__stdcall* ext_NtWaitForSingleObject)(
+    HANDLE Object,
+    BOOLEAN Alertable,
+    PLARGE_INTEGER Timeout);
+
+NTSTATUS(__stdcall* ext_NtCreateEvent)(
+    PHANDLE EventHandle,
+    ACCESS_MASK DesiredAccess,
+    POBJECT_ATTRIBUTES ObjectAttributes,
+    EVENT_TYPE EventType,
+    BOOLEAN InitialState);
 
 VOID(__stdcall* ext_RtlInitUnicodeString)(
     PUNICODE_STRING         DestinationString,
     __drv_aliasesMem PCWSTR SourceString
     );
 
-#define PIPE_NAME L"\\Device\\NamedPipe\\my_pipe"
+#define PIPE_NAME L"\\Device\\NamedPipe\\ipc_pipe"
 #define FILE_PIPE_BYTE_STREAM_TYPE 0x00000000
 #define FILE_PIPE_BYTE_STREAM_MODE 0x00000000
 #define FILE_PIPE_COMPLETE_OPERATION 0x00000001
 #define FILE_PIPE_MESSAGE_TYPE 0x00000001
 #define FILE_PIPE_MESSAGE_MODE 0x00000001
 #define FILE_PIPE_QUEUE_OPERATION 0x00000000
+
+// FSCTL codes https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-fscc/4dc02779-9d95-43f8-bba4-8d4ce4961458
+#define FSCTL_PIPE_WAIT 0X110018
+
+// IO_STATUS_BLOCK Information codes:
+// FILE_SUPERSEDED = 0;
+// FILE_OPENED = 1;
+// FILE_CREATED = 2;
+// FILE_OVERWRITTEN = 3;
+// FILE_EXISTS = 4;
+// FILE_DOES_NOT_EXIST = 5
+// No info = 99999
+
+// NTSTATUS information codes
+// Guide on the numbers: https://learn.microsoft.com/en-us/openspecs/windows_protocols/ms-erref/596a1078-e883-4972-9bbc-49e60bebca55
 
 VOID attachNT(PVOID* ppvReal, const CHAR* psz, const WCHAR* lib)
 {
@@ -168,30 +205,44 @@ VOID attachNT(PVOID* ppvReal, const CHAR* psz, const WCHAR* lib)
 int main() {
     std::cout << "Initializing libraries..." << std::endl;
 
-    attachNT(&(PVOID&)ext_NtReadFile, "NtReadFile", L"ntdll.dll");
-    attachNT(&(PVOID&)ext_NtWriteFile, "NtWriteFile", L"ntdll.dll");
     attachNT(&(PVOID&)ext_NtCreateNamedPipeFile, "NtCreateNamedPipeFile", L"ntdll.dll");
+    attachNT(&(PVOID&)ext_NtReadFile, "NtReadFile", L"ntdll.dll");
+    attachNT(&(PVOID&)ext_NtClose, "NtClose", L"ntdll.dll");
+    attachNT(&(PVOID&)ext_NtFsControlFile, "NtFsControlFile", L"ntdll.dll");
+    attachNT(&(PVOID&)ext_NtWaitForSingleObject, "NtWaitForSingleObject", L"ntdll.dll");
+    attachNT(&(PVOID&)ext_NtCreateEvent, "NtCreateEvent", L"ntdll.dll");
     attachNT(&(PVOID&)ext_RtlInitUnicodeString, "RtlInitUnicodeString", L"ntdll.dll");
 
     std::cout << "Initializing libraries [Success]..." << std::endl;
     std::cout << "Initializing attributes..." << std::endl;
 
-    HANDLE hPipe;
-    UNICODE_STRING pipeName;
-    ext_RtlInitUnicodeString(&pipeName, PIPE_NAME);
-
-    OBJECT_ATTRIBUTES objAttr;
-    InitializeObjectAttributes(&objAttr, &pipeName, OBJ_CASE_INSENSITIVE, NULL, NULL);
-
+    NTSTATUS status = { 0 };
+    HANDLE hEvent = { 0 };
     IO_STATUS_BLOCK ioStatusBlock = { 0 };
+
+    // Create the communication pipe
+    HANDLE hPipe = { 0 };
+    UNICODE_STRING pipeName = { 0 };
+    OBJECT_ATTRIBUTES objAttr = { 0 };
+    LARGE_INTEGER pipeTimeout = { 0 };
+
+    ioStatusBlock.Information = 99999;
+    ext_RtlInitUnicodeString(&pipeName, PIPE_NAME);
+    InitializeObjectAttributes(
+        &objAttr,
+        &pipeName,
+        OBJ_CASE_INSENSITIVE,
+        NULL,
+        NULL
+    );
+    pipeTimeout.QuadPart = -10000000LL;
 
     std::cout << "Initializing attributes [Success]..." << std::endl;
     std::cout << "Initializing pipes..." << std::endl;
 
-    // Create named pipe
-    NTSTATUS status = ext_NtCreateNamedPipeFile(
+    status = ext_NtCreateNamedPipeFile(
         &hPipe,
-        GENERIC_READ | GENERIC_WRITE,
+        GENERIC_READ | GENERIC_WRITE | SYNCHRONIZE,
         &objAttr,
         &ioStatusBlock,
         FILE_SHARE_READ | FILE_SHARE_WRITE,
@@ -200,81 +251,102 @@ int main() {
         FILE_PIPE_MESSAGE_TYPE,
         FILE_PIPE_MESSAGE_MODE,
         FILE_PIPE_QUEUE_OPERATION,
-        1,               // Maximum instances
-        1024,            // Inbound quota
-        1024,            // Outbound quota
-        NULL             // Default timeout
+        1,
+        1024,
+        1024,
+        &pipeTimeout
     );
 
+    std::cout << "------------------------" << std::endl;
+    std::cout << "Pipename: "; std::wcout << pipeName.Buffer << std::endl;
+    std::cout << "Status block info: " << ioStatusBlock.Information << std::endl;
+    std::cout << "NtCreateNamedPipeFile Code: 0x" << std::hex << status << std::endl;
     if (status < 0) {
-        std::cerr << "Failed to create named pipe. "
-            << "Error Code: 0x" << std::hex << status << std::endl;
-
-        switch (status) {
-        case 0xC000000D:
-            std::cerr << "Detailed: Invalid Parameter" << std::endl;
-            break;
-        case 0xC0000035:
-            std::cerr << "Detailed: Pipe Not Available" << std::endl;
-            break;
-        default:
-            std::cerr << "Unknown Error" << std::endl;
-        }
+        std::cout << "Failed to create named pipe. " << std::endl;
         return 1;
     }
-
+    std::cout << "------------------------" << std::endl;
     std::cout << "Initializing pipes [Success]..." << std::endl;
     std::cout << "Waiting for client..." << std::endl;
 
-    // Prepare status block and buffer
-    IO_STATUS_BLOCK readStatusBlock = { 0 };
+    // Wait for connection
+    status = ext_NtCreateEvent(
+        &hEvent,
+        EVENT_ALL_ACCESS,
+        NULL,
+        SynchronizationEvent,
+        FALSE
+    );
+    std::cout << "------------------------" << std::endl;
+    std::cout << "NtCreateEvent Code: 0x" << std::hex << status << std::endl;
+
+    ioStatusBlock = { 0 };
+    ioStatusBlock.Information = 99999;
+    status = ext_NtFsControlFile(
+        hPipe,
+        hEvent,
+        NULL,
+        NULL,
+        &ioStatusBlock,
+        FSCTL_PIPE_WAIT,
+        NULL,
+        0,
+        NULL,
+        0
+    );
+
+    std::cout << "------------------------" << std::endl;
+    std::cout << "NtFsControlFile Code: 0x" << std::hex << status << std::endl;
+    std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
+
+    if (status == STATUS_PENDING) {
+        LARGE_INTEGER waitTimeout = { 0 };
+
+        // 10 seconds
+        waitTimeout.QuadPart = -100000000LL;
+
+        status = ext_NtWaitForSingleObject(hPipe, FALSE, &waitTimeout);
+        std::cout << "------------------------" << std::endl;
+        std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
+    }
+
+    std::cout << "------------------------" << std::endl;
+
+    std::cout << "Waiting for client [Success]..." << std::endl;
+
+    std::cout << "Reading from pipes..." << std::endl;
+
+    // Read from the pipe
+    ioStatusBlock = { 0 };
+    ioStatusBlock.Information = 99999;
     char buffer[512] = { 0 };
 
-    // Wait for client connection and read
-    NTSTATUS readStatus = ext_NtReadFile(
+    status = ext_NtReadFile(
         hPipe,
         NULL,
         NULL,
         NULL,
-        &readStatusBlock,
+        &ioStatusBlock,
         buffer,
         sizeof(buffer) - 1,  // Leave room for null terminator
         NULL,
         NULL
     );
 
-    if (readStatus >= 0) {
-        // Null terminate the received buffer
-        buffer[readStatusBlock.Information] = '\0';
+    std::cout << "------------------------" << std::endl;
+    std::cout << "NtReadFile Code: 0x" << std::hex << status << std::endl;
+    std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
+    std::cout << "------------------------" << std::endl;
+
+    if (ioStatusBlock.Information < 512) {
+        buffer[ioStatusBlock.Information] = '\0';
         std::cout << "Received: " << buffer << std::endl;
-
-        // Prepare response
-        IO_STATUS_BLOCK writeStatusBlock = { 0 };
-        std::string response = "Message received";
-
-        // Write response
-        NTSTATUS writeStatus = ext_NtWriteFile(
-            hPipe,
-            NULL,
-            NULL,
-            NULL,
-            &writeStatusBlock,
-            (void*)response.c_str(),
-            response.size(),
-            NULL,
-            NULL
-        );
-
-        if (writeStatus < 0) {
-            std::cerr << "Failed to write response: " << std::hex << writeStatus << std::endl;
-        }
     }
     else {
-        std::cerr << "Failed to read from pipe: " << std::hex << readStatus << std::endl;
+        std::cout << "Message too large or invalid" << std::endl;
     }
 
-    CloseHandle(hPipe);
-
+    ext_NtClose(hPipe);
 
     std::cout << "Program finished" << std::endl;
 
