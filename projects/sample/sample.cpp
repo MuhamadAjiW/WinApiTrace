@@ -134,36 +134,6 @@ int main() {
     pipeTimeout.QuadPart = -900000000LL;
 
     std::cout << "Initializing attributes [Success]..." << std::endl;
-    std::cout << "Initializing pipes..." << std::endl;
-
-    status = ext_NtCreateNamedPipeFile(
-        &hPipe,
-        GENERIC_READ | GENERIC_WRITE | SYNCHRONIZE,
-        &pipeAttr,
-        &ioStatusBlock,
-        FILE_SHARE_READ | FILE_SHARE_WRITE,
-        FILE_OPEN_IF,
-        0,
-        FILE_PIPE_MESSAGE_TYPE,
-        FILE_PIPE_MESSAGE_MODE,
-        FILE_PIPE_QUEUE_OPERATION,
-        1,
-        1024,
-        1024,
-        &pipeTimeout
-    );
-
-    std::cout << "------------------------" << std::endl;
-    std::cout << "Pipename: "; std::wcout << pipeName.Buffer << std::endl;
-    std::cout << "Status block info: " << ioStatusBlock.Information << std::endl;
-    std::cout << "NtCreateNamedPipeFile Code: 0x" << std::hex << status << std::endl;
-    if (status < 0) {
-        std::cout << "Failed to create named pipe. " << std::endl;
-        return 1;
-    }
-    std::cout << "------------------------" << std::endl;
-    std::cout << "Initializing pipes [Success]..." << std::endl;
-    std::cout << "Waiting for client..." << std::endl;
 
     // Wait for connection
     OBJECT_ATTRIBUTES eventAttr = { 0 };
@@ -188,52 +158,89 @@ int main() {
     std::cout << "Eventname: "; std::wcout << eventName.Buffer << std::endl;
     std::cout << "NtCreateEvent Code: 0x" << std::hex << status << std::endl;
 
-    status = ext_NtWaitForSingleObject(hEvent, TRUE, NULL);
+    while (true) {
+        std::cout << "Initializing pipes..." << std::endl;
 
-    std::cout << "------------------------" << std::endl;
-    std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
-    std::cout << "------------------------" << std::endl;
-    std::cout << "Waiting for client [Success]..." << std::endl;
-    std::cout << "Reading from pipes..." << std::endl;
+        status = ext_NtCreateNamedPipeFile(
+            &hPipe,
+            GENERIC_READ | GENERIC_WRITE | SYNCHRONIZE,
+            &pipeAttr,
+            &ioStatusBlock,
+            FILE_SHARE_READ | FILE_SHARE_WRITE,
+            FILE_OPEN_IF,
+            0,
+            FILE_PIPE_MESSAGE_TYPE,
+            FILE_PIPE_MESSAGE_MODE,
+            FILE_PIPE_QUEUE_OPERATION,
+            -1,
+            1024,
+            1024,
+            &pipeTimeout
+        );
 
-    // Read from the pipe
-    ioStatusBlock = { 0 };
-    ioStatusBlock.Information = 99999;
-    char buffer[512] = { 0 };
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Pipename: "; std::wcout << pipeName.Buffer << std::endl;
+        std::cout << "Status block info: " << ioStatusBlock.Information << std::endl;
+        std::cout << "NtCreateNamedPipeFile Code: 0x" << std::hex << status << std::endl;
+        if (status < 0) {
+            std::cout << "Failed to create named pipe. " << std::endl;
+            return 1;
+        }
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Initializing pipes [Success]..." << std::endl;
+        std::cout << "Waiting for client..." << std::endl;
 
-    status = ext_NtReadFile(
-        hPipe,
-        NULL,
-        NULL,
-        NULL,
-        &ioStatusBlock,
-        buffer,
-        sizeof(buffer) - 1,  // Leave room for null terminator
-        NULL,
-        NULL
-    );
+        status = ext_NtWaitForSingleObject(hEvent, TRUE, NULL);
 
-    std::cout << "------------------------" << std::endl;
-    std::cout << "NtReadFile Code: 0x" << std::hex << status << std::endl;
-    std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
-    std::cout << "------------------------" << std::endl;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "Waiting for client [Success]..." << std::endl;
+        // std::cout << "Reading from pipes..." << std::endl;
 
-    if (ioStatusBlock.Information < 512) {
-        buffer[ioStatusBlock.Information] = '\0';
-        std::cout << "Received: " << buffer << std::endl;
+        // Read from the pipe
+        // ioStatusBlock = { 0 };
+        // ioStatusBlock.Information = 99999;
+        // char buffer[512] = { 0 };
+
+        // status = ext_NtReadFile(
+        //     hPipe,
+        //     NULL,
+        //     NULL,
+        //     NULL,
+        //     &ioStatusBlock,
+        //     buffer,
+        //     sizeof(buffer) - 1,  // Leave room for null terminator
+        //     NULL,
+        //     NULL
+        // );
+
+        // std::cout << "------------------------" << std::endl;
+        // std::cout << "NtReadFile Code: 0x" << std::hex << status << std::endl;
+        // std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
+        // std::cout << "------------------------" << std::endl;
+
+        // if (ioStatusBlock.Information < 512) {
+        //     buffer[ioStatusBlock.Information] = '\0';
+        //     std::cout << "Received: " << buffer << std::endl;
+        // }
+        // else {
+        //     std::cout << "Message too large or invalid" << std::endl;
+        // }
+
+        DisconnectNamedPipe(hPipe);
+        CloseHandle(hPipe);
     }
-    else {
-        std::cout << "Message too large or invalid" << std::endl;
-    }
-    std::cout << "Reading from pipes [Success]..." << std::endl;
-    std::cout << "Closing pipe..." << std::endl;
 
-    ext_NtClose(hPipe);
+    // std::cout << "Reading from pipes [Success]..." << std::endl;
+    // std::cout << "Closing pipe..." << std::endl;
 
-    std::cout << "------------------------" << std::endl;
-    std::cout << "NtClose Code: 0x" << std::hex << status << std::endl;
-    std::cout << "------------------------" << std::endl;
-    std::cout << "Closing pipe [Success]..." << std::endl;
+    // ext_NtClose(hPipe);
+
+    // std::cout << "------------------------" << std::endl;
+    // std::cout << "NtClose Code: 0x" << std::hex << status << std::endl;
+    // std::cout << "------------------------" << std::endl;
+    // std::cout << "Closing pipe [Success]..." << std::endl;
 
     std::cout << "Program finished" << std::endl;
 

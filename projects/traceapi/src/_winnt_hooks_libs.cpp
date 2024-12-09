@@ -1,0 +1,340 @@
+
+#include <iostream>
+
+#include <windows.h>
+#include <wincrypt.h>
+#include <security.h>
+#include <stdio.h>
+#include <winternl.h>
+#include <shlobj.h>
+#include <detours/detours.h>
+
+#define LOG_HOOK_PTR(func_name, param_formats, ...) \
+        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        LONG nThread = 0; \
+        if (s_nTlsThread >= 0) { \
+            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
+        } \
+        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
+        log_parameters_helper(param_formats, #__VA_ARGS__, __VA_ARGS__); \
+        void* rv = NULL; \
+        __try { \
+            rv = Real_##func_name(__VA_ARGS__); \
+        } \
+        __finally { \
+            _PrintExit("%s() -> %x\n", #func_name, rv); \
+        }; \
+        return rv;
+
+#define LOG_HOOK_VOID(func_name, param_formats, ...) \
+        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        LONG nThread = 0; \
+        if (s_nTlsThread >= 0) { \
+            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
+        } \
+        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
+        log_parameters_helper( \
+            param_formats, #__VA_ARGS__, __VA_ARGS__); \
+        int rv = 0; \
+        __try { \
+            Real_##func_name(__VA_ARGS__); \
+        } \
+        __finally { \
+            _PrintExit("%s() -> %x\n", #func_name, rv); \
+        };
+
+#define LOG_HOOK_INT(func_name, param_formats, ...) \
+        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        LONG nThread = 0; \
+        if (s_nTlsThread >= 0) { \
+            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
+        } \
+        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
+        log_parameters_helper(param_formats, #__VA_ARGS__, __VA_ARGS__); \
+        int rv = 0; \
+        __try { \
+            rv = Real_##func_name(__VA_ARGS__); \
+        } \
+        __finally { \
+            _PrintExit("%s() -> %x\n", #func_name, rv); \
+        }; \
+        return rv;
+
+#define LOG_HOOK_PTR_NOARGS(func_name, param_formats) \
+        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        LONG nThread = 0; \
+        if (s_nTlsThread >= 0) { \
+            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
+        } \
+        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
+        log_parameters_helper(param_formats, "", NULL); \
+        HWND rv = 0; \
+        __try { \
+            rv = Real_##func_name(); \
+        } \
+        __finally { \
+            _PrintExit("%s() -> %x\n", #func_name, rv); \
+        }; \
+        return rv;
+
+#define LOG_HOOK_INT_NOARGS(func_name, param_formats) \
+        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        LONG nThread = 0; \
+        if (s_nTlsThread >= 0) { \
+            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
+        } \
+        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
+        log_parameters_helper(param_formats, "", NULL); \
+        int rv = 0; \
+        __try { \
+            rv = Real_##func_name(); \
+        } \
+        __finally { \
+            _PrintExit("%s() -> %x\n", #func_name, rv); \
+        }; \
+        return rv;
+
+void log_parameters_helper(
+    const char* param_formats,
+    const char* param_names,
+    ...)
+{
+    const char* param = param_names;
+    const char* format = param_formats;
+    va_list args;
+    va_start(args, param_names);
+
+    while (param && *param) {
+        const char* next_comma = strchr(param, ',');
+        if (next_comma == NULL) next_comma = param + strlen(param);
+
+        char name[256];
+        snprintf(name, next_comma - param + (param == param_names), "%s", param + (param != param_names));
+
+        switch (*format)
+        {
+        case 'd': // Integer
+            _PrintEnter(";[%s]%d", name, va_arg(args, int));
+            break;
+        case 'l': // Long
+            _PrintEnter(";[%s]%ld", name, va_arg(args, long));
+            break;
+        case 'D': // Unsigned integer
+            _PrintEnter(";[%s]%u", name, va_arg(args, unsigned int));
+            break;
+        case 'L': // Unsigned long
+            _PrintEnter(";[%s]%lu", name, va_arg(args, unsigned long));
+            break;
+        case 'f': // Float
+            _PrintEnter(";[%s]%f", name, va_arg(args, float));
+            break;
+        case 'F': // Double
+            _PrintEnter(";[%s]%lf", name, va_arg(args, double));
+            break;
+        case 'p': // Pointer
+        default:
+            _PrintEnter(";[%s]%p", name, va_arg(args, void*));
+        }
+
+        param = (*next_comma) ? next_comma + 1 : NULL;
+        format++;
+    }
+    _PrintEnter("\n");
+
+    va_end(args);
+}
+
+#define PIPE_NAME L"\\Device\\NamedPipe\\ipc_pipe"
+#define EVENT_NAME L"\\BaseNamedObjects\\ipc_event"
+#define FILE_PIPE_MESSAGE_TYPE 0x00000001
+#define FILE_PIPE_MESSAGE_MODE 0x00000001
+#define FILE_PIPE_QUEUE_OPERATION 0x00000000
+
+// --Function-Codes--
+enum AnalyzedFunctions {
+    // Paper functions
+    Enum_RegEnumKeyExW,
+    Enum_CreateDirectoryW,
+    Enum_DrawTextExW,
+    Enum_CoInitializeEx,
+    Enum_NtDeleteKey,
+    Enum_SHGetFolderPathW,
+    Enum_GetFileInformationByHandleEx,
+    Enum_GetForegroundWindow,
+    Enum_NtQueryAttributesFile,
+    Enum_DeviceIoControl,
+    Enum_SearchPathW,
+    Enum_SetFileTime,
+    Enum_SendNotifyMessageW,
+    Enum_GetSystemMetrics,
+    Enum_GetKeyState,
+    Enum_NtCreateKey,
+    Enum_LoadResource,
+    Enum_GetDiskFreeSpaceExW,
+    Enum_EnumWindows,
+    Enum_RegOpenKeyExW,
+    Enum_NtQueryKey,
+    Enum_NtQueryValueKey,
+    Enum_NtSetValueKey,
+    Enum_CreateActCtxW,
+    Enum_GetSystemTimeAsFileTime,
+    Enum_GetSystemWindowsDirectoryW,
+    Enum_SetErrorMode,
+    Enum_GetFileVersionInfoSizeW,
+    Enum_NtOpenMutant,
+
+    // Additional Functions
+    Enum_NtOpenKey,
+    Enum_NtClose,
+    Enum_NtCreateFile,
+    Enum_NtReadFile,
+    Enum_NtWriteFile,
+    Enum_LdrGetDllHandle,
+    Enum_NtOpenFile,
+    Enum_NtFreeVirtualMemory,
+    Enum_NtAllocateVirtualMemory,
+    Enum_NtProtectVirtualMemory,
+    Enum_LdrLoadDll,
+    Enum_NtQueryInformationFile,
+    Enum_NtQueryDirectoryFile
+};
+
+// --Communications-API--
+NTSTATUS(__stdcall* Real_NtOpenEvent)(
+    PHANDLE EventHandle,
+    ACCESS_MASK DesiredAccess,
+    POBJECT_ATTRIBUTES ObjectAttributes);
+
+NTSTATUS(__stdcall* Real_NtSetEvent)(
+    HANDLE EventHandle,
+    PLONG PreviousState);
+
+VOID(__stdcall* Real_RtlInitUnicodeString)(
+    PUNICODE_STRING         DestinationString,
+    __drv_aliasesMem PCWSTR SourceString);
+
+NTSTATUS status = { 0 };
+IO_STATUS_BLOCK ioStatusBlock = { 0 };
+
+HANDLE hEvent = { 0 };
+UNICODE_STRING eventName = { 0 };
+OBJECT_ATTRIBUTES eventAttr = { 0 };
+
+HANDLE hPipe = { 0 };
+UNICODE_STRING pipeName = { 0 };
+OBJECT_ATTRIBUTES pipeAttr = { 0 };
+
+HANDLE hCommsThread;
+DWORD dwCommsThread;
+
+// --Move up--
+DWORD WINAPI sendRoutine(LPVOID lpParam);
+
+// --Functions--
+VOID fetchNTFunc(PVOID* ppvReal, const CHAR* psz, const WCHAR* lib) {
+    HMODULE hNtdll = LoadLibrary(lib);
+    *ppvReal = (PVOID)GetProcAddress(hNtdll, psz);
+}
+
+void setupComms() {
+    fetchNTFunc(&(PVOID&)Real_NtOpenFile, "NtOpenFile", L"ntdll.dll");
+    fetchNTFunc(&(PVOID&)Real_NtWriteFile, "NtWriteFile", L"ntdll.dll");
+    fetchNTFunc(&(PVOID&)Real_NtClose, "NtClose", L"ntdll.dll");
+    fetchNTFunc(&(PVOID&)Real_NtOpenEvent, "NtOpenEvent", L"ntdll.dll");
+    fetchNTFunc(&(PVOID&)Real_NtSetEvent, "NtSetEvent", L"ntdll.dll");
+    fetchNTFunc(&(PVOID&)Real_RtlInitUnicodeString, "RtlInitUnicodeString", L"ntdll.dll");
+
+    // Init pipe
+    Real_RtlInitUnicodeString(&pipeName, PIPE_NAME);
+    InitializeObjectAttributes(
+        &pipeAttr,
+        &pipeName,
+        OBJ_CASE_INSENSITIVE,
+        NULL,
+        NULL
+    );
+
+    ioStatusBlock = { 0 };
+    status = Real_NtOpenFile(
+        &hPipe,
+        GENERIC_READ | GENERIC_WRITE,
+        &pipeAttr,
+        &ioStatusBlock,
+        FILE_SHARE_READ | FILE_SHARE_WRITE,
+        0
+    );
+
+    // Init event
+    Real_RtlInitUnicodeString(&eventName, EVENT_NAME);
+    InitializeObjectAttributes(
+        &eventAttr,
+        &eventName,
+        OBJ_CASE_INSENSITIVE,
+        NULL,
+        NULL
+    );
+
+    status = Real_NtOpenEvent(
+        &hEvent,
+        EVENT_ALL_ACCESS,
+        &eventAttr
+    );
+
+    commsSending = TRUE;
+    hCommsThread = CreateThread(
+        NULL,
+        0,
+        sendRoutine,
+        NULL,
+        0,
+        &dwCommsThread
+    );
+}
+
+void sendData() {
+    // Send data
+    char buffer[512] = { 0 };
+    const char* message = "Hello World! [Hi!]";
+    ioStatusBlock = { 0 };
+    status = Real_NtWriteFile(
+        hPipe,
+        NULL,
+        NULL,
+        NULL,
+        &ioStatusBlock,
+        (void*)message,
+        strlen(message) + 1,
+        NULL,
+        NULL
+    );
+
+    // Trigger Event
+    status = Real_NtSetEvent(
+        hEvent,
+        NULL
+    );
+}
+
+DWORD WINAPI sendRoutine(LPVOID lpParam) {
+    std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now();
+    double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count();
+
+    Sleep(30);
+    while (commsSending) {
+        sendData();
+        Sleep(10);
+    }
+
+    return 0;
+}
+
+void closeComms() {
+    commsSending = FALSE;
+    status = Real_NtClose(hPipe);
+    status = Real_NtClose(hEvent);
+}

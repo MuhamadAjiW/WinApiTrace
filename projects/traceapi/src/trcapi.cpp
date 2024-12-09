@@ -74,7 +74,6 @@ BOOL InstanceEnumerate(HINSTANCE hInst);
 VOID _PrintEnter(const CHAR* psz, ...);
 VOID _PrintExit(const CHAR* psz, ...);
 VOID _Print(const CHAR* psz, ...);
-//VOID _VPrint(PCSTR msg, va_list args, PCHAR pszBuf, LONG cbBuf);
 
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
@@ -86,6 +85,7 @@ LONG s_nTlsThread = -1;
 LONG s_nThreadCnt = 0;
 std::string output_string = "";
 std::chrono::high_resolution_clock::time_point start_time;
+BOOLEAN commsSending;
 
 // _NOTE: Now before you start blaming me on including c files and not using header files.
 // There are tons of problems from winapi if we do so
@@ -396,6 +396,8 @@ BOOL ThreadDetach(HMODULE hDll)
 
 BOOL ProcessAttach(HMODULE hDll)
 {
+    setupComms();
+
     s_bLog = FALSE;
     s_nTlsIndent = TlsAlloc();
     s_nTlsThread = TlsAlloc();
@@ -438,6 +440,10 @@ BOOL ProcessDetach(HMODULE hDll)
     if (s_nTlsThread >= 0) {
         TlsFree(s_nTlsThread);
     }
+
+    sendData();
+    closeComms();
+
     return TRUE;
 }
 

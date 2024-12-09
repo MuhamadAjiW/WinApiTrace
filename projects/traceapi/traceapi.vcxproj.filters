@@ -18,13 +18,13 @@
     <ClCompile Include="src\_winnt_hooks.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\_winnt_hooks_additional.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
     <ClCompile Include="src\attach_hooks.cpp">
       <Filter>src</Filter>
     </ClCompile>
     <ClCompile Include="src\trcapi.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\_winnt_hooks_libs.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
