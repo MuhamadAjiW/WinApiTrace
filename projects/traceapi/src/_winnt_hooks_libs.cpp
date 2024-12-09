@@ -15,10 +15,12 @@
         void* rv = NULL; \
         rv = Real_##func_name(__VA_ARGS__); \
         if (setupCompleted){ \
+            EnterCriticalSection(&hLock); \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
             int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             api_data.api_count[segment][Enum_##func_name]++; \
+            LeaveCriticalSection(&hLock); \
         } \
         return rv;
 
@@ -26,10 +28,12 @@
         HWND rv = NULL; \
         rv = Real_##func_name(__VA_ARGS__); \
         if (setupCompleted) { \
+            EnterCriticalSection(&hLock); \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
             int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             api_data.api_count[segment][Enum_##func_name]++; \
+            LeaveCriticalSection(&hLock); \
         } \
         return rv;
 
@@ -37,20 +41,24 @@
         int rv = 0; \
         Real_##func_name(__VA_ARGS__); \
         if (setupCompleted) { \
+            EnterCriticalSection(&hLock); \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
             int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             api_data.api_count[segment][Enum_##func_name]++; \
+            LeaveCriticalSection(&hLock); \
         }
 
 #define LOG_HOOK_INT(func_name, param_formats, ...) \
         int rv = 0; \
         rv = Real_##func_name(__VA_ARGS__); \
         if (setupCompleted) { \
+            EnterCriticalSection(&hLock); \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
             int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             api_data.api_count[segment][Enum_##func_name]++; \
+            LeaveCriticalSection(&hLock); \
         } \
         return rv;
 
@@ -197,6 +205,7 @@ VOID fetchNTFunc(PVOID* ppvReal, const CHAR* psz, const WCHAR* lib) {
 }
 
 void setupComms() {
+    InitializeCriticalSection(&hLock);
     fetchNTFunc(&(PVOID&)Real_NtOpenFile, "NtOpenFile", L"ntdll.dll");
     fetchNTFunc(&(PVOID&)Real_NtWriteFile, "NtWriteFile", L"ntdll.dll");
     fetchNTFunc(&(PVOID&)Real_NtClose, "NtClose", L"ntdll.dll");
@@ -286,7 +295,9 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
     Sleep(COLLECTED_API_TIME_RANGE);
     while (commsSending) {
         sendData();
+        EnterCriticalSection(&hLock);
         memset(api_data.api_count[api_data.offset], 0, COLLECTED_API_COUNT * sizeof(uint16_t));
+        LeaveCriticalSection(&hLock);
         api_data.offset = INCREMENT_WRAP(api_data.offset, COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY);
         Sleep(COLLECTED_API_TIME_DELAY);
     }
@@ -298,4 +309,5 @@ void closeComms() {
     commsSending = FALSE;
     status = Real_NtClose(hPipe);
     status = Real_NtClose(hEvent);
+    DeleteCriticalSection(&hLock);
 }
