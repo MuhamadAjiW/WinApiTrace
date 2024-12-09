@@ -156,9 +156,9 @@ void AttachNTHooks()
     ATTACH_NT(NtOpenMutant, L"ntdll.dll");
     ATTACH_NT(NtOpenKey, L"ntdll.dll");
     ATTACH_NT(NtClose, L"ntdll.dll");
-    //ATTACH_NT(NtCreateFile, L"ntdll.dll");
-    //ATTACH_NT(NtReadFile, L"ntdll.dll");
-    //ATTACH_NT(NtWriteFile, L"ntdll.dll");
+    ATTACH_NT(NtCreateFile, L"ntdll.dll");
+    ATTACH_NT(NtReadFile, L"ntdll.dll");
+    ATTACH_NT(NtWriteFile, L"ntdll.dll");
     ATTACH_NT(LdrGetDllHandle, L"ntdll.dll");
     ATTACH_NT(NtOpenFile, L"ntdll.dll");
     ATTACH_NT(NtFreeVirtualMemory, L"ntdll.dll");
@@ -209,9 +209,9 @@ void DetachNTHooks()
     DETACH(NtOpenMutant);
     DETACH(NtOpenKey);
     DETACH(NtClose);
-    //DETACH(NtCreateFile);
-    //DETACH(NtReadFile);
-    //DETACH(NtWriteFile);
+    DETACH(NtCreateFile);
+    DETACH(NtReadFile);
+    DETACH(NtWriteFile);
     DETACH(LdrGetDllHandle);
     DETACH(NtOpenFile);
     DETACH(NtFreeVirtualMemory);
