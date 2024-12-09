@@ -117,7 +117,7 @@ VOID DetDetachNT(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
     }
 }
 
-#include <traceapi/_winnt_hooks.cpp>
+#include "_winnt_hooks.cpp"
 
 #define ATTACH(x)           DetAttach(&(PVOID&)Real_##x,Mine_##x,#x)
 #define ATTACH_NT(x, lib)   DetAttachNT(&(PVOID&)Real_##x,Mine_##x,#x, lib)

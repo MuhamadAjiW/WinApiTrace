@@ -87,7 +87,10 @@ LONG s_nThreadCnt = 0;
 std::string output_string = "";
 std::chrono::high_resolution_clock::time_point start_time;
 
-#include <traceapi/attach_hooks.cpp>
+// _NOTE: Now before you start blaming me on including c files and not using header files.
+// There are tons of problems from winapi if we do so
+// This simplifies lots of stuff, especially for an MVP
+#include "attach_hooks.cpp"
 
 ////////////////////////////////////////////////////////////// Logging System.
 //
@@ -126,7 +129,7 @@ VOID _PrintEnter(const CHAR* psz, ...)
 
     if (s_bLog && psz) {
         // _NOTE: Recursion data, uncomment if needed
-        
+
         //CHAR szBuf[1024];
         //PCHAR pszBuf = szBuf;
         //PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
