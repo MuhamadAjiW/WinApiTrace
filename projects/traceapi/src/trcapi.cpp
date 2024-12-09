@@ -78,8 +78,8 @@ BOOL InstanceEnumerate(HINSTANCE hInst);
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
 #define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_RANGE 40
-#define COLLECTED_API_TIME_DELAY 10
+#define COLLECTED_API_TIME_RANGE 4000
+#define COLLECTED_API_TIME_DELAY 1000
 
 //////////////////////////////////////////////////////////////////////////////
 
@@ -435,6 +435,7 @@ BOOL ProcessAttach(HMODULE hDll)
 
 BOOL ProcessDetach(HMODULE hDll)
 {
+    setupCompleted = false;
     ThreadDetach(hDll);
     s_bLog = FALSE;
 

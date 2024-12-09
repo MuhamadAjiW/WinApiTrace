@@ -10,7 +10,8 @@ int main()
     const WCHAR* filePath = L"testfile.txt";
     int count = 0;
 
-    while (count < 100) {
+    Sleep(4200);
+    while (count < 6) {
         // Call CreateFile, which internally calls NtCreateFile
         HANDLE hFile = CreateFile(
             filePath,                     // File name
@@ -29,7 +30,7 @@ int main()
         CloseHandle(hFile);
 
         count++;
-        Sleep(10);
+        Sleep(1000);
     }
 
     return 0;

@@ -487,7 +487,7 @@ BOOL Mine_GetFileInformationByHandleEx(
 
 HWND Mine_GetForegroundWindow(VOID)
 {
-    LOG_HOOK_PTR_NOARGS(
+    LOG_HOOK_HWND(
         GetForegroundWindow,
         ""
     );

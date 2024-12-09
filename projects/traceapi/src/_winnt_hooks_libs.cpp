@@ -9,58 +9,49 @@
 #include <shlobj.h>
 #include <detours/detours.h>
 
+#define INCREMENT_WRAP(index, max_size) (((index) + 1) % (max_size))
+
 #define LOG_HOOK_PTR(func_name, param_formats, ...) \
-        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
         void* rv = NULL; \
         rv = Real_##func_name(__VA_ARGS__); \
+        if (setupCompleted){ \
+            std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+            long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
+            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
+            api_data.api_count[segment][Enum_##func_name]++; \
+        } \
+        return rv;
+
+#define LOG_HOOK_HWND(func_name, param_formats, ...) \
+        HWND rv = NULL; \
+        rv = Real_##func_name(__VA_ARGS__); \
+        if (setupCompleted) { \
+            std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+            long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
+            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
+            api_data.api_count[segment][Enum_##func_name]++; \
+        } \
         return rv;
 
 #define LOG_HOOK_VOID(func_name, param_formats, ...) \
-        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
         int rv = 0; \
-        Real_##func_name(__VA_ARGS__);
+        Real_##func_name(__VA_ARGS__); \
+        if (setupCompleted) { \
+            std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+            long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
+            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
+            api_data.api_count[segment][Enum_##func_name]++; \
+        }
 
 #define LOG_HOOK_INT(func_name, param_formats, ...) \
-        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
         int rv = 0; \
         rv = Real_##func_name(__VA_ARGS__); \
-        return rv;
-
-#define LOG_HOOK_PTR_NOARGS(func_name, param_formats) \
-        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
+        if (setupCompleted) { \
+            std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+            long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
+            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
+            api_data.api_count[segment][Enum_##func_name]++; \
         } \
-        HWND rv = 0; \
-        rv = Real_##func_name(); \
-        return rv;
-
-#define LOG_HOOK_INT_NOARGS(func_name, param_formats) \
-        std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
-        int rv = 0; \
-        rv = Real_##func_name(); \
         return rv;
 
 // void log_parameters_helper(
@@ -223,16 +214,6 @@ void setupComms() {
         NULL
     );
 
-    ioStatusBlock = { 0 };
-    status = Real_NtOpenFile(
-        &hPipe,
-        GENERIC_READ | GENERIC_WRITE,
-        &pipeAttr,
-        &ioStatusBlock,
-        FILE_SHARE_READ | FILE_SHARE_WRITE,
-        0
-    );
-
     // Init event
     Real_RtlInitUnicodeString(&eventName, EVENT_NAME);
     InitializeObjectAttributes(
@@ -261,8 +242,20 @@ void setupComms() {
 }
 
 void sendData() {
+    // Get pipe
+    ioStatusBlock = { 0 };
+    status = Real_NtOpenFile(
+        &hPipe,
+        GENERIC_READ | GENERIC_WRITE,
+        &pipeAttr,
+        &ioStatusBlock,
+        FILE_SHARE_READ | FILE_SHARE_WRITE,
+        0
+    );
+
     // Send data
     ioStatusBlock = { 0 };
+    // const char* send = "Hello!";
     status = Real_NtWriteFile(
         hPipe,
         NULL,
@@ -270,7 +263,7 @@ void sendData() {
         NULL,
         &ioStatusBlock,
         (void*)&api_data,
-        sizeof(APIDATA),
+        sizeof(api_data),
         NULL,
         NULL
     );
@@ -280,6 +273,8 @@ void sendData() {
         hEvent,
         NULL
     );
+
+    status = Real_NtClose(hPipe);
 }
 
 DWORD WINAPI sendRoutine(LPVOID lpParam) {
@@ -291,6 +286,8 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
     Sleep(COLLECTED_API_TIME_RANGE);
     while (commsSending) {
         sendData();
+        memset(api_data.api_count[api_data.offset], 0, COLLECTED_API_COUNT * sizeof(uint16_t));
+        api_data.offset = INCREMENT_WRAP(api_data.offset, COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY);
         Sleep(COLLECTED_API_TIME_DELAY);
     }
 

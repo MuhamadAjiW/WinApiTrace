@@ -5,11 +5,20 @@
 #include <winternl.h>
 #include <iostream>
 
+#define COLLECTED_API_COUNT 42
+#define COLLECTED_API_TIME_RANGE 40
+#define COLLECTED_API_TIME_DELAY 10
+
 // ---Structs---
 typedef enum _EVENT_TYPE {
     NotificationEvent,
     SynchronizationEvent
 } EVENT_TYPE, * PEVENT_TYPE;
+
+typedef struct _APIDATA {
+    uint16_t api_count[COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY][COLLECTED_API_COUNT];
+    uint8_t offset;
+} APIDATA;
 
 // ---Function headers---
 NTSTATUS(__stdcall* ext_NtCreateNamedPipeFile)(
@@ -196,52 +205,45 @@ int main() {
         std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
         std::cout << "------------------------" << std::endl;
         std::cout << "Waiting for client [Success]..." << std::endl;
-        // std::cout << "Reading from pipes..." << std::endl;
+        std::cout << "Reading from pipes..." << std::endl;
 
         // Read from the pipe
-        // ioStatusBlock = { 0 };
-        // ioStatusBlock.Information = 99999;
-        // char buffer[512] = { 0 };
+        ioStatusBlock = { 0 };
+        ioStatusBlock.Information = 99999;
+        APIDATA api_data = { 0 };
 
-        // status = ext_NtReadFile(
-        //     hPipe,
-        //     NULL,
-        //     NULL,
-        //     NULL,
-        //     &ioStatusBlock,
-        //     buffer,
-        //     sizeof(buffer) - 1,  // Leave room for null terminator
-        //     NULL,
-        //     NULL
-        // );
+        status = ext_NtReadFile(
+            hPipe,
+            NULL,
+            NULL,
+            NULL,
+            &ioStatusBlock,
+            &api_data,
+            sizeof(api_data),  // Leave room for null terminator
+            NULL,
+            NULL
+        );
 
-        // std::cout << "------------------------" << std::endl;
-        // std::cout << "NtReadFile Code: 0x" << std::hex << status << std::endl;
-        // std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
-        // std::cout << "------------------------" << std::endl;
+        std::cout << "------------------------" << std::endl;
+        std::cout << "NtReadFile Code: 0x" << std::hex << status << std::endl;
+        std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
+        std::cout << "------------------------" << std::endl;
 
-        // if (ioStatusBlock.Information < 512) {
-        //     buffer[ioStatusBlock.Information] = '\0';
-        //     std::cout << "Received: " << buffer << std::endl;
-        // }
-        // else {
-        //     std::cout << "Message too large or invalid" << std::endl;
-        // }
+        std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
+        for (size_t frame = 0; frame < COLLECTED_API_COUNT / COLLECTED_API_TIME_DELAY; frame++)
+        {
+            std::cout << "[";
+            for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
+                std::cout << api_data.api_count[frame][i] << ",";
+            }
+            std::cout << "]" << std::endl;
+        }
 
         DisconnectNamedPipe(hPipe);
         CloseHandle(hPipe);
     }
 
-    // std::cout << "Reading from pipes [Success]..." << std::endl;
-    // std::cout << "Closing pipe..." << std::endl;
-
-    // ext_NtClose(hPipe);
-
-    // std::cout << "------------------------" << std::endl;
-    // std::cout << "NtClose Code: 0x" << std::hex << status << std::endl;
-    // std::cout << "------------------------" << std::endl;
-    // std::cout << "Closing pipe [Success]..." << std::endl;
-
+    std::cout << "Reading from pipes [Success]..." << std::endl;
     std::cout << "Program finished" << std::endl;
 
     return 0;
