@@ -71,21 +71,31 @@ static CHAR s_szDllPath[MAX_PATH];
 BOOL ProcessEnumerate();
 BOOL InstanceEnumerate(HINSTANCE hInst);
 
-VOID _PrintEnter(const CHAR* psz, ...);
-VOID _PrintExit(const CHAR* psz, ...);
-VOID _Print(const CHAR* psz, ...);
+// VOID _PrintEnter(const CHAR* psz, ...);
+// VOID _PrintExit(const CHAR* psz, ...);
+// VOID _Print(const CHAR* psz, ...);
 
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
+#define COLLECTED_API_COUNT 42
+#define COLLECTED_API_TIME_RANGE 40
+#define COLLECTED_API_TIME_DELAY 10
+
 //////////////////////////////////////////////////////////////////////////////
+
+typedef struct _APIDATA {
+    uint16_t api_count[COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY][COLLECTED_API_COUNT];
+    uint8_t offset;
+} APIDATA;
 
 BOOL s_bLog = FALSE;
 LONG s_nTlsIndent = -1;
 LONG s_nTlsThread = -1;
 LONG s_nThreadCnt = 0;
-std::string output_string = "";
 std::chrono::high_resolution_clock::time_point start_time;
 BOOLEAN commsSending;
+BOOLEAN setupCompleted;
+APIDATA api_data = { 0 };
 
 // _NOTE: Now before you start blaming me on including c files and not using header files.
 // There are tons of problems from winapi if we do so
@@ -95,167 +105,167 @@ BOOLEAN commsSending;
 ////////////////////////////////////////////////////////////// Logging System.
 //
 
-void str_concatf(std::string* str, const char* __restrict pattern, ...) {
-    va_list args;
-    va_start(args, pattern);
-    int len = vsnprintf(NULL, 0, pattern, args) + 1;
-    va_end(args);
+// void str_concatf(std::string* str, const char* __restrict pattern, ...) {
+//     va_list args;
+//     va_start(args, pattern);
+//     int len = vsnprintf(NULL, 0, pattern, args) + 1;
+//     va_end(args);
 
-    char* content = (char*)malloc(len);
-    if (content == NULL) return;
+//     char* content = (char*)malloc(len);
+//     if (content == NULL) return;
 
-    va_start(args, pattern);
-    vsnprintf(content, len, pattern, args);
-    va_end(args);
+//     va_start(args, pattern);
+//     vsnprintf(content, len, pattern, args);
+//     va_end(args);
 
-    str->append(content);
+//     str->append(content);
 
-    free(content);
-}
+//     free(content);
+// }
 
-VOID _PrintEnter(const CHAR* psz, ...)
-{
-    DWORD dwErr = GetLastError();
+// VOID _PrintEnter(const CHAR* psz, ...)
+// {
+//     DWORD dwErr = GetLastError();
 
-    LONG nIndent = 0;
-    LONG nThread = 0;
-    if (s_nTlsIndent >= 0) {
-        nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent);
-        TlsSetValue(s_nTlsIndent, (PVOID)(LONG_PTR)(nIndent + 1));
-    }
-    if (s_nTlsThread >= 0) {
-        nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
-    }
+//     LONG nIndent = 0;
+//     LONG nThread = 0;
+//     if (s_nTlsIndent >= 0) {
+//         nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent);
+//         TlsSetValue(s_nTlsIndent, (PVOID)(LONG_PTR)(nIndent + 1));
+//     }
+//     if (s_nTlsThread >= 0) {
+//         nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
+//     }
 
-    if (s_bLog && psz) {
-        // _NOTE: Recursion data, uncomment if needed
+//     if (s_bLog && psz) {
+//         // _NOTE: Recursion data, uncomment if needed
 
-        //CHAR szBuf[1024];
-        //PCHAR pszBuf = szBuf;
-        //PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
-        //LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
-        //*pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
-        //*pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
-        //*pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
-        //*pszBuf++ = ' ';
-        //while (nLen-- > 0) {
-        //    *pszBuf++ = ' ';
-        //}
-        //*pszBuf++ = '+';
-        //*pszBuf = '\0';
+//         //CHAR szBuf[1024];
+//         //PCHAR pszBuf = szBuf;
+//         //PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
+//         //LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
+//         //*pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
+//         //*pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
+//         //*pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
+//         //*pszBuf++ = ' ';
+//         //while (nLen-- > 0) {
+//         //    *pszBuf++ = ' ';
+//         //}
+//         //*pszBuf++ = '+';
+//         //*pszBuf = '\0';
 
-        //output_string.append(szBuf);
+//         //output_string.append(szBuf);
 
-        // Function data
-        va_list args;
-        va_start(args, psz);
-        int len = vsnprintf(NULL, 0, psz, args) + 1;
-        va_end(args);
+//         // Function data
+//         va_list args;
+//         va_start(args, psz);
+//         int len = vsnprintf(NULL, 0, psz, args) + 1;
+//         va_end(args);
 
-        char* content = (char*)malloc(len);
-        if (content == NULL) return;
+//         char* content = (char*)malloc(len);
+//         if (content == NULL) return;
 
-        va_start(args, psz);
-        vsnprintf(content, len, psz, args);
-        va_end(args);
+//         va_start(args, psz);
+//         vsnprintf(content, len, psz, args);
+//         va_end(args);
 
-        output_string.append(content);
+//         output_string.append(content);
 
-        free(content);
-    }
-    SetLastError(dwErr);
-}
+//         free(content);
+//     }
+//     SetLastError(dwErr);
+// }
 
-VOID _PrintExit(const CHAR* psz, ...)
-{
-    // _NOTE: Return function data, uncomment if needed
+// VOID _PrintExit(const CHAR* psz, ...)
+// {
+//     // _NOTE: Return function data, uncomment if needed
 
-    //DWORD dwErr = GetLastError();
+//     DWORD dwErr = GetLastError();
 
-    //LONG nIndent = 0;
-    //LONG nThread = 0;
-    //if (s_nTlsIndent >= 0) {
-    //    nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent) - 1;
-    //    ASSERT_ALWAYS(nIndent >= 0);
-    //    TlsSetValue(s_nTlsIndent, (PVOID)(LONG_PTR)nIndent);
-    //}
-    //if (s_nTlsThread >= 0) {
-    //    nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
-    //}
+//     LONG nIndent = 0;
+//     LONG nThread = 0;
+//     if (s_nTlsIndent >= 0) {
+//         nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent) - 1;
+//         ASSERT_ALWAYS(nIndent >= 0);
+//         TlsSetValue(s_nTlsIndent, (PVOID)(LONG_PTR)nIndent);
+//     }
+//     if (s_nTlsThread >= 0) {
+//         nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
+//     }
 
-    //if (s_bLog && psz) {
-    //    CHAR szBuf[1024];
-    //    PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
-    //    PCHAR pszBuf = szBuf;
-    //    LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
-    //    *pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
-    //    *pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
-    //    *pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
-    //    *pszBuf++ = ' ';
-    //    while (nLen-- > 0) {
-    //        *pszBuf++ = ' ';
-    //    }
-    //    *pszBuf++ = '-';
-    //    *pszBuf = '\0';
+//     if (s_bLog && psz) {
+//         CHAR szBuf[1024];
+//         PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
+//         PCHAR pszBuf = szBuf;
+//         LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
+//         *pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
+//         *pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
+//         *pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
+//         *pszBuf++ = ' ';
+//         while (nLen-- > 0) {
+//             *pszBuf++ = ' ';
+//         }
+//         *pszBuf++ = '-';
+//         *pszBuf = '\0';
 
-    //    va_list  args;
-    //    va_start(args, psz);
+//         va_list  args;
+//         va_start(args, psz);
 
-    //    while ((*pszBuf++ = *psz++) != 0 && pszBuf < pszEnd) {
-    //        // Copy characters.
-    //    }
-    //    *pszEnd = '\0';
-    //    output_string.append(szBuf);
+//         while ((*pszBuf++ = *psz++) != 0 && pszBuf < pszEnd) {
+//             // Copy characters.
+//         }
+//         *pszEnd = '\0';
+//         output_string.append(szBuf);
 
-    //    va_end(args);
-    //}
-    //SetLastError(dwErr);
-}
+//         va_end(args);
+//     }
+//     SetLastError(dwErr);
+// }
 
-VOID _Print(const CHAR* psz, ...)
-{
-    DWORD dwErr = GetLastError();
+// VOID _Print(const CHAR* psz, ...)
+// {
+//     DWORD dwErr = GetLastError();
 
-    LONG nIndent = 0;
-    LONG nThread = 0;
-    if (s_nTlsIndent >= 0) {
-        nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent);
-    }
-    if (s_nTlsThread >= 0) {
-        nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
-    }
+//     LONG nIndent = 0;
+//     LONG nThread = 0;
+//     if (s_nTlsIndent >= 0) {
+//         nIndent = (LONG)(LONG_PTR)TlsGetValue(s_nTlsIndent);
+//     }
+//     if (s_nTlsThread >= 0) {
+//         nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread);
+//     }
 
-    if (s_bLog && psz) {
-        CHAR szBuf[1024];
-        PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
-        PCHAR pszBuf = szBuf;
-        LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
-        *pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
-        *pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
-        *pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
-        *pszBuf++ = ' ';
-        while (nLen-- > 0) {
-            *pszBuf++ = ' ';
-        }
-        *pszBuf = '\0';
+//     if (s_bLog && psz) {
+//         CHAR szBuf[1024];
+//         PCHAR pszEnd = szBuf + ARRAYSIZE(szBuf) - 1;
+//         PCHAR pszBuf = szBuf;
+//         LONG nLen = (nIndent > 0) ? (nIndent < 35 ? nIndent * 2 : 70) : 0;
+//         *pszBuf++ = (CHAR)('0' + ((nThread / 100) % 10));
+//         *pszBuf++ = (CHAR)('0' + ((nThread / 10) % 10));
+//         *pszBuf++ = (CHAR)('0' + ((nThread / 1) % 10));
+//         *pszBuf++ = ' ';
+//         while (nLen-- > 0) {
+//             *pszBuf++ = ' ';
+//         }
+//         *pszBuf = '\0';
 
-        va_list  args;
-        va_start(args, psz);
+//         va_list  args;
+//         va_start(args, psz);
 
-        while ((*pszBuf++ = *psz++) != 0 && pszBuf < pszEnd) {
-            // Copy characters.
-        }
-        *pszEnd = '\0';
-        output_string.append(szBuf);
+//         while ((*pszBuf++ = *psz++) != 0 && pszBuf < pszEnd) {
+//             // Copy characters.
+//         }
+//         *pszEnd = '\0';
+//         output_string.append(szBuf);
 
-        va_end(args);
-    }
-    SetLastError(dwErr);
-}
+//         va_end(args);
+//     }
+//     SetLastError(dwErr);
+// }
 
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine)
 {
-    str_concatf(&output_string, "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
+//     str_concatf(&output_string, "ASSERT(%s) failed in %s, line %d.\n", pszMsg, pszFile, nLine);
 }
 
 //////////////////////////////////////////////////////////////////////////////
@@ -414,11 +424,12 @@ BOOL ProcessAttach(HMODULE hDll)
 
     LONG error = AttachDetours();
     if (error != NO_ERROR) {
-        str_concatf(&output_string, "### Error attaching detours: %d\n", error);
+        // str_concatf(&output_string, "### Error attaching detours: %d\n", error);
     }
 
     s_bLog = TRUE;
     start_time = std::chrono::high_resolution_clock::now();
+    setupCompleted = true;
     return TRUE;
 }
 
@@ -429,10 +440,10 @@ BOOL ProcessDetach(HMODULE hDll)
 
     LONG error = DetachDetours();
     if (error != NO_ERROR) {
-        str_concatf(&output_string, "### Error detaching detours: %d\n", error);
+        // str_concatf(&output_string, "### Error detaching detours: %d\n", error);
     }
 
-    str_concatf(&output_string, "### Closing.\n");
+    // str_concatf(&output_string, "### Closing.\n");
 
     if (s_nTlsIndent >= 0) {
         TlsFree(s_nTlsIndent);
@@ -467,7 +478,7 @@ __declspec(dllexport) BOOL APIENTRY DllMain(HINSTANCE hModule, DWORD dwReason, P
         ret = ProcessDetach(hModule);
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"
             " DllMain DLL_PROCESS_DETACH\n");
-        std::cout << output_string << std::endl;
+        // std::cout << output_string << std::endl;
         return ret;
     case DLL_THREAD_ATTACH:
         OutputDebugStringA("trcapi" DETOURS_STRINGIFY(DETOURS_BITS) ".dll:"

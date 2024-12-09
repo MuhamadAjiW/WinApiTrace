@@ -11,143 +11,107 @@
 
 #define LOG_HOOK_PTR(func_name, param_formats, ...) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
         LONG nThread = 0; \
         if (s_nTlsThread >= 0) { \
             nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
         } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, #__VA_ARGS__, __VA_ARGS__); \
         void* rv = NULL; \
-        __try { \
-            rv = Real_##func_name(__VA_ARGS__); \
-        } \
-        __finally { \
-            _PrintExit("%s() -> %x\n", #func_name, rv); \
-        }; \
+        rv = Real_##func_name(__VA_ARGS__); \
         return rv;
 
 #define LOG_HOOK_VOID(func_name, param_formats, ...) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
         LONG nThread = 0; \
         if (s_nTlsThread >= 0) { \
             nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
         } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper( \
-            param_formats, #__VA_ARGS__, __VA_ARGS__); \
         int rv = 0; \
-        __try { \
-            Real_##func_name(__VA_ARGS__); \
-        } \
-        __finally { \
-            _PrintExit("%s() -> %x\n", #func_name, rv); \
-        };
+        Real_##func_name(__VA_ARGS__);
 
 #define LOG_HOOK_INT(func_name, param_formats, ...) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
         LONG nThread = 0; \
         if (s_nTlsThread >= 0) { \
             nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
         } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, #__VA_ARGS__, __VA_ARGS__); \
         int rv = 0; \
-        __try { \
-            rv = Real_##func_name(__VA_ARGS__); \
-        } \
-        __finally { \
-            _PrintExit("%s() -> %x\n", #func_name, rv); \
-        }; \
+        rv = Real_##func_name(__VA_ARGS__); \
         return rv;
 
 #define LOG_HOOK_PTR_NOARGS(func_name, param_formats) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
         LONG nThread = 0; \
         if (s_nTlsThread >= 0) { \
             nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
         } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, "", NULL); \
         HWND rv = 0; \
-        __try { \
-            rv = Real_##func_name(); \
-        } \
-        __finally { \
-            _PrintExit("%s() -> %x\n", #func_name, rv); \
-        }; \
+        rv = Real_##func_name(); \
         return rv;
 
 #define LOG_HOOK_INT_NOARGS(func_name, param_formats) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-        double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
+        long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
         LONG nThread = 0; \
         if (s_nTlsThread >= 0) { \
             nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
         } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, "", NULL); \
         int rv = 0; \
-        __try { \
-            rv = Real_##func_name(); \
-        } \
-        __finally { \
-            _PrintExit("%s() -> %x\n", #func_name, rv); \
-        }; \
+        rv = Real_##func_name(); \
         return rv;
 
-void log_parameters_helper(
-    const char* param_formats,
-    const char* param_names,
-    ...)
-{
-    const char* param = param_names;
-    const char* format = param_formats;
-    va_list args;
-    va_start(args, param_names);
+// void log_parameters_helper(
+//     const char* param_formats,
+//     const char* param_names,
+//     ...)
+// {
+//     const char* param = param_names;
+//     const char* format = param_formats;
+//     va_list args;
+//     va_start(args, param_names);
 
-    while (param && *param) {
-        const char* next_comma = strchr(param, ',');
-        if (next_comma == NULL) next_comma = param + strlen(param);
+//     while (param && *param) {
+//         const char* next_comma = strchr(param, ',');
+//         if (next_comma == NULL) next_comma = param + strlen(param);
 
-        char name[256];
-        snprintf(name, next_comma - param + (param == param_names), "%s", param + (param != param_names));
+//         char name[256];
+//         snprintf(name, next_comma - param + (param == param_names), "%s", param + (param != param_names));
 
-        switch (*format)
-        {
-        case 'd': // Integer
-            _PrintEnter(";[%s]%d", name, va_arg(args, int));
-            break;
-        case 'l': // Long
-            _PrintEnter(";[%s]%ld", name, va_arg(args, long));
-            break;
-        case 'D': // Unsigned integer
-            _PrintEnter(";[%s]%u", name, va_arg(args, unsigned int));
-            break;
-        case 'L': // Unsigned long
-            _PrintEnter(";[%s]%lu", name, va_arg(args, unsigned long));
-            break;
-        case 'f': // Float
-            _PrintEnter(";[%s]%f", name, va_arg(args, float));
-            break;
-        case 'F': // Double
-            _PrintEnter(";[%s]%lf", name, va_arg(args, double));
-            break;
-        case 'p': // Pointer
-        default:
-            _PrintEnter(";[%s]%p", name, va_arg(args, void*));
-        }
+//         switch (*format)
+//         {
+//         case 'd': // Integer
+//             _PrintEnter(";[%s]%d", name, va_arg(args, int));
+//             break;
+//         case 'l': // Long
+//             _PrintEnter(";[%s]%ld", name, va_arg(args, long));
+//             break;
+//         case 'D': // Unsigned integer
+//             _PrintEnter(";[%s]%u", name, va_arg(args, unsigned int));
+//             break;
+//         case 'L': // Unsigned long
+//             _PrintEnter(";[%s]%lu", name, va_arg(args, unsigned long));
+//             break;
+//         case 'f': // Float
+//             _PrintEnter(";[%s]%f", name, va_arg(args, float));
+//             break;
+//         case 'F': // Double
+//             _PrintEnter(";[%s]%lf", name, va_arg(args, double));
+//             break;
+//         case 'p': // Pointer
+//         default:
+//             _PrintEnter(";[%s]%p", name, va_arg(args, void*));
+//         }
 
-        param = (*next_comma) ? next_comma + 1 : NULL;
-        format++;
-    }
-    _PrintEnter("\n");
+//         param = (*next_comma) ? next_comma + 1 : NULL;
+//         format++;
+//     }
+//     _PrintEnter("\n");
 
-    va_end(args);
-}
+//     va_end(args);
+// }
 
 #define PIPE_NAME L"\\Device\\NamedPipe\\ipc_pipe"
 #define EVENT_NAME L"\\BaseNamedObjects\\ipc_event"
@@ -298,8 +262,6 @@ void setupComms() {
 
 void sendData() {
     // Send data
-    char buffer[512] = { 0 };
-    const char* message = "Hello World! [Hi!]";
     ioStatusBlock = { 0 };
     status = Real_NtWriteFile(
         hPipe,
@@ -307,8 +269,8 @@ void sendData() {
         NULL,
         NULL,
         &ioStatusBlock,
-        (void*)message,
-        strlen(message) + 1,
+        (void*)&api_data,
+        sizeof(APIDATA),
         NULL,
         NULL
     );
@@ -324,10 +286,12 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
     std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now();
     double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count();
 
-    Sleep(30);
+    while (!setupCompleted) {}
+
+    Sleep(COLLECTED_API_TIME_RANGE);
     while (commsSending) {
         sendData();
-        Sleep(10);
+        Sleep(COLLECTED_API_TIME_DELAY);
     }
 
     return 0;
