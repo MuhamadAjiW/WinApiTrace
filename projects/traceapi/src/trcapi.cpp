@@ -78,8 +78,8 @@ BOOL InstanceEnumerate(HINSTANCE hInst);
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
 #define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_RANGE 200
-#define COLLECTED_API_TIME_DELAY 40
+#define COLLECTED_API_TIME_RANGE 2000
+#define COLLECTED_API_TIME_DELAY 500
 
 //////////////////////////////////////////////////////////////////////////////
 

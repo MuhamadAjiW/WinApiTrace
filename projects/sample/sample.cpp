@@ -6,8 +6,8 @@
 #include <iostream>
 
 #define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_RANGE 200
-#define COLLECTED_API_TIME_DELAY 40
+#define COLLECTED_API_TIME_RANGE 2000
+#define COLLECTED_API_TIME_DELAY 500
 
 // ---Structs---
 typedef enum _EVENT_TYPE {
@@ -167,7 +167,7 @@ int main() {
     std::cout << "Eventname: "; std::wcout << eventName.Buffer << std::endl;
     std::cout << "NtCreateEvent Code: 0x" << std::hex << status << std::endl;
 
-    while (true) {
+    while (true) {   // main loop
         std::cout << "Initializing pipes..." << std::endl;
 
         status = ext_NtCreateNamedPipeFile(
@@ -241,6 +241,8 @@ int main() {
 
         DisconnectNamedPipe(hPipe);
         CloseHandle(hPipe);
+        std::cout << "Handle closed" << std::endl;
+        std::cout << "========================" << std::endl << std::endl;
     }
 
     std::cout << "Reading from pipes [Success]..." << std::endl;
