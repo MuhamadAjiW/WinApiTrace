@@ -195,6 +195,8 @@ OBJECT_ATTRIBUTES pipeAttr = { 0 };
 HANDLE hCommsThread;
 DWORD dwCommsThread;
 
+APIDATA apidata_tosend;
+
 // --Move up--
 DWORD WINAPI sendRoutine(LPVOID lpParam);
 
@@ -271,8 +273,10 @@ void sendData() {
         NULL,
         NULL,
         &ioStatusBlock,
-        (void*)&api_data,
-        sizeof(api_data),
+        (void*)&apidata_tosend,
+        sizeof(apidata_tosend),
+        //(void*)&api_data,
+        //sizeof(api_data),
         NULL,
         NULL
     );
@@ -294,6 +298,30 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
 
     Sleep(COLLECTED_API_TIME_RANGE);
     while (commsSending) {
+        /**/
+        for (int i = 0; i < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; i++) {
+            memcpy(apidata_tosend.api_count[i], api_data.api_count[i], COLLECTED_API_COUNT * sizeof(uint16_t));
+        }
+        apidata_tosend.offset = api_data.offset;
+        /**
+        std::chrono::high_resolution_clock::time_point curr_time1 = std::chrono::high_resolution_clock::now();
+        long long relative_time1 = std::chrono::duration_cast<std::chrono::microseconds>(curr_time1 - start_time).count();
+        std::cout << "about to print at " << relative_time1 << std::endl;
+
+        std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
+        for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++)
+        {
+            std::cout << "[";
+            for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
+                std::cout << apidata_tosend.api_count[frame][i] << ",";
+            }
+            std::cout << "]" << std::endl;
+        }
+
+        std::chrono::high_resolution_clock::time_point curr_time2 = std::chrono::high_resolution_clock::now();
+        long long relative_time2 = std::chrono::duration_cast<std::chrono::microseconds>(curr_time2 - start_time).count();
+        std::cout << "about to send at " << relative_time2 << std::endl;
+        /**/
         sendData();
         EnterCriticalSection(&hLock);
         memset(api_data.api_count[api_data.offset], 0, COLLECTED_API_COUNT * sizeof(uint16_t));
