@@ -13,53 +13,53 @@
 
 #define LOG_HOOK_PTR(func_name, param_formats, ...) \
         void* rv = NULL; \
-        rv = Real_##func_name(__VA_ARGS__); \
         if (setupCompleted){ \
-            EnterCriticalSection(&hLock); \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
             int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
+            EnterCriticalSection(&hLock); \
             api_data.api_count[segment][Enum_##func_name]++; \
             LeaveCriticalSection(&hLock); \
         } \
+        rv = Real_##func_name(__VA_ARGS__); \
         return rv;
 
 #define LOG_HOOK_HWND(func_name, param_formats, ...) \
         HWND rv = NULL; \
-        rv = Real_##func_name(__VA_ARGS__); \
         if (setupCompleted) { \
-            EnterCriticalSection(&hLock); \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
             int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
+            EnterCriticalSection(&hLock); \
             api_data.api_count[segment][Enum_##func_name]++; \
             LeaveCriticalSection(&hLock); \
         } \
+        rv = Real_##func_name(__VA_ARGS__); \
         return rv;
 
 #define LOG_HOOK_VOID(func_name, param_formats, ...) \
         int rv = 0; \
-        Real_##func_name(__VA_ARGS__); \
         if (setupCompleted) { \
-            EnterCriticalSection(&hLock); \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
             int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
-            api_data.api_count[segment][Enum_##func_name]++; \
-            LeaveCriticalSection(&hLock); \
-        }
-
-#define LOG_HOOK_INT(func_name, param_formats, ...) \
-        int rv = 0; \
-        rv = Real_##func_name(__VA_ARGS__); \
-        if (setupCompleted) { \
             EnterCriticalSection(&hLock); \
-            std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
-            long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             api_data.api_count[segment][Enum_##func_name]++; \
             LeaveCriticalSection(&hLock); \
         } \
+        Real_##func_name(__VA_ARGS__);
+
+#define LOG_HOOK_INT(func_name, param_formats, ...) \
+        int rv = 0; \
+        if (setupCompleted) { \
+            std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
+            long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
+            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
+            EnterCriticalSection(&hLock); \
+            api_data.api_count[segment][Enum_##func_name]++; \
+            LeaveCriticalSection(&hLock); \
+        } \
+        rv = Real_##func_name(__VA_ARGS__); \
         return rv;
 
 // void log_parameters_helper(

@@ -6,8 +6,8 @@
 #include <iostream>
 
 #define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_RANGE 40
-#define COLLECTED_API_TIME_DELAY 10
+#define COLLECTED_API_TIME_RANGE 200
+#define COLLECTED_API_TIME_DELAY 40
 
 // ---Structs---
 typedef enum _EVENT_TYPE {
@@ -230,7 +230,7 @@ int main() {
         std::cout << "------------------------" << std::endl;
 
         std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
-        for (size_t frame = 0; frame < COLLECTED_API_COUNT / COLLECTED_API_TIME_DELAY; frame++)
+        for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++)
         {
             std::cout << "[";
             for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
