@@ -4,10 +4,11 @@
 #include <windows.h>
 #include <winternl.h>
 #include <iostream>
+#include <chrono>
 
 #define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_RANGE 2000
 #define COLLECTED_API_TIME_DELAY 500
+#define COLLECTED_API_TIME_RANGE (4*COLLECTED_API_TIME_DELAY)
 
 // ---Structs---
 typedef enum _EVENT_TYPE {
@@ -167,7 +168,13 @@ int main() {
     std::cout << "Eventname: "; std::wcout << eventName.Buffer << std::endl;
     std::cout << "NtCreateEvent Code: 0x" << std::hex << status << std::endl;
 
+    std::chrono::high_resolution_clock::time_point start_tp = std::chrono::high_resolution_clock::now();
+
     while (true) {   // main loop
+        std::chrono::high_resolution_clock::time_point iter_tp = std::chrono::high_resolution_clock::now();
+        long long iter_time = std::chrono::duration_cast<std::chrono::microseconds>(iter_tp - start_tp).count();
+        std::cout << "[" << iter_time << "us] Iteration start" << std::endl;
+
         std::cout << "Initializing pipes..." << std::endl;
 
         status = ext_NtCreateNamedPipeFile(
@@ -199,7 +206,15 @@ int main() {
         std::cout << "Initializing pipes [Success]..." << std::endl;
         std::cout << "Waiting for client..." << std::endl;
 
+        std::chrono::high_resolution_clock::time_point iter1_tp = std::chrono::high_resolution_clock::now();
+        long long iter1_time = std::chrono::duration_cast<std::chrono::microseconds>(iter1_tp - start_tp).count();
+        std::cout << "[" << std::dec << iter1_time << "us] Start waiting" << std::endl;
+
         status = ext_NtWaitForSingleObject(hEvent, TRUE, NULL);
+
+        std::chrono::high_resolution_clock::time_point iter2_tp = std::chrono::high_resolution_clock::now();
+        long long iter2_time = std::chrono::duration_cast<std::chrono::microseconds>(iter2_tp - start_tp).count();
+        std::cout << "[" << iter2_time << "us] End waiting, time taken " << iter2_time - iter1_time << std::endl;
 
         std::cout << "------------------------" << std::endl;
         std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
@@ -241,7 +256,11 @@ int main() {
 
         DisconnectNamedPipe(hPipe);
         CloseHandle(hPipe);
-        std::cout << "Handle closed" << std::endl;
+
+        std::chrono::high_resolution_clock::time_point end_iter_tp = std::chrono::high_resolution_clock::now();
+        long long end_iter_time = std::chrono::duration_cast<std::chrono::microseconds>(end_iter_tp - start_tp).count();
+
+        std::cout << "[" << end_iter_time << "us] Handle closed, time taken " << end_iter_time - iter_time << std::endl;
         std::cout << "========================" << std::endl << std::endl;
     }
 

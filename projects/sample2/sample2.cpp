@@ -11,7 +11,7 @@ int main()
     int count = 0;
 
     Sleep(420);
-    while (count < 501) {
+    while (count < 500) {
         // Call CreateFile, which internally calls NtCreateFile
         HANDLE hFile = CreateFile(
             filePath,                     // File name
