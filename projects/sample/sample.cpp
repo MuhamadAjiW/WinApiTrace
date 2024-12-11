@@ -233,7 +233,7 @@ int main() {
             NULL,
             NULL
         );
-        unsigned int segment = api_data_single.offset % (COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY);
+        unsigned int segment = api_data_single.offset % (COLLECTED_API_TIME_RANGE_STEPS);
         api_data.offset = api_data_single.offset;
         for (unsigned int i = 0; i < COLLECTED_API_COUNT; i++) {
             api_data.api_count[segment][i] = api_data_single.api_count[i];
@@ -250,7 +250,7 @@ int main() {
         unsigned int max_length[COLLECTED_API_COUNT];
         for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
             max_length[i] = 1;
-            for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++) {
+            for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE_STEPS; frame++) {
                 unsigned int curr_entry = api_data.api_count[frame][i];
                 unsigned int curr_length = 0;
                 while (curr_entry) {
@@ -260,12 +260,13 @@ int main() {
                 if (curr_length > max_length[i]) max_length[i] = curr_length;
             }
         }
-        for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++)
+        for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE_STEPS; frame++)
         {
-            std::cout << "[";
+            int api_count_index = (api_data.offset + frame - COLLECTED_API_TIME_RANGE_STEPS + 1) % COLLECTED_API_TIME_RANGE_STEPS;
+            std::cout << api_count_index << " [";
             for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
                 if (i) putchar(',');
-                printf("%*u", max_length[i], api_data.api_count[frame][i]);
+                printf("%*u", max_length[i], api_data.api_count[api_count_index][i]);
             }
             std::cout << "]" << std::endl;
         }

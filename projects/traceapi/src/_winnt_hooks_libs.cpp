@@ -301,7 +301,7 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
         std::cout << "about to print at " << relative_time1 << std::endl;
         /**
         std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
-        for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++)
+        for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE_STEPS; frame++)
         {
             std::cout << "[";
             for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
@@ -320,7 +320,8 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
         memset(api_data.api_count, 0, sizeof(api_data.api_count));
         LeaveCriticalSection(&hLock);
         sendData();
-        api_data.offset = INCREMENT_WRAP(api_data.offset, COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY);
+        //api_data.offset = INCREMENT_WRAP(api_data.offset, COLLECTED_API_TIME_RANGE_STEPS);
+        api_data.offset++;
 
         std::chrono::high_resolution_clock::time_point pre_sleep_time = std::chrono::high_resolution_clock::now();
         long long relative_ps_time = std::chrono::duration_cast<std::chrono::microseconds>(pre_sleep_time - call_time).count();
