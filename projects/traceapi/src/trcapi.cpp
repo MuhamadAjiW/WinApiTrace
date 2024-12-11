@@ -83,10 +83,10 @@ VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
 //////////////////////////////////////////////////////////////////////////////
 
-typedef struct _APIDATA {
-    uint16_t api_count[COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY][COLLECTED_API_COUNT];
-    uint8_t offset;
-} APIDATA;
+typedef struct _APIDATA_SINGLE {
+    uint16_t api_count[COLLECTED_API_COUNT];
+    uint32_t offset;
+} APIDATA_SINGLE;
 
 BOOL s_bLog = FALSE;
 LONG s_nTlsIndent = -1;
@@ -95,7 +95,7 @@ LONG s_nThreadCnt = 0;
 std::chrono::high_resolution_clock::time_point start_time;
 BOOLEAN commsSending;
 BOOLEAN setupCompleted;
-APIDATA api_data = { 0 };
+APIDATA_SINGLE api_data = { 0 };
 CRITICAL_SECTION hLock;
 
 // _NOTE: Now before you start blaming me on including c files and not using header files.

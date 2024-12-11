@@ -16,9 +16,8 @@
         if (setupCompleted){ \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             EnterCriticalSection(&hLock); \
-            api_data.api_count[segment][Enum_##func_name]++; \
+            api_data.api_count[Enum_##func_name]++; \
             LeaveCriticalSection(&hLock); \
         } \
         rv = Real_##func_name(__VA_ARGS__); \
@@ -29,9 +28,8 @@
         if (setupCompleted) { \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             EnterCriticalSection(&hLock); \
-            api_data.api_count[segment][Enum_##func_name]++; \
+            api_data.api_count[Enum_##func_name]++; \
             LeaveCriticalSection(&hLock); \
         } \
         rv = Real_##func_name(__VA_ARGS__); \
@@ -42,9 +40,8 @@
         if (setupCompleted) { \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             EnterCriticalSection(&hLock); \
-            api_data.api_count[segment][Enum_##func_name]++; \
+            api_data.api_count[Enum_##func_name]++; \
             LeaveCriticalSection(&hLock); \
         } \
         Real_##func_name(__VA_ARGS__);
@@ -54,9 +51,8 @@
         if (setupCompleted) { \
             std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
             long long relative_time = std::chrono::duration_cast<std::chrono::milliseconds>(call_time - start_time).count(); \
-            int segment = (relative_time % COLLECTED_API_TIME_RANGE) / COLLECTED_API_TIME_DELAY; \
             EnterCriticalSection(&hLock); \
-            api_data.api_count[segment][Enum_##func_name]++; \
+            api_data.api_count[Enum_##func_name]++; \
             LeaveCriticalSection(&hLock); \
         } \
         rv = Real_##func_name(__VA_ARGS__); \
@@ -195,7 +191,7 @@ OBJECT_ATTRIBUTES pipeAttr = { 0 };
 HANDLE hCommsThread;
 DWORD dwCommsThread;
 
-APIDATA apidata_tosend;
+APIDATA_SINGLE apidata_tosend;
 
 // --Move up--
 DWORD WINAPI sendRoutine(LPVOID lpParam);
@@ -299,10 +295,6 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
     Sleep(COLLECTED_API_TIME_RANGE);
     while (commsSending) {
         /**/
-        for (int i = 0; i < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; i++) {
-            memcpy(apidata_tosend.api_count[i], api_data.api_count[i], COLLECTED_API_COUNT * sizeof(uint16_t));
-        }
-        apidata_tosend.offset = api_data.offset;
         /**
         std::chrono::high_resolution_clock::time_point curr_time1 = std::chrono::high_resolution_clock::now();
         long long relative_time1 = std::chrono::duration_cast<std::chrono::microseconds>(curr_time1 - start_time).count();
@@ -322,10 +314,12 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
         long long relative_time2 = std::chrono::duration_cast<std::chrono::microseconds>(curr_time2 - start_time).count();
         std::cout << "about to send at " << relative_time2 << std::endl;
         /**/
-        sendData();
+        apidata_tosend.offset = api_data.offset;
         EnterCriticalSection(&hLock);
-        memset(api_data.api_count[api_data.offset], 0, COLLECTED_API_COUNT * sizeof(uint16_t));
+        memcpy(apidata_tosend.api_count, api_data.api_count, sizeof(apidata_tosend.api_count));
+        memset(api_data.api_count, 0, sizeof(api_data.api_count));
         LeaveCriticalSection(&hLock);
+        sendData();
         api_data.offset = INCREMENT_WRAP(api_data.offset, COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY);
 
         std::chrono::high_resolution_clock::time_point pre_sleep_time = std::chrono::high_resolution_clock::now();

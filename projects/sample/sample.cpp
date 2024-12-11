@@ -16,6 +16,11 @@ typedef enum _EVENT_TYPE {
     SynchronizationEvent
 } EVENT_TYPE, * PEVENT_TYPE;
 
+typedef struct _APIDATA_SINGLE {
+    uint16_t api_count[COLLECTED_API_COUNT];
+    uint32_t offset;
+} APIDATA_SINGLE;
+
 typedef struct _APIDATA {
     uint16_t api_count[COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY][COLLECTED_API_COUNT];
     uint8_t offset;
@@ -170,6 +175,8 @@ int main() {
 
     std::chrono::high_resolution_clock::time_point start_tp = std::chrono::high_resolution_clock::now();
 
+    APIDATA api_data = { 0 };
+
     while (true) {   // main loop
         std::chrono::high_resolution_clock::time_point iter_tp = std::chrono::high_resolution_clock::now();
         long long iter_time = std::chrono::duration_cast<std::chrono::microseconds>(iter_tp - start_tp).count();
@@ -225,7 +232,8 @@ int main() {
         // Read from the pipe
         ioStatusBlock = { 0 };
         ioStatusBlock.Information = 99999;
-        APIDATA api_data = { 0 };
+        
+        APIDATA_SINGLE api_data_single = { 0 };
 
         status = ext_NtReadFile(
             hPipe,
@@ -233,11 +241,16 @@ int main() {
             NULL,
             NULL,
             &ioStatusBlock,
-            &api_data,
-            sizeof(api_data),  // Leave room for null terminator
+            &api_data_single,
+            sizeof(api_data_single),  // Leave room for null terminator
             NULL,
             NULL
         );
+        unsigned int segment = api_data_single.offset % (COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY);
+        api_data.offset = api_data_single.offset;
+        for (unsigned int i = 0; i < COLLECTED_API_COUNT; i++) {
+            api_data.api_count[segment][i] = api_data_single.api_count[i];
+        }
 
         std::cout << "------------------------" << std::endl;
         std::cout << "NtReadFile Code: 0x" << std::hex << status;
