@@ -307,7 +307,7 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
         std::chrono::high_resolution_clock::time_point curr_time1 = std::chrono::high_resolution_clock::now();
         long long relative_time1 = std::chrono::duration_cast<std::chrono::microseconds>(curr_time1 - start_time).count();
         std::cout << "about to print at " << relative_time1 << std::endl;
-
+        /**
         std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
         for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++)
         {
@@ -327,7 +327,13 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
         memset(api_data.api_count[api_data.offset], 0, COLLECTED_API_COUNT * sizeof(uint16_t));
         LeaveCriticalSection(&hLock);
         api_data.offset = INCREMENT_WRAP(api_data.offset, COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY);
-        Sleep(COLLECTED_API_TIME_DELAY);
+
+        std::chrono::high_resolution_clock::time_point pre_sleep_time = std::chrono::high_resolution_clock::now();
+        long long relative_ps_time = std::chrono::duration_cast<std::chrono::microseconds>(pre_sleep_time - call_time).count();
+        int relative_ps_time_mod = relative_ps_time % (COLLECTED_API_TIME_DELAY * 1000);
+        int sleep_length = (COLLECTED_API_TIME_DELAY * 1000 - relative_ps_time_mod) / 1000;
+        //std::cout << "about to print at " << relative_time1 << std::endl;
+        Sleep(sleep_length);
     }
 
     return 0;
