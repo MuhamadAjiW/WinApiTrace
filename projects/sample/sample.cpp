@@ -7,7 +7,7 @@
 #include <chrono>
 
 #define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_DELAY 500
+#define COLLECTED_API_TIME_DELAY 100
 #define COLLECTED_API_TIME_RANGE (4*COLLECTED_API_TIME_DELAY)
 
 // ---Structs---
@@ -240,16 +240,32 @@ int main() {
         );
 
         std::cout << "------------------------" << std::endl;
-        std::cout << "NtReadFile Code: 0x" << std::hex << status << std::endl;
+        std::cout << "NtReadFile Code: 0x" << std::hex << status;
+        if (status) std::cout << " [ERROR]";
+        std::cout << std::endl;
         std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
         std::cout << "------------------------" << std::endl;
 
         std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
+        unsigned int max_length[COLLECTED_API_COUNT];
+        for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
+            max_length[i] = 1;
+            for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++) {
+                unsigned int curr_entry = api_data.api_count[frame][i];
+                unsigned int curr_length = 0;
+                while (curr_entry) {
+                    curr_entry /= 10;
+                    curr_length++;
+                }
+                if (curr_length > max_length[i]) max_length[i] = curr_length;
+            }
+        }
         for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY; frame++)
         {
             std::cout << "[";
             for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
-                std::cout << api_data.api_count[frame][i] << ",";
+                if (i) putchar(',');
+                printf("%*u", max_length[i], api_data.api_count[frame][i]);
             }
             std::cout << "]" << std::endl;
         }

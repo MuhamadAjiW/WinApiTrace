@@ -331,7 +331,7 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
         std::chrono::high_resolution_clock::time_point pre_sleep_time = std::chrono::high_resolution_clock::now();
         long long relative_ps_time = std::chrono::duration_cast<std::chrono::microseconds>(pre_sleep_time - call_time).count();
         int relative_ps_time_mod = relative_ps_time % (COLLECTED_API_TIME_DELAY * 1000);
-        int sleep_length = (COLLECTED_API_TIME_DELAY * 1000 - relative_ps_time_mod) / 1000;
+        int sleep_length = COLLECTED_API_TIME_DELAY - relative_ps_time_mod / 1000;
         //std::cout << "about to print at " << relative_time1 << std::endl;
         Sleep(sleep_length);
     }
