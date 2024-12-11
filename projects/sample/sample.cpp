@@ -5,26 +5,13 @@
 #include <winternl.h>
 #include <iostream>
 #include <chrono>
-
-#define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_DELAY 100
-#define COLLECTED_API_TIME_RANGE (4*COLLECTED_API_TIME_DELAY)
+#include "..\..\dependencies\include\definitions.h"
 
 // ---Structs---
 typedef enum _EVENT_TYPE {
     NotificationEvent,
     SynchronizationEvent
 } EVENT_TYPE, * PEVENT_TYPE;
-
-typedef struct _APIDATA_SINGLE {
-    uint16_t api_count[COLLECTED_API_COUNT];
-    uint32_t offset;
-} APIDATA_SINGLE;
-
-typedef struct _APIDATA {
-    uint16_t api_count[COLLECTED_API_TIME_RANGE / COLLECTED_API_TIME_DELAY][COLLECTED_API_COUNT];
-    uint8_t offset;
-} APIDATA;
 
 // ---Function headers---
 NTSTATUS(__stdcall* ext_NtCreateNamedPipeFile)(

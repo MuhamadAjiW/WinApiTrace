@@ -28,6 +28,7 @@
 #include <detours/detours.h>
 #include <string>
 #include <chrono>
+#include "..\..\dependencies\include\definitions.h"
 
 #if (_MSC_VER < 1299)
 #define LONG_PTR    LONG
@@ -77,16 +78,7 @@ BOOL InstanceEnumerate(HINSTANCE hInst);
 
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
-#define COLLECTED_API_COUNT 42
-#define COLLECTED_API_TIME_DELAY 100
-#define COLLECTED_API_TIME_RANGE (4*COLLECTED_API_TIME_DELAY)
-
 //////////////////////////////////////////////////////////////////////////////
-
-typedef struct _APIDATA_SINGLE {
-    uint16_t api_count[COLLECTED_API_COUNT];
-    uint32_t offset;
-} APIDATA_SINGLE;
 
 BOOL s_bLog = FALSE;
 LONG s_nTlsIndent = -1;
