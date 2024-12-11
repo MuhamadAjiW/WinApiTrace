@@ -188,32 +188,32 @@ int main() {
             &pipeTimeout
         );
 
-        std::cout << "------------------------" << std::endl;
-        std::cout << "Pipename: "; std::wcout << pipeName.Buffer << std::endl;
-        std::cout << "Status block info: " << ioStatusBlock.Information << std::endl;
-        std::cout << "NtCreateNamedPipeFile Code: 0x" << std::hex << status << std::endl;
+        std::cout << "  Pipename: "; std::wcout << pipeName.Buffer << std::endl;
+        std::cout << "  Status block info: " << ioStatusBlock.Information << std::endl;
+        std::cout << "  NtCreateNamedPipeFile Code: 0x" << std::hex << status << std::endl;
         if (status < 0) {
             std::cout << "Failed to create named pipe. " << std::endl;
             return 1;
         }
-        std::cout << "------------------------" << std::endl;
         std::cout << "Initializing pipes [Success]..." << std::endl;
+
+
         std::cout << "Waiting for client..." << std::endl;
 
         std::chrono::high_resolution_clock::time_point iter1_tp = std::chrono::high_resolution_clock::now();
         long long iter1_time = std::chrono::duration_cast<std::chrono::microseconds>(iter1_tp - start_tp).count();
-        std::cout << "[" << std::dec << iter1_time << "us] Start waiting" << std::endl;
+        std::cout << "  [" << std::dec << iter1_time << "us] Start waiting" << std::endl;
 
         status = ext_NtWaitForSingleObject(hEvent, TRUE, NULL);
 
         std::chrono::high_resolution_clock::time_point iter2_tp = std::chrono::high_resolution_clock::now();
         long long iter2_time = std::chrono::duration_cast<std::chrono::microseconds>(iter2_tp - start_tp).count();
-        std::cout << "[" << iter2_time << "us] End waiting, time taken " << iter2_time - iter1_time << std::endl;
+        std::cout << "  [" << iter2_time << "us] End waiting, time taken " << iter2_time - iter1_time << std::endl;
 
-        std::cout << "------------------------" << std::endl;
-        std::cout << "NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
-        std::cout << "------------------------" << std::endl;
+        std::cout << "  NtWaitForSingleObject Code: 0x" << std::hex << status << std::endl;
         std::cout << "Waiting for client [Success]..." << std::endl;
+
+
         std::cout << "Reading from pipes..." << std::endl;
 
         // Read from the pipe
@@ -239,14 +239,12 @@ int main() {
             api_data.api_count[segment][i] = api_data_single.api_count[i];
         }
 
-        std::cout << "------------------------" << std::endl;
-        std::cout << "NtReadFile Code: 0x" << std::hex << status;
+        std::cout << "   NtReadFile Code: 0x" << std::hex << status;
         if (status) std::cout << " [ERROR]";
         std::cout << std::endl;
-        std::cout << "Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
-        std::cout << "------------------------" << std::endl;
+        std::cout << "   Status block info: " << std::dec << ioStatusBlock.Information << std::endl;
 
-        std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
+        std::cout << std::endl << "offset: " << static_cast<int>(api_data.offset) << std::endl;
         unsigned int max_length[COLLECTED_API_COUNT];
         for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
             max_length[i] = 1;
@@ -278,7 +276,7 @@ int main() {
         long long end_iter_time = std::chrono::duration_cast<std::chrono::microseconds>(end_iter_tp - start_tp).count();
 
         std::cout << "[" << end_iter_time << "us] Handle closed, time taken " << end_iter_time - iter_time << std::endl;
-        std::cout << "========================" << std::endl << std::endl;
+        std::cout << "========================================================================" << std::endl << std::endl;
     }
 
     std::cout << "Reading from pipes [Success]..." << std::endl;
