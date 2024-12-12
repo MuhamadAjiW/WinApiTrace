@@ -4,7 +4,7 @@
 #define FILE_PIPE_MESSAGE_MODE 0x00000001
 #define FILE_PIPE_QUEUE_OPERATION 0x00000000
 
-// --Communications-API--
+// --Communications APIs used--
 NTSTATUS(__stdcall* Real_NtOpenEvent)(
     PHANDLE EventHandle,
     ACCESS_MASK DesiredAccess,
@@ -17,6 +17,29 @@ NTSTATUS(__stdcall* Real_NtSetEvent)(
 VOID(__stdcall* Real_RtlInitUnicodeString)(
     PUNICODE_STRING         DestinationString,
     __drv_aliasesMem PCWSTR SourceString);
+
+// --File APIs used--
+NTSTATUS(__stdcall* Real_NtOpenFile)(
+    PHANDLE FileHandle,
+    ACCESS_MASK DesiredAccess,
+    POBJECT_ATTRIBUTES ObjectAttributes,
+    PIO_STATUS_BLOCK IoStatusBlock,
+    ULONG ShareAccess,
+    ULONG OpenOptions);
+
+NTSTATUS(__stdcall* Real_NtWriteFile)(
+    HANDLE FileHandle,
+    HANDLE Event,
+    PIO_APC_ROUTINE ApcRoutine,
+    PVOID ApcContext,
+    PIO_STATUS_BLOCK IoStatusBlock,
+    PVOID Buffer,
+    ULONG Length,
+    PLARGE_INTEGER ByteOffset,
+    PULONG Key);
+
+NTSTATUS(__stdcall* Real_NtClose)(
+    HANDLE Handle);
 
 NTSTATUS status = { 0 };
 IO_STATUS_BLOCK ioStatusBlock = { 0 };
@@ -51,9 +74,11 @@ VOID fetchNTFunc(PVOID* ppvReal, const CHAR* psz, const WCHAR* lib) {
 
 void setupComms() {
     InitializeCriticalSection(&hLock);
+
     fetchNTFunc(&(PVOID&)Real_NtOpenFile, "NtOpenFile", L"ntdll.dll");
     fetchNTFunc(&(PVOID&)Real_NtWriteFile, "NtWriteFile", L"ntdll.dll");
     fetchNTFunc(&(PVOID&)Real_NtClose, "NtClose", L"ntdll.dll");
+
     fetchNTFunc(&(PVOID&)Real_NtOpenEvent, "NtOpenEvent", L"ntdll.dll");
     fetchNTFunc(&(PVOID&)Real_NtSetEvent, "NtSetEvent", L"ntdll.dll");
     fetchNTFunc(&(PVOID&)Real_RtlInitUnicodeString, "RtlInitUnicodeString", L"ntdll.dll");

@@ -270,9 +270,6 @@ NTSTATUS(__stdcall* Real_NtOpenKey)(
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes);
 
-NTSTATUS(__stdcall* Real_NtClose)(
-    HANDLE Handle);
-
 NTSTATUS(__stdcall* Real_NtCreateFile)(
     PHANDLE FileHandle,
     ACCESS_MASK DesiredAccess,
@@ -297,30 +294,11 @@ NTSTATUS(__stdcall* Real_NtReadFile)(
     PLARGE_INTEGER ByteOffset,
     PULONG Key);
 
-NTSTATUS(__stdcall* Real_NtWriteFile)(
-    HANDLE FileHandle,
-    HANDLE Event,
-    PIO_APC_ROUTINE ApcRoutine,
-    PVOID ApcContext,
-    PIO_STATUS_BLOCK IoStatusBlock,
-    PVOID Buffer,
-    ULONG Length,
-    PLARGE_INTEGER ByteOffset,
-    PULONG Key);
-
 NTSTATUS(__stdcall* Real_LdrGetDllHandle)(
     PWORD pwPath,
     PVOID Unused,
     PUNICODE_STRING ModuleFileName,
     PHANDLE pHModule);
-
-NTSTATUS(__stdcall* Real_NtOpenFile)(
-    PHANDLE FileHandle,
-    ACCESS_MASK DesiredAccess,
-    POBJECT_ATTRIBUTES ObjectAttributes,
-    PIO_STATUS_BLOCK IoStatusBlock,
-    ULONG ShareAccess,
-    ULONG OpenOptions);
 
 NTSTATUS(__stdcall* Real_NtFreeVirtualMemory)(
     HANDLE ProcessHandle,
