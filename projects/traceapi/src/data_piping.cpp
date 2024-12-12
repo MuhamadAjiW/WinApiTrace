@@ -32,6 +32,12 @@ OBJECT_ATTRIBUTES pipeAttr = { 0 };
 HANDLE hCommsThread;
 DWORD dwCommsThread;
 
+BOOLEAN setupCompleted;
+BOOLEAN commsSending;
+APIDATA_SINGLE api_data = { 0 };
+CRITICAL_SECTION hLock;
+std::chrono::high_resolution_clock::time_point start_time;
+
 APIDATA_SINGLE apidata_tosend;
 
 // --Move up--

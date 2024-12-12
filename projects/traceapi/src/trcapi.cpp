@@ -84,11 +84,6 @@ BOOL s_bLog = FALSE;
 LONG s_nTlsIndent = -1;
 LONG s_nTlsThread = -1;
 LONG s_nThreadCnt = 0;
-std::chrono::high_resolution_clock::time_point start_time;
-BOOLEAN commsSending;
-BOOLEAN setupCompleted;
-APIDATA_SINGLE api_data = { 0 };
-CRITICAL_SECTION hLock;
 
 // _NOTE: Now before you start blaming me on including c files and not using header files.
 // There are tons of problems from winapi if we do so
