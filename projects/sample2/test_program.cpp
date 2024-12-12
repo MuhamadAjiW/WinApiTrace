@@ -5,8 +5,7 @@
 #include <windows.h>
 #include <synchapi.h>
 
-int main()
-{
+DWORD WINAPI sendThread(LPVOID lpParam) {
     const WCHAR* filePath = L"testfile.txt";
     int count = 0;
 
@@ -31,6 +30,33 @@ int main()
 
         count++;
         Sleep(20);
+    }
+
+    return 0;
+}
+
+#define thread_num 2
+
+int main()
+{
+    HANDLE hFileThread[thread_num];
+    DWORD dwFileThread[thread_num];
+
+    for (size_t i = 0; i < thread_num; i++)
+    {
+        hFileThread[i] = CreateThread(
+            NULL,
+            0,
+            sendThread,
+            NULL,
+            0,
+            &dwFileThread[i]
+        );
+    }
+
+    for (size_t i = 0; i < thread_num; i++)
+    {
+        WaitForSingleObject(hFileThread[i], INFINITE);
     }
 
     return 0;
