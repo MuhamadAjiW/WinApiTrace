@@ -162,9 +162,6 @@ void AttachNTHooks()
     ATTACH_NT(LdrGetDllHandle, L"ntdll.dll");
     ATTACH_NT(NtOpenFile, L"ntdll.dll");
     ATTACH_NT(NtFreeVirtualMemory, L"ntdll.dll");
-
-    // _TODO: Figure a better logging system, possibly static
-    // These hooks may break the program because logging is done within the memory
      ATTACH_NT(NtAllocateVirtualMemory, L"ntdll.dll");
 
     ATTACH_NT(NtProtectVirtualMemory, L"ntdll.dll");
@@ -215,10 +212,7 @@ void DetachNTHooks()
     DETACH(LdrGetDllHandle);
     DETACH(NtOpenFile);
     DETACH(NtFreeVirtualMemory);
-
-    // _TODO: Figure a better logging system, possibly static
-    // These hooks may break the program because logging is done within the memory
-     DETACH(NtAllocateVirtualMemory);
+    DETACH(NtAllocateVirtualMemory);
 
     DETACH(NtProtectVirtualMemory);
 

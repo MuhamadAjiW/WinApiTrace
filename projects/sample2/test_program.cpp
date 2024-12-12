@@ -9,7 +9,7 @@ LARGE_INTEGER timestamp_log_start, timestamp_log_end;
 LARGE_INTEGER timer_freq;
 double timer_period;
 
-int main()
+DWORD WINAPI sendThread(LPVOID lpParam)
 {
     const WCHAR* filePath = L"testfile.txt";
     int count = 0;
@@ -53,6 +53,33 @@ int main()
     QueryPerformanceCounter(&timestamp_log_end);
     long long program_duration = (long long)((timestamp_log_end.QuadPart - timestamp_log_start.QuadPart) * timer_period);
     std::cout << "Total time: " << program_duration << std::endl;
+
+    return 0;
+}
+
+#define thread_num 2
+
+int main()
+{
+    HANDLE hFileThread[thread_num];
+    DWORD dwFileThread[thread_num];
+
+    for (size_t i = 0; i < thread_num; i++)
+    {
+        hFileThread[i] = CreateThread(
+            NULL,
+            0,
+            sendThread,
+            NULL,
+            0,
+            &dwFileThread[i]
+        );
+    }
+
+    for (size_t i = 0; i < thread_num; i++)
+    {
+        WaitForSingleObject(hFileThread[i], INFINITE);
+    }
 
     return 0;
 }
