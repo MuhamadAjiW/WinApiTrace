@@ -27,5 +27,8 @@
     <ClCompile Include="src\_winnt_hooks_libs.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\data_piping.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

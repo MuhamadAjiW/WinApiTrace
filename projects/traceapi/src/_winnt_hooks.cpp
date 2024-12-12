@@ -371,6 +371,7 @@ NTSTATUS(__stdcall* Real_NtQueryDirectoryFile)(
 
 // --Libs--
 #include "_winnt_hooks_libs.cpp"
+#include "data_piping.cpp"
 
 // --Hooked-Paper-Functions--
 LSTATUS Mine_RegEnumKeyExW(
