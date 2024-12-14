@@ -166,26 +166,6 @@ DWORD WINAPI sendRoutine(LPVOID lpParam) {
 
     Sleep(COLLECTED_API_TIME_RANGE);
     while (commsSending) {
-        /**/
-        /**
-        std::chrono::high_resolution_clock::time_point curr_time1 = std::chrono::high_resolution_clock::now();
-        long long relative_time1 = std::chrono::duration_cast<std::chrono::microseconds>(curr_time1 - start_time).count();
-        std::cout << "about to print at " << relative_time1 << std::endl;
-        /**
-        std::cout << "offset: " << static_cast<int>(api_data.offset) << std::endl;
-        for (size_t frame = 0; frame < COLLECTED_API_TIME_RANGE_STEPS; frame++)
-        {
-            std::cout << "[";
-            for (size_t i = 0; i < COLLECTED_API_COUNT; i++) {
-                std::cout << apidata_tosend.api_count[frame][i] << ",";
-            }
-            std::cout << "]" << std::endl;
-        }
-
-        std::chrono::high_resolution_clock::time_point curr_time2 = std::chrono::high_resolution_clock::now();
-        long long relative_time2 = std::chrono::duration_cast<std::chrono::microseconds>(curr_time2 - start_time).count();
-        std::cout << "about to send at " << relative_time2 << std::endl;
-        /**/
         apidata_tosend.offset = api_data.offset;
         EnterCriticalSection(&hLock);
         memcpy(apidata_tosend.api_count, api_data.api_count, sizeof(apidata_tosend.api_count));
