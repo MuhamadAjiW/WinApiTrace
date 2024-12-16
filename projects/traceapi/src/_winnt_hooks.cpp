@@ -59,12 +59,7 @@ enum AnalyzedFunctions {
 #define LOG_HOOK_PTR(func_name, param_formats, ...) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
         double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, #__VA_ARGS__, __VA_ARGS__); \
+        _PrintEnter("%s()\n", #func_name); \
         void* rv = NULL; \
         __try { \
             rv = Real_##func_name(__VA_ARGS__); \
@@ -77,13 +72,7 @@ enum AnalyzedFunctions {
 #define LOG_HOOK_VOID(func_name, param_formats, ...) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
         double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper( \
-            param_formats, #__VA_ARGS__, __VA_ARGS__); \
+        _PrintEnter("%s()\n", #func_name); \
         int rv = 0; \
         __try { \
             Real_##func_name(__VA_ARGS__); \
@@ -95,12 +84,7 @@ enum AnalyzedFunctions {
 #define LOG_HOOK_INT(func_name, param_formats, ...) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
         double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, #__VA_ARGS__, __VA_ARGS__); \
+        _PrintEnter("%s()\n", #func_name); \
         int rv = 0; \
         __try { \
             rv = Real_##func_name(__VA_ARGS__); \
@@ -113,12 +97,7 @@ enum AnalyzedFunctions {
 #define LOG_HOOK_PTR_NOARGS(func_name, param_formats) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
         double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, "", NULL); \
+        _PrintEnter("%s()\n", #func_name); \
         HWND rv = 0; \
         __try { \
             rv = Real_##func_name(); \
@@ -131,12 +110,7 @@ enum AnalyzedFunctions {
 #define LOG_HOOK_INT_NOARGS(func_name, param_formats) \
         std::chrono::high_resolution_clock::time_point call_time = std::chrono::high_resolution_clock::now(); \
         double relative_time = std::chrono::duration<double, std::milli>(call_time - start_time).count(); \
-        LONG nThread = 0; \
-        if (s_nTlsThread >= 0) { \
-            nThread = (LONG)(LONG_PTR)TlsGetValue(s_nTlsThread); \
-        } \
-        _PrintEnter("%lf;%ld;%s", relative_time, nThread, #func_name); \
-        log_parameters_helper(param_formats, "", NULL); \
+        _PrintEnter("%s()\n", #func_name); \
         int rv = 0; \
         __try { \
             rv = Real_##func_name(); \

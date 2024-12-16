@@ -3439,111 +3439,111 @@ void DetachWin32Hooks(VOID) {
 }
 
 
-//void AttachNTHooks()
-//{
-//    ATTACH(RegEnumKeyExW);
-//    ATTACH(CreateDirectoryW);
-//    ATTACH(DrawTextExW);
-//    ATTACH_LIB(CoInitializeEx, L"ole32.dll");
-//    ATTACH_LIB(NtDeleteKey, L"ntdll.dll");
-//    ATTACH(SHGetFolderPathW);
-//    ATTACH_LIB(GetFileInformationByHandleEx, L"kernel32.dll");
-//    ATTACH(GetForegroundWindow);
-//    ATTACH_LIB(NtQueryAttributesFile, L"ntdll.dll");
-//    ATTACH(DeviceIoControl);
-//    ATTACH(SearchPathW);
-//    ATTACH(SetFileTime);
-//    ATTACH(SendNotifyMessageW);
-//    ATTACH(GetSystemMetrics);
-//    ATTACH(GetKeyState);
-//    ATTACH_LIB(NtCreateKey, L"ntdll.dll");
-//    ATTACH(LoadResource);
-//    ATTACH(GetDiskFreeSpaceExW);
-//    ATTACH(EnumWindows);
-//    ATTACH(RegOpenKeyExW);
-//    ATTACH_LIB(NtQueryKey, L"ntdll.dll");
-//    ATTACH_LIB(NtQueryValueKey, L"ntdll.dll");
-//    ATTACH_LIB(NtSetValueKey, L"ntdll.dll");
-//    ATTACH(CreateActCtxW);
-//    ATTACH(GetSystemTimeAsFileTime);
-//    ATTACH(GetSystemWindowsDirectoryW);
-//    ATTACH(SetErrorMode);
-//    ATTACH_LIB(GetFileVersionInfoSizeW, L"version.dll");
-//    ATTACH_LIB(NtOpenMutant, L"ntdll.dll");
-//    ATTACH_LIB(NtOpenKey, L"ntdll.dll");
-//    ATTACH_LIB(NtClose, L"ntdll.dll");
-//    ATTACH_LIB(NtCreateFile, L"ntdll.dll");
-//    ATTACH_LIB(NtReadFile, L"ntdll.dll");
-//    ATTACH_LIB(NtWriteFile, L"ntdll.dll");
-//    ATTACH_LIB(LdrGetDllHandle, L"ntdll.dll");
-//    ATTACH_LIB(NtOpenFile, L"ntdll.dll");
-//    ATTACH_LIB(NtFreeVirtualMemory, L"ntdll.dll");
-//
-//    // _TODO: Figure a better logging system, possibly static
-//    // These hooks may break the program because logging is done within the memory
-//    // ATTACH_LIB(NtAllocateVirtualMemory, L"ntdll.dll");
-//
-//    ATTACH_LIB(NtProtectVirtualMemory, L"ntdll.dll");
-//
-//    // _TODO: investigate infinite looping
-//    // ATTACH_LIB(LdrLoadDll, L"ntdll.dll");
-//
-//    ATTACH_LIB(NtQueryInformationFile, L"ntdll.dll");
-//    ATTACH_LIB(NtQueryDirectoryFile, L"ntdll.dll");
-//}
-//
-//void DetachNTHooks()
-//{
-//    DETACH(RegEnumKeyExW);
-//    DETACH(CreateDirectoryW);
-//    DETACH(DrawTextExW);
-//    DETACH(CoInitializeEx);
-//    DETACH(NtDeleteKey);
-//    DETACH(SHGetFolderPathW);
-//    DETACH(GetFileInformationByHandleEx);
-//    DETACH(GetForegroundWindow);
-//    DETACH(NtQueryAttributesFile);
-//    DETACH(DeviceIoControl);
-//    DETACH(SearchPathW);
-//    DETACH(SetFileTime);
-//    DETACH(SendNotifyMessageW);
-//    DETACH(GetSystemMetrics);
-//    DETACH(GetKeyState);
-//    DETACH(NtCreateKey);
-//    DETACH(LoadResource);
-//    DETACH(GetDiskFreeSpaceExW);
-//    DETACH(EnumWindows);
-//    DETACH(RegOpenKeyExW);
-//    DETACH(NtQueryKey);
-//    DETACH(NtQueryValueKey);
-//    DETACH(NtSetValueKey);
-//    DETACH(CreateActCtxW);
-//    DETACH(GetSystemTimeAsFileTime);
-//    DETACH(GetSystemWindowsDirectoryW);
-//    DETACH(SetErrorMode);
-//    DETACH(GetFileVersionInfoSizeW);
-//    DETACH(NtOpenMutant);
-//    DETACH(NtOpenKey);
-//    DETACH(NtClose);
-//    DETACH(NtCreateFile);
-//    DETACH(NtReadFile);
-//    DETACH(NtWriteFile);
-//    DETACH(LdrGetDllHandle);
-//    DETACH(NtOpenFile);
-//    DETACH(NtFreeVirtualMemory);
-//
-//    // _TODO: Figure a better logging system, possibly static
-//    // These hooks may break the program because logging is done within the memory
-//    // DETACH(NtAllocateVirtualMemory);
-//
-//    DETACH(NtProtectVirtualMemory);
-//
-//    // _TODO: investigate infinite looping
-//    // DETACH(LdrLoadDll);
-//
-//    DETACH(NtQueryInformationFile);
-//    DETACH(NtQueryDirectoryFile);
-//}
+void AttachNTHooks()
+{
+    ATTACH(RegEnumKeyExW);
+    ATTACH(CreateDirectoryW);
+    ATTACH(DrawTextExW);
+    ATTACH_LIB(CoInitializeEx, L"ole32.dll");
+    ATTACH_LIB(NtDeleteKey, L"ntdll.dll");
+    ATTACH(SHGetFolderPathW);
+    ATTACH_LIB(GetFileInformationByHandleEx, L"kernel32.dll");
+    ATTACH(GetForegroundWindow);
+    ATTACH_LIB(NtQueryAttributesFile, L"ntdll.dll");
+    ATTACH(DeviceIoControl);
+    ATTACH(SearchPathW);
+    ATTACH(SetFileTime);
+    ATTACH(SendNotifyMessageW);
+    ATTACH(GetSystemMetrics);
+    ATTACH(GetKeyState);
+    ATTACH_LIB(NtCreateKey, L"ntdll.dll");
+    ATTACH(LoadResource);
+    ATTACH(GetDiskFreeSpaceExW);
+    ATTACH(EnumWindows);
+    ATTACH(RegOpenKeyExW);
+    ATTACH_LIB(NtQueryKey, L"ntdll.dll");
+    ATTACH_LIB(NtQueryValueKey, L"ntdll.dll");
+    ATTACH_LIB(NtSetValueKey, L"ntdll.dll");
+    ATTACH(CreateActCtxW);
+    ATTACH(GetSystemTimeAsFileTime);
+    ATTACH(GetSystemWindowsDirectoryW);
+    ATTACH(SetErrorMode);
+    ATTACH_LIB(GetFileVersionInfoSizeW, L"version.dll");
+    ATTACH_LIB(NtOpenMutant, L"ntdll.dll");
+    //ATTACH_LIB(NtOpenKey, L"ntdll.dll");
+    //ATTACH_LIB(NtClose, L"ntdll.dll");
+    //ATTACH_LIB(NtCreateFile, L"ntdll.dll");
+    //ATTACH_LIB(NtReadFile, L"ntdll.dll");
+    //ATTACH_LIB(NtWriteFile, L"ntdll.dll");
+    //ATTACH_LIB(LdrGetDllHandle, L"ntdll.dll");
+    //ATTACH_LIB(NtOpenFile, L"ntdll.dll");
+    //ATTACH_LIB(NtFreeVirtualMemory, L"ntdll.dll");
+
+    // _TODO: Figure a better logging system, possibly static
+    // These hooks may break the program because logging is done within the memory
+    // ATTACH_LIB(NtAllocateVirtualMemory, L"ntdll.dll");
+
+    ATTACH_LIB(NtProtectVirtualMemory, L"ntdll.dll");
+
+    // _TODO: investigate infinite looping
+    // ATTACH_LIB(LdrLoadDll, L"ntdll.dll");
+
+    ATTACH_LIB(NtQueryInformationFile, L"ntdll.dll");
+    ATTACH_LIB(NtQueryDirectoryFile, L"ntdll.dll");
+}
+
+void DetachNTHooks()
+{
+    DETACH(RegEnumKeyExW);
+    DETACH(CreateDirectoryW);
+    DETACH(DrawTextExW);
+    DETACH(CoInitializeEx);
+    DETACH(NtDeleteKey);
+    DETACH(SHGetFolderPathW);
+    DETACH(GetFileInformationByHandleEx);
+    DETACH(GetForegroundWindow);
+    DETACH(NtQueryAttributesFile);
+    DETACH(DeviceIoControl);
+    DETACH(SearchPathW);
+    DETACH(SetFileTime);
+    DETACH(SendNotifyMessageW);
+    DETACH(GetSystemMetrics);
+    DETACH(GetKeyState);
+    DETACH(NtCreateKey);
+    DETACH(LoadResource);
+    DETACH(GetDiskFreeSpaceExW);
+    DETACH(EnumWindows);
+    DETACH(RegOpenKeyExW);
+    DETACH(NtQueryKey);
+    DETACH(NtQueryValueKey);
+    DETACH(NtSetValueKey);
+    DETACH(CreateActCtxW);
+    DETACH(GetSystemTimeAsFileTime);
+    DETACH(GetSystemWindowsDirectoryW);
+    DETACH(SetErrorMode);
+    DETACH(GetFileVersionInfoSizeW);
+    DETACH(NtOpenMutant);
+    //DETACH(NtOpenKey);
+    //DETACH(NtClose);
+    //DETACH(NtCreateFile);
+    //DETACH(NtReadFile);
+    //DETACH(NtWriteFile);
+    //DETACH(LdrGetDllHandle);
+    //DETACH(NtOpenFile);
+    //DETACH(NtFreeVirtualMemory);
+
+    // _TODO: Figure a better logging system, possibly static
+    // These hooks may break the program because logging is done within the memory
+    // DETACH(NtAllocateVirtualMemory);
+
+    DETACH(NtProtectVirtualMemory);
+
+    // _TODO: investigate infinite looping
+    // DETACH(LdrLoadDll);
+
+    DETACH(NtQueryInformationFile);
+    DETACH(NtQueryDirectoryFile);
+}
 
 LONG AttachDetours(VOID)
 {
@@ -3553,8 +3553,8 @@ LONG AttachDetours(VOID)
     // For this many APIs, we'll ignore one or two can't be detoured.
     DetourSetIgnoreTooSmall(TRUE);
 
-    AttachWin32Hooks();
-     //AttachNTHooks();
+    //AttachWin32Hooks();
+     AttachNTHooks();
 
     PVOID* ppbFailedPointer = NULL;
     LONG error = DetourTransactionCommitEx(&ppbFailedPointer);
@@ -3574,8 +3574,8 @@ LONG DetachDetours(VOID)
     // For this many APIs, we'll ignore one or two can't be detoured.
     DetourSetIgnoreTooSmall(TRUE);
 
-    DetachWin32Hooks();
-     //DetachNTHooks();
+    //DetachWin32Hooks();
+     DetachNTHooks();
 
     if (DetourTransactionCommit() != 0) {
         PVOID* ppbFailedPointer = NULL;

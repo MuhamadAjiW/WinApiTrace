@@ -4164,9 +4164,8 @@ BOOL(__stdcall* Real_GetSystemTimeAdjustment)(PDWORD a0,
     PBOOL a2)
     = GetSystemTimeAdjustment;
 
-// _TODO: Comment, this code conflicts with _winnt_hooks
-void(__stdcall* Real_GetSystemTimeAsFileTime)(LPFILETIME a0)
-= GetSystemTimeAsFileTime;
+//void(__stdcall* Real_GetSystemTimeAsFileTime)(LPFILETIME a0)
+//= GetSystemTimeAsFileTime;
 
 #if _MSC_VER < 1300
 DWORD(__stdcall* Real_GetTabbedTextExtentA)(HDC a0,

@@ -122,7 +122,7 @@ static LONG s_nThreadCnt = 0;
 std::chrono::high_resolution_clock::time_point start_time;
 
 #include "_win32_hooks.cpp"
-//#include "_winnt_hooks.cpp"
+#include "_winnt_hooks.cpp"
 #include "attach_hooks.cpp"
 
 VOID _PrintEnter(const CHAR* psz, ...)
