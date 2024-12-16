@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="..\..\src\withdll\withdll.cpp">
+    <ClCompile Include="withdll.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>

@@ -110,7 +110,7 @@ extern "C" {
         = LeaveCriticalSection;
 }
 
-#include <traceapi/_win32_hooks.cpp>
+#include "_win32_hooks.cpp"
 
 ////////////////////////////////////////////////////////////// Logging System.
 //
