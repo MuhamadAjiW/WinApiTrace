@@ -12,6 +12,7 @@
 #include <stdlib.h>
 #include <detours/syelog.h>
 #include <detours/detours.h>
+#include <winternl.h>
 
 #include <stdio.h>
 
@@ -24,11 +25,23 @@ extern "C" {
                                                DWORD a4,
                                                DWORD a5,
                                                HANDLE a6);
-    extern BOOL ( WINAPI * Real_WriteFile)(HANDLE hFile,
-                                           LPCVOID lpBuffer,
-                                           DWORD nNumberOfBytesToWrite,
-                                           LPDWORD lpNumberOfBytesWritten,
-                                           LPOVERLAPPED lpOverlapped);
+    //extern BOOL ( WINAPI * Real_WriteFile)(HANDLE hFile,
+    //                                       LPCVOID lpBuffer,
+    //                                       DWORD nNumberOfBytesToWrite,
+    //                                       LPDWORD lpNumberOfBytesWritten,
+    //                                       LPOVERLAPPED lpOverlapped);
+
+    extern NTSTATUS(WINAPI* Real_NtWriteFile)(
+        HANDLE FileHandle,
+        HANDLE Event,
+        PIO_APC_ROUTINE ApcRoutine,
+        PVOID ApcContext,
+        PIO_STATUS_BLOCK IoStatusBlock,
+        PVOID Buffer,
+        ULONG Length,
+        PLARGE_INTEGER ByteOffset,
+        PULONG Key);
+
     extern BOOL ( WINAPI * Real_FlushFileBuffers)(HANDLE hFile);
     extern BOOL ( WINAPI * Real_CloseHandle)(HANDLE hObject);
 
@@ -50,6 +63,46 @@ extern "C" {
 //
 // Completely side-effect free printf replacement (but no FP numbers).
 //
+
+static BOOL Wrapped_WriteFile(
+    HANDLE hFile,
+    LPCVOID lpBuffer,
+    DWORD nNumberOfBytesToWrite,
+    LPDWORD lpNumberOfBytesWritten,
+    LPOVERLAPPED lpOverlapped
+) {
+    IO_STATUS_BLOCK ioStatus;
+    LARGE_INTEGER byteOffset;
+    ULONG key = 0;
+
+
+    if (lpOverlapped == NULL) {
+        byteOffset.QuadPart = 0;
+    }
+    else {
+        byteOffset.LowPart = lpOverlapped->Offset;
+        byteOffset.HighPart = lpOverlapped->OffsetHigh;
+    }
+
+    NTSTATUS status = Real_NtWriteFile(
+        hFile,
+        NULL,
+        NULL,
+        NULL,
+        &ioStatus,
+        (PVOID)lpBuffer,
+        nNumberOfBytesToWrite,
+        &byteOffset,
+        &key
+    );
+
+    if (lpNumberOfBytesWritten != NULL) {
+        *lpNumberOfBytesWritten = ioStatus.Information;
+    }
+
+    return NT_SUCCESS(status);
+}
+
 static PCHAR do_base(PCHAR pszOut, UINT64 nValue, UINT nBase, PCSTR pszDigits)
 {
     CHAR szTmp[96];
@@ -786,7 +839,7 @@ VOID SyelogExV(BOOL fTerminate, BYTE nSeverity, PCSTR pszMsgf, va_list args)
     Real_EnterCriticalSection(&s_csPipe);
 
     if (syelogIsOpen(&Message.ftOccurance)) {
-        if (!Real_WriteFile(s_hPipe, &Message, Message.nBytes, &cbWritten, NULL)) {
+        if (!Wrapped_WriteFile(s_hPipe, &Message, Message.nBytes, &cbWritten, NULL)) {
             s_nPipeError = GetLastError();
             if (s_nPipeError == ERROR_BAD_IMPERSONATION_LEVEL) {
                 // Don't close the file just for a temporary impersonation level.
@@ -797,7 +850,7 @@ VOID SyelogExV(BOOL fTerminate, BYTE nSeverity, PCSTR pszMsgf, va_list args)
                     s_hPipe = INVALID_HANDLE_VALUE;
                 }
                 if (syelogIsOpen(&Message.ftOccurance)) {
-                    Real_WriteFile(s_hPipe, &Message, Message.nBytes, &cbWritten, NULL);
+                    Wrapped_WriteFile(s_hPipe, &Message, Message.nBytes, &cbWritten, NULL);
                 }
             }
         }

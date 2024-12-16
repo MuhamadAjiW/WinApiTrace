@@ -107,11 +107,11 @@ extern "C" {
     extern HANDLE(WINAPI* Real_CreateFileW)(LPCWSTR a0, DWORD a1, DWORD a2,
         LPSECURITY_ATTRIBUTES a3, DWORD a4, DWORD a5,
         HANDLE a6);
-    extern BOOL(WINAPI* Real_WriteFile)(HANDLE hFile,
-        LPCVOID lpBuffer,
-        DWORD nNumberOfBytesToWrite,
-        LPDWORD lpNumberOfBytesWritten,
-        LPOVERLAPPED lpOverlapped);
+    //extern BOOL(WINAPI* Real_WriteFile)(HANDLE hFile,
+    //    LPCVOID lpBuffer,
+    //    DWORD nNumberOfBytesToWrite,
+    //    LPDWORD lpNumberOfBytesWritten,
+    //    LPOVERLAPPED lpOverlapped);
     extern BOOL(WINAPI* Real_FlushFileBuffers)(HANDLE hFile);
     extern BOOL(WINAPI* Real_CloseHandle)(HANDLE hObject);
     extern BOOL(WINAPI* Real_WaitNamedPipeW)(LPCWSTR lpNamedPipeName, DWORD nTimeOut);
@@ -427,6 +427,8 @@ BOOL ThreadDetach(HMODULE hDll)
 
 BOOL ProcessAttach(HMODULE hDll)
 {
+    fetchNTFunc(&(PVOID&)Real_NtWriteFile, "NtWriteFile", L"ntdll.dll");
+
     s_bLog = FALSE;
     s_nTlsIndent = TlsAlloc();
     s_nTlsThread = TlsAlloc();

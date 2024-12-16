@@ -3474,7 +3474,7 @@ void AttachNTHooks()
     ATTACH_LIB(NtClose, L"ntdll.dll");
     ATTACH_LIB(NtCreateFile, L"ntdll.dll");
     ATTACH_LIB(NtReadFile, L"ntdll.dll");
-    //ATTACH_LIB(NtWriteFile, L"ntdll.dll");
+    ATTACH_LIB(NtWriteFile, L"ntdll.dll");
     ATTACH_LIB(LdrGetDllHandle, L"ntdll.dll");
     ATTACH_LIB(NtOpenFile, L"ntdll.dll");
     ATTACH_LIB(NtFreeVirtualMemory, L"ntdll.dll");
@@ -3523,7 +3523,7 @@ void DetachNTHooks()
     DETACH(NtClose);
     DETACH(NtCreateFile);
     DETACH(NtReadFile);
-    //DETACH(NtWriteFile);
+    DETACH(NtWriteFile);
     DETACH(LdrGetDllHandle);
     DETACH(NtOpenFile);
     DETACH(NtFreeVirtualMemory);
