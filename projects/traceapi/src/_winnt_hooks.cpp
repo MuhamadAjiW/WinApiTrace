@@ -1,13 +1,3 @@
-#include <iostream>
-
-#include <windows.h>
-#include <wincrypt.h>
-#include <security.h>
-#include <stdio.h>
-#include <winternl.h>
-#include <shlobj.h>
-#include <detours/detours.h>
-
 enum AnalyzedFunctions {
     // Paper functions
     Enum_RegEnumKeyExW,

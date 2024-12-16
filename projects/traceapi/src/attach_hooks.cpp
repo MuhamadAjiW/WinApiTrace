@@ -3470,19 +3470,15 @@ void AttachNTHooks()
     ATTACH(SetErrorMode);
     ATTACH_LIB(GetFileVersionInfoSizeW, L"version.dll");
     ATTACH_LIB(NtOpenMutant, L"ntdll.dll");
-    //ATTACH_LIB(NtOpenKey, L"ntdll.dll");
-    //ATTACH_LIB(NtClose, L"ntdll.dll");
-    //ATTACH_LIB(NtCreateFile, L"ntdll.dll");
-    //ATTACH_LIB(NtReadFile, L"ntdll.dll");
+    ATTACH_LIB(NtOpenKey, L"ntdll.dll");
+    ATTACH_LIB(NtClose, L"ntdll.dll");
+    ATTACH_LIB(NtCreateFile, L"ntdll.dll");
+    ATTACH_LIB(NtReadFile, L"ntdll.dll");
     //ATTACH_LIB(NtWriteFile, L"ntdll.dll");
-    //ATTACH_LIB(LdrGetDllHandle, L"ntdll.dll");
-    //ATTACH_LIB(NtOpenFile, L"ntdll.dll");
-    //ATTACH_LIB(NtFreeVirtualMemory, L"ntdll.dll");
-
-    // _TODO: Figure a better logging system, possibly static
-    // These hooks may break the program because logging is done within the memory
-    // ATTACH_LIB(NtAllocateVirtualMemory, L"ntdll.dll");
-
+    ATTACH_LIB(LdrGetDllHandle, L"ntdll.dll");
+    ATTACH_LIB(NtOpenFile, L"ntdll.dll");
+    ATTACH_LIB(NtFreeVirtualMemory, L"ntdll.dll");
+    ATTACH_LIB(NtAllocateVirtualMemory, L"ntdll.dll");
     ATTACH_LIB(NtProtectVirtualMemory, L"ntdll.dll");
 
     // _TODO: investigate infinite looping
@@ -3523,19 +3519,15 @@ void DetachNTHooks()
     DETACH(SetErrorMode);
     DETACH(GetFileVersionInfoSizeW);
     DETACH(NtOpenMutant);
-    //DETACH(NtOpenKey);
-    //DETACH(NtClose);
-    //DETACH(NtCreateFile);
-    //DETACH(NtReadFile);
+    DETACH(NtOpenKey);
+    DETACH(NtClose);
+    DETACH(NtCreateFile);
+    DETACH(NtReadFile);
     //DETACH(NtWriteFile);
-    //DETACH(LdrGetDllHandle);
-    //DETACH(NtOpenFile);
-    //DETACH(NtFreeVirtualMemory);
-
-    // _TODO: Figure a better logging system, possibly static
-    // These hooks may break the program because logging is done within the memory
-    // DETACH(NtAllocateVirtualMemory);
-
+    DETACH(LdrGetDllHandle);
+    DETACH(NtOpenFile);
+    DETACH(NtFreeVirtualMemory);
+    DETACH(NtAllocateVirtualMemory);
     DETACH(NtProtectVirtualMemory);
 
     // _TODO: investigate infinite looping

@@ -25,8 +25,6 @@
 #endif
 #include <strsafe.h>
 #pragma warning(pop)
-#include <detours/detours.h>
-#include <detours/syelog.h>
 
 #if (_MSC_VER < 1299)
 #define LONG_PTR    LONG
@@ -62,8 +60,20 @@
 
 #define UNUSED(c)    (c) = (c)
 
+//////////////////////////////////////////////////////////////////////////////
+
 #define SECURITY_WIN32
+
 #include <chrono>
+#include <iostream>
+
+#include <winternl.h>
+#include <wincrypt.h>
+#include <security.h>
+#include <shlobj.h>
+#include <detours/detours.h>
+#include <detours/syelog.h>
+
 
 //////////////////////////////////////////////////////////////////////////////
 static HMODULE s_hInst = NULL;
@@ -80,6 +90,13 @@ VOID _Print(const CHAR* psz, ...);
 
 VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 
+////////////////////////////////////////////////////////////// Utility Functions.
+//
+VOID fetchNTFunc(PVOID * ppvReal, const CHAR * psz, const WCHAR * lib) {
+    HMODULE hNtdll = LoadLibrary(lib);
+    *ppvReal = (PVOID)GetProcAddress(hNtdll, psz);
+}
+
 //////////////////////////////////////////////////////////////////////////////
 //
 // Trampolines
@@ -87,30 +104,40 @@ VOID AssertMessage(CONST CHAR* pszMsg, CONST CHAR* pszFile, ULONG nLine);
 extern "C" {
     //  Trampolines for SYELOG library.
     //
-    extern HANDLE(WINAPI* Real_CreateFileW)(LPCWSTR a0, DWORD a1, DWORD a2,
-        LPSECURITY_ATTRIBUTES a3, DWORD a4, DWORD a5,
-        HANDLE a6);
-    extern BOOL(WINAPI* Real_WriteFile)(HANDLE hFile,
-        LPCVOID lpBuffer,
-        DWORD nNumberOfBytesToWrite,
-        LPDWORD lpNumberOfBytesWritten,
-        LPOVERLAPPED lpOverlapped);
-    extern BOOL(WINAPI* Real_FlushFileBuffers)(HANDLE hFile);
-    extern BOOL(WINAPI* Real_CloseHandle)(HANDLE hObject);
-    extern BOOL(WINAPI* Real_WaitNamedPipeW)(LPCWSTR lpNamedPipeName, DWORD nTimeOut);
-    extern BOOL(WINAPI* Real_SetNamedPipeHandleState)(HANDLE hNamedPipe,
-        LPDWORD lpMode,
-        LPDWORD lpMaxCollectionCount,
-        LPDWORD lpCollectDataTimeout);
-    extern DWORD(WINAPI* Real_GetCurrentProcessId)(VOID);
-    extern VOID(WINAPI* Real_GetSystemTimeAsFileTime)(LPFILETIME lpSystemTimeAsFileTime);
+    //extern HANDLE(WINAPI* Real_CreateFileW)(LPCWSTR a0, DWORD a1, DWORD a2,
+    //    LPSECURITY_ATTRIBUTES a3, DWORD a4, DWORD a5,
+    //    HANDLE a6);
+    //extern BOOL(WINAPI* Real_WriteFile)(HANDLE hFile,
+    //    LPCVOID lpBuffer,
+    //    DWORD nNumberOfBytesToWrite,
+    //    LPDWORD lpNumberOfBytesWritten,
+    //    LPOVERLAPPED lpOverlapped);
+    //extern BOOL(WINAPI* Real_FlushFileBuffers)(HANDLE hFile);
+    //extern BOOL(WINAPI* Real_CloseHandle)(HANDLE hObject);
+    //extern BOOL(WINAPI* Real_WaitNamedPipeW)(LPCWSTR lpNamedPipeName, DWORD nTimeOut);
+    //extern BOOL(WINAPI* Real_SetNamedPipeHandleState)(HANDLE hNamedPipe,
+    //    LPDWORD lpMode,
+    //    LPDWORD lpMaxCollectionCount,
+    //    LPDWORD lpCollectDataTimeout);
+    //extern DWORD(WINAPI* Real_GetCurrentProcessId)(VOID);
+    //extern VOID(WINAPI* Real_GetSystemTimeAsFileTime)(LPFILETIME lpSystemTimeAsFileTime);
+    //extern NTSTATUS(WINAPI* Real_NtWriteFile)(
+    //    HANDLE FileHandle,
+    //    HANDLE Event,
+    //    PIO_APC_ROUTINE ApcRoutine,
+    //    PVOID ApcContext,
+    //    PIO_STATUS_BLOCK IoStatusBlock,
+    //    PVOID Buffer,
+    //    ULONG Length,
+    //    PLARGE_INTEGER ByteOffset,
+    //    PULONG Key);
 
-    VOID(WINAPI* Real_InitializeCriticalSection)(LPCRITICAL_SECTION lpSection)
-        = InitializeCriticalSection;
-    VOID(WINAPI* Real_EnterCriticalSection)(LPCRITICAL_SECTION lpSection)
-        = EnterCriticalSection;
-    VOID(WINAPI* Real_LeaveCriticalSection)(LPCRITICAL_SECTION lpSection)
-        = LeaveCriticalSection;
+    //VOID(WINAPI* Real_InitializeCriticalSection)(LPCRITICAL_SECTION lpSection)
+    //    = InitializeCriticalSection;
+    //VOID(WINAPI* Real_EnterCriticalSection)(LPCRITICAL_SECTION lpSection)
+    //    = EnterCriticalSection;
+    //VOID(WINAPI* Real_LeaveCriticalSection)(LPCRITICAL_SECTION lpSection)
+    //    = LeaveCriticalSection;
 }
 
 ////////////////////////////////////////////////////////////// Logging System.
@@ -161,6 +188,7 @@ VOID _PrintEnter(const CHAR* psz, ...)
             // Copy characters.
         }
         *pszEnd = '\0';
+        printf("Something caught on enter hook %s\n", szBuf);
         SyelogV(SYELOG_SEVERITY_INFORMATION, szBuf, args);
 
         va_end(args);
@@ -205,6 +233,7 @@ VOID _PrintExit(const CHAR* psz, ...)
             // Copy characters.
         }
         *pszEnd = '\0';
+        printf("Something caught on exit hook %s\n", szBuf);
         SyelogV(SYELOG_SEVERITY_INFORMATION, szBuf, args);
 
         va_end(args);
