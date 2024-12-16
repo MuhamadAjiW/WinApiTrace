@@ -2,6 +2,7 @@
     "files.associations": {
         "chrono": "cpp",
         "ios": "cpp",
-        "ostream": "cpp"
+        "ostream": "cpp",
+        "xlocale": "cpp"
     }
 }

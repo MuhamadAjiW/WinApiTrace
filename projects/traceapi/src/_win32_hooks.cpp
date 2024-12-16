@@ -633,9 +633,9 @@ HRESULT(__stdcall* Real_CoImpersonateClient)(void)
 HRESULT(__stdcall* Real_CoInitialize)(LPVOID a0)
 = CoInitialize;
 
-HRESULT(__stdcall* Real_CoInitializeEx)(LPVOID a0,
-    DWORD a1)
-    = CoInitializeEx;
+//HRESULT(__stdcall* Real_CoInitializeEx)(LPVOID a0,
+//    DWORD a1)
+//    = CoInitializeEx;
 
 HRESULT(__stdcall* Real_CoInitializeSecurity)(PSECURITY_DESCRIPTOR a0,
     LONG a1,
@@ -1113,9 +1113,9 @@ BOOL(__stdcall* Real_CreateDirectoryExW)(LPCWSTR a0,
     LPSECURITY_ATTRIBUTES a2)
     = CreateDirectoryExW;
 
-BOOL(__stdcall* Real_CreateDirectoryW)(LPCWSTR a0,
-    LPSECURITY_ATTRIBUTES a1)
-    = CreateDirectoryW;
+//BOOL(__stdcall* Real_CreateDirectoryW)(LPCWSTR a0,
+//    LPSECURITY_ATTRIBUTES a1)
+//    = CreateDirectoryW;
 
 HBITMAP(__stdcall* Real_CreateDiscardableBitmap)(HDC a0,
     int a1,
@@ -1960,15 +1960,15 @@ BOOL(__stdcall* Real_DestroyMenu)(HMENU a0)
 BOOL(__stdcall* Real_DestroyWindow)(HWND a0)
 = DestroyWindow;
 
-BOOL(__stdcall* Real_DeviceIoControl)(HANDLE a0,
-    DWORD a1,
-    LPVOID a2,
-    DWORD a3,
-    LPVOID a4,
-    DWORD a5,
-    LPDWORD a6,
-    LPOVERLAPPED a7)
-    = DeviceIoControl;
+//BOOL(__stdcall* Real_DeviceIoControl)(HANDLE a0,
+//    DWORD a1,
+//    LPVOID a2,
+//    DWORD a3,
+//    LPVOID a4,
+//    DWORD a5,
+//    LPDWORD a6,
+//    LPOVERLAPPED a7)
+//    = DeviceIoControl;
 
 INT_PTR(__stdcall* Real_DialogBoxIndirectParamA)(HINSTANCE a0,
     LPCDLGTEMPLATEA a1,
@@ -2177,13 +2177,13 @@ int(__stdcall* Real_DrawTextExA)(HDC a0,
     LPDRAWTEXTPARAMS a5)
     = DrawTextExA;
 
-int(__stdcall* Real_DrawTextExW)(HDC a0,
-    LPWSTR a1,
-    int a2,
-    LPRECT a3,
-    UINT a4,
-    LPDRAWTEXTPARAMS a5)
-    = DrawTextExW;
+//int(__stdcall* Real_DrawTextExW)(HDC a0,
+//    LPWSTR a1,
+//    int a2,
+//    LPRECT a3,
+//    UINT a4,
+//    LPDRAWTEXTPARAMS a5)
+//    = DrawTextExW;
 
 int(__stdcall* Real_DrawTextW)(HDC a0,
     LPCWSTR a1,
@@ -2518,9 +2518,9 @@ BOOL(__stdcall* Real_EnumWindowStationsW)(WINSTAENUMPROCW a0,
     LPARAM a1)
     = EnumWindowStationsW;
 
-BOOL(__stdcall* Real_EnumWindows)(WNDENUMPROC a0,
-    LPARAM a1)
-    = EnumWindows;
+//BOOL(__stdcall* Real_EnumWindows)(WNDENUMPROC a0,
+//    LPARAM a1)
+//    = EnumWindows;
 
 BOOL(__stdcall* Real_EqualRect)(CONST RECT* a0,
     CONST RECT* a1)
@@ -3337,11 +3337,11 @@ BOOL(__stdcall* Real_GetDiskFreeSpaceExA)(LPCSTR a0,
     union _ULARGE_INTEGER* a3)
     = GetDiskFreeSpaceExA;
 
-BOOL(__stdcall* Real_GetDiskFreeSpaceExW)(LPCWSTR a0,
-    union _ULARGE_INTEGER* a1,
-    union _ULARGE_INTEGER* a2,
-    union _ULARGE_INTEGER* a3)
-    = GetDiskFreeSpaceExW;
+//BOOL(__stdcall* Real_GetDiskFreeSpaceExW)(LPCWSTR a0,
+//    union _ULARGE_INTEGER* a1,
+//    union _ULARGE_INTEGER* a2,
+//    union _ULARGE_INTEGER* a3)
+//    = GetDiskFreeSpaceExW;
 
 BOOL(__stdcall* Real_GetDiskFreeSpaceW)(LPCWSTR a0,
     LPDWORD a1,
@@ -3492,8 +3492,8 @@ DWORD(__stdcall* Real_GetFontData)(HDC a0,
 DWORD(__stdcall* Real_GetFontLanguageInfo)(HDC a0)
 = GetFontLanguageInfo;
 
-HWND(__stdcall* Real_GetForegroundWindow)(void)
-= GetForegroundWindow;
+//HWND(__stdcall* Real_GetForegroundWindow)(void)
+//= GetForegroundWindow;
 
 DWORD(__stdcall* Real_GetFullPathNameA)(LPCSTR a0,
     DWORD a1,
@@ -3580,8 +3580,8 @@ int(__stdcall* Real_GetKeyNameTextW)(LONG a0,
     int a2)
     = GetKeyNameTextW;
 
-SHORT(__stdcall* Real_GetKeyState)(int a0)
-= GetKeyState;
+//SHORT(__stdcall* Real_GetKeyState)(int a0)
+//= GetKeyState;
 
 HKL(__stdcall* Real_GetKeyboardLayout)(DWORD a0)
 = GetKeyboardLayout;
@@ -4141,8 +4141,8 @@ HMENU(__stdcall* Real_GetSystemMenu)(HWND a0,
     BOOL a1)
     = GetSystemMenu;
 
-int(__stdcall* Real_GetSystemMetrics)(int a0)
-= GetSystemMetrics;
+//int(__stdcall* Real_GetSystemMetrics)(int a0)
+//= GetSystemMetrics;
 
 UINT(__stdcall* Real_GetSystemPaletteEntries)(HDC a0,
     UINT a1,
@@ -4164,8 +4164,8 @@ BOOL(__stdcall* Real_GetSystemTimeAdjustment)(PDWORD a0,
     PBOOL a2)
     = GetSystemTimeAdjustment;
 
-void(__stdcall* Real_GetSystemTimeAsFileTime)(LPFILETIME a0)
-= GetSystemTimeAsFileTime;
+//void(__stdcall* Real_GetSystemTimeAsFileTime)(LPFILETIME a0)
+//= GetSystemTimeAsFileTime;
 
 #if _MSC_VER < 1300
 DWORD(__stdcall* Real_GetTabbedTextExtentA)(HDC a0,
@@ -4956,9 +4956,9 @@ DWORD(__stdcall* Real_LoadModule)(LPCSTR a0,
     LPVOID a1)
     = LoadModule;
 
-HGLOBAL(__stdcall* Real_LoadResource)(HMODULE a0,
-    HRSRC a1)
-    = LoadResource;
+//HGLOBAL(__stdcall* Real_LoadResource)(HMODULE a0,
+//    HRSRC a1)
+//    = LoadResource;
 
 int(__stdcall* Real_LoadStringA)(HINSTANCE a0,
     UINT a1,
@@ -6382,13 +6382,13 @@ DWORD(__stdcall* Real_SearchPathA)(LPCSTR a0,
     LPSTR* a5)
     = SearchPathA;
 
-DWORD(__stdcall* Real_SearchPathW)(LPCWSTR a0,
-    LPCWSTR a1,
-    LPCWSTR a2,
-    DWORD a3,
-    LPWSTR a4,
-    LPWSTR* a5)
-    = SearchPathW;
+//DWORD(__stdcall* Real_SearchPathW)(LPCWSTR a0,
+//    LPCWSTR a1,
+//    LPCWSTR a2,
+//    DWORD a3,
+//    LPWSTR a4,
+//    LPWSTR* a5)
+//    = SearchPathW;
 
 BOOL(__stdcall* Real_SelectClipPath)(HDC a0,
     int a1)
@@ -6473,11 +6473,11 @@ BOOL(__stdcall* Real_SendNotifyMessageA)(HWND a0,
     LPARAM a3)
     = SendNotifyMessageA;
 
-BOOL(__stdcall* Real_SendNotifyMessageW)(HWND a0,
-    UINT a1,
-    WPARAM a2,
-    LPARAM a3)
-    = SendNotifyMessageW;
+//BOOL(__stdcall* Real_SendNotifyMessageW)(HWND a0,
+//    UINT a1,
+//    WPARAM a2,
+//    LPARAM a3)
+//    = SendNotifyMessageW;
 
 int(__stdcall* Real_SetAbortProc)(HDC a0,
     ABORTPROC a1)
@@ -6724,8 +6724,8 @@ BOOL(__stdcall* Real_SetEnvironmentVariableW)(LPCWSTR a0,
     LPCWSTR a1)
     = SetEnvironmentVariableW;
 
-UINT(__stdcall* Real_SetErrorMode)(UINT a0)
-= SetErrorMode;
+//UINT(__stdcall* Real_SetErrorMode)(UINT a0)
+//= SetErrorMode;
 
 BOOL(__stdcall* Real_SetEvent)(HANDLE a0)
 = SetEvent;
@@ -6750,11 +6750,11 @@ DWORD(__stdcall* Real_SetFilePointer)(HANDLE a0,
     DWORD a3)
     = SetFilePointer;
 
-BOOL(__stdcall* Real_SetFileTime)(HANDLE a0,
-    CONST FILETIME* a1,
-    CONST FILETIME* a2,
-    CONST FILETIME* a3)
-    = SetFileTime;
+//BOOL(__stdcall* Real_SetFileTime)(HANDLE a0,
+//    CONST FILETIME* a1,
+//    CONST FILETIME* a2,
+//    CONST FILETIME* a3)
+//    = SetFileTime;
 
 HWND(__stdcall* Real_SetFocus)(HWND a0)
 = SetFocus;
@@ -10605,20 +10605,20 @@ HRESULT __stdcall Mine_CoInitialize(LPVOID a0)
     return rv;
 }
 
-HRESULT __stdcall Mine_CoInitializeEx(LPVOID a0,
-    DWORD a1)
-{
-    _PrintEnter("CoInitializeEx(%p,%p)\n", a0, a1);
-
-    HRESULT rv = 0;
-    __try {
-        rv = Real_CoInitializeEx(a0, a1);
-    }
-    __finally {
-        _PrintExit("CoInitializeEx(,) -> %x\n", rv);
-    };
-    return rv;
-}
+//HRESULT __stdcall Mine_CoInitializeEx(LPVOID a0,
+//    DWORD a1)
+//{
+//    _PrintEnter("CoInitializeEx(%p,%p)\n", a0, a1);
+//
+//    HRESULT rv = 0;
+//    __try {
+//        rv = Real_CoInitializeEx(a0, a1);
+//    }
+//    __finally {
+//        _PrintExit("CoInitializeEx(,) -> %x\n", rv);
+//    };
+//    return rv;
+//}
 
 HRESULT __stdcall Mine_CoInitializeSecurity(PSECURITY_DESCRIPTOR a0,
     LONG a1,
@@ -12090,20 +12090,20 @@ BOOL __stdcall Mine_CreateDirectoryExW(LPCWSTR a0,
     return rv;
 }
 
-BOOL __stdcall Mine_CreateDirectoryW(LPCWSTR a0,
-    LPSECURITY_ATTRIBUTES a1)
-{
-    _PrintEnter("CreateDirectoryW(%ls,%p)\n", a0, a1);
-
-    BOOL rv = 0;
-    __try {
-        rv = Real_CreateDirectoryW(a0, a1);
-    }
-    __finally {
-        _PrintExit("CreateDirectoryW(,) -> %x\n", rv);
-    };
-    return rv;
-}
+//BOOL __stdcall Mine_CreateDirectoryW(LPCWSTR a0,
+//    LPSECURITY_ATTRIBUTES a1)
+//{
+//    _PrintEnter("CreateDirectoryW(%ls,%p)\n", a0, a1);
+//
+//    BOOL rv = 0;
+//    __try {
+//        rv = Real_CreateDirectoryW(a0, a1);
+//    }
+//    __finally {
+//        _PrintExit("CreateDirectoryW(,) -> %x\n", rv);
+//    };
+//    return rv;
+//}
 
 HBITMAP __stdcall Mine_CreateDiscardableBitmap(HDC a0,
     int a1,
@@ -14629,26 +14629,26 @@ BOOL __stdcall Mine_DestroyWindow(HWND a0)
     return rv;
 }
 
-BOOL __stdcall Mine_DeviceIoControl(HANDLE a0,
-    DWORD a1,
-    LPVOID a2,
-    DWORD a3,
-    LPVOID a4,
-    DWORD a5,
-    LPDWORD a6,
-    LPOVERLAPPED a7)
-{
-    _PrintEnter("DeviceIoControl(%p,%p,%p,%p,%p,%p,%p,%p)\n", a0, a1, a2, a3, a4, a5, a6, a7);
-
-    BOOL rv = 0;
-    __try {
-        rv = Real_DeviceIoControl(a0, a1, a2, a3, a4, a5, a6, a7);
-    }
-    __finally {
-        _PrintExit("DeviceIoControl(,,,,,,,) -> %p\n", rv);
-    };
-    return rv;
-}
+//BOOL __stdcall Mine_DeviceIoControl(HANDLE a0,
+//    DWORD a1,
+//    LPVOID a2,
+//    DWORD a3,
+//    LPVOID a4,
+//    DWORD a5,
+//    LPDWORD a6,
+//    LPOVERLAPPED a7)
+//{
+//    _PrintEnter("DeviceIoControl(%p,%p,%p,%p,%p,%p,%p,%p)\n", a0, a1, a2, a3, a4, a5, a6, a7);
+//
+//    BOOL rv = 0;
+//    __try {
+//        rv = Real_DeviceIoControl(a0, a1, a2, a3, a4, a5, a6, a7);
+//    }
+//    __finally {
+//        _PrintExit("DeviceIoControl(,,,,,,,) -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 INT_PTR __stdcall Mine_DialogBoxIndirectParamA(HINSTANCE a0,
     LPCDLGTEMPLATEA a1,
@@ -15220,24 +15220,24 @@ int __stdcall Mine_DrawTextExA(HDC a0,
     return rv;
 }
 
-int __stdcall Mine_DrawTextExW(HDC a0,
-    LPWSTR a1,
-    int a2,
-    LPRECT a3,
-    UINT a4,
-    LPDRAWTEXTPARAMS a5)
-{
-    _PrintEnter("DrawTextExW(%p,%ls,%p,%p,%p,%p)\n", a0, a1, a2, a3, a4, a5);
-
-    int rv = 0;
-    __try {
-        rv = Real_DrawTextExW(a0, a1, a2, a3, a4, a5);
-    }
-    __finally {
-        _PrintExit("DrawTextExW(,%ls,,,,) -> %p\n", a1, rv);
-    };
-    return rv;
-}
+//int __stdcall Mine_DrawTextExW(HDC a0,
+//    LPWSTR a1,
+//    int a2,
+//    LPRECT a3,
+//    UINT a4,
+//    LPDRAWTEXTPARAMS a5)
+//{
+//    _PrintEnter("DrawTextExW(%p,%ls,%p,%p,%p,%p)\n", a0, a1, a2, a3, a4, a5);
+//
+//    int rv = 0;
+//    __try {
+//        rv = Real_DrawTextExW(a0, a1, a2, a3, a4, a5);
+//    }
+//    __finally {
+//        _PrintExit("DrawTextExW(,%ls,,,,) -> %p\n", a1, rv);
+//    };
+//    return rv;
+//}
 
 int __stdcall Mine_DrawTextW(HDC a0,
     LPCWSTR a1,
@@ -16182,20 +16182,20 @@ BOOL __stdcall Mine_EnumWindowStationsW(WINSTAENUMPROCW a0,
     return rv;
 }
 
-BOOL __stdcall Mine_EnumWindows(WNDENUMPROC a0,
-    LPARAM a1)
-{
-    _PrintEnter("EnumWindows(%p,%p)\n", a0, a1);
-
-    BOOL rv = 0;
-    __try {
-        rv = Real_EnumWindows(a0, a1);
-    }
-    __finally {
-        _PrintExit("EnumWindows(,) -> %p\n", rv);
-    };
-    return rv;
-}
+//BOOL __stdcall Mine_EnumWindows(WNDENUMPROC a0,
+//    LPARAM a1)
+//{
+//    _PrintEnter("EnumWindows(%p,%p)\n", a0, a1);
+//
+//    BOOL rv = 0;
+//    __try {
+//        rv = Real_EnumWindows(a0, a1);
+//    }
+//    __finally {
+//        _PrintExit("EnumWindows(,) -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 BOOL __stdcall Mine_EqualRect(RECT* a0,
     RECT* a1)
@@ -18925,22 +18925,22 @@ BOOL __stdcall Mine_GetDiskFreeSpaceExA(LPCSTR a0,
     return rv;
 }
 
-BOOL __stdcall Mine_GetDiskFreeSpaceExW(LPCWSTR a0,
-    union _ULARGE_INTEGER* a1,
-    union _ULARGE_INTEGER* a2,
-    union _ULARGE_INTEGER* a3)
-{
-    _PrintEnter("GetDiskFreeSpaceExW(%ls,%p,%p,%p)\n", a0, a1, a2, a3);
-
-    BOOL rv = 0;
-    __try {
-        rv = Real_GetDiskFreeSpaceExW(a0, a1, a2, a3);
-    }
-    __finally {
-        _PrintExit("GetDiskFreeSpaceExW(,,,) -> %p\n", rv);
-    };
-    return rv;
-}
+//BOOL __stdcall Mine_GetDiskFreeSpaceExW(LPCWSTR a0,
+//    union _ULARGE_INTEGER* a1,
+//    union _ULARGE_INTEGER* a2,
+//    union _ULARGE_INTEGER* a3)
+//{
+//    _PrintEnter("GetDiskFreeSpaceExW(%ls,%p,%p,%p)\n", a0, a1, a2, a3);
+//
+//    BOOL rv = 0;
+//    __try {
+//        rv = Real_GetDiskFreeSpaceExW(a0, a1, a2, a3);
+//    }
+//    __finally {
+//        _PrintExit("GetDiskFreeSpaceExW(,,,) -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 BOOL __stdcall Mine_GetDiskFreeSpaceW(LPCWSTR a0,
     LPDWORD a1,
@@ -19463,19 +19463,19 @@ DWORD __stdcall Mine_GetFontLanguageInfo(HDC a0)
     return rv;
 }
 
-HWND __stdcall Mine_GetForegroundWindow(void)
-{
-    _PrintEnter("GetForegroundWindow()\n");
-
-    HWND rv = 0;
-    __try {
-        rv = Real_GetForegroundWindow();
-    }
-    __finally {
-        _PrintExit("GetForegroundWindow() -> %p\n", rv);
-    };
-    return rv;
-}
+//HWND __stdcall Mine_GetForegroundWindow(void)
+//{
+//    _PrintEnter("GetForegroundWindow()\n");
+//
+//    HWND rv = 0;
+//    __try {
+//        rv = Real_GetForegroundWindow();
+//    }
+//    __finally {
+//        _PrintExit("GetForegroundWindow() -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 DWORD __stdcall Mine_GetFullPathNameA(LPCSTR a0,
     DWORD a1,
@@ -19749,19 +19749,19 @@ int __stdcall Mine_GetKeyNameTextW(LONG a0,
     return rv;
 }
 
-SHORT __stdcall Mine_GetKeyState(int a0)
-{
-    _PrintEnter("GetKeyState(%p)\n", a0);
-
-    SHORT rv = 0;
-    __try {
-        rv = Real_GetKeyState(a0);
-    }
-    __finally {
-        _PrintExit("GetKeyState() -> %p\n", rv);
-    };
-    return rv;
-}
+//SHORT __stdcall Mine_GetKeyState(int a0)
+//{
+//    _PrintEnter("GetKeyState(%p)\n", a0);
+//
+//    SHORT rv = 0;
+//    __try {
+//        rv = Real_GetKeyState(a0);
+//    }
+//    __finally {
+//        _PrintExit("GetKeyState() -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 HKL __stdcall Mine_GetKeyboardLayout(DWORD a0)
 {
@@ -21655,19 +21655,19 @@ HMENU __stdcall Mine_GetSystemMenu(HWND a0,
     return rv;
 }
 
-int __stdcall Mine_GetSystemMetrics(int a0)
-{
-    _PrintEnter("GetSystemMetrics(%p)\n", a0);
-
-    int rv = 0;
-    __try {
-        rv = Real_GetSystemMetrics(a0);
-    }
-    __finally {
-        _PrintExit("GetSystemMetrics() -> %p\n", rv);
-    };
-    return rv;
-}
+//int __stdcall Mine_GetSystemMetrics(int a0)
+//{
+//    _PrintEnter("GetSystemMetrics(%p)\n", a0);
+//
+//    int rv = 0;
+//    __try {
+//        rv = Real_GetSystemMetrics(a0);
+//    }
+//    __finally {
+//        _PrintExit("GetSystemMetrics() -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 UINT __stdcall Mine_GetSystemPaletteEntries(HDC a0,
     UINT a1,
@@ -21742,17 +21742,17 @@ BOOL __stdcall Mine_GetSystemTimeAdjustment(PDWORD a0,
     return rv;
 }
 
-void __stdcall Mine_GetSystemTimeAsFileTime(LPFILETIME a0)
-{
-    _PrintEnter("GetSystemTimeAsFileTime(%p)\n", a0);
-
-    __try {
-        Real_GetSystemTimeAsFileTime(a0);
-    }
-    __finally {
-        _PrintExit("GetSystemTimeAsFileTime() ->\n");
-    };
-}
+//void __stdcall Mine_GetSystemTimeAsFileTime(LPFILETIME a0)
+//{
+//    _PrintEnter("GetSystemTimeAsFileTime(%p)\n", a0);
+//
+//    __try {
+//        Real_GetSystemTimeAsFileTime(a0);
+//    }
+//    __finally {
+//        _PrintExit("GetSystemTimeAsFileTime() ->\n");
+//    };
+//}
 
 DWORD __stdcall Mine_GetTabbedTextExtentA(HDC a0,
     LPCSTR a1,
@@ -24422,20 +24422,20 @@ DWORD __stdcall Mine_LoadModule(LPCSTR a0,
     return rv;
 }
 
-HGLOBAL __stdcall Mine_LoadResource(HMODULE a0,
-    HRSRC a1)
-{
-    _PrintEnter("LoadResource(%p,%p)\n", a0, a1);
-
-    HGLOBAL rv = 0;
-    __try {
-        rv = Real_LoadResource(a0, a1);
-    }
-    __finally {
-        _PrintExit("LoadResource(,) -> %p\n", rv);
-    };
-    return rv;
-}
+//HGLOBAL __stdcall Mine_LoadResource(HMODULE a0,
+//    HRSRC a1)
+//{
+//    _PrintEnter("LoadResource(%p,%p)\n", a0, a1);
+//
+//    HGLOBAL rv = 0;
+//    __try {
+//        rv = Real_LoadResource(a0, a1);
+//    }
+//    __finally {
+//        _PrintExit("LoadResource(,) -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 int __stdcall Mine_LoadStringA(HINSTANCE a0,
     UINT a1,
@@ -28503,24 +28503,24 @@ DWORD __stdcall Mine_SearchPathA(LPCSTR a0,
     return rv;
 }
 
-DWORD __stdcall Mine_SearchPathW(LPCWSTR a0,
-    LPCWSTR a1,
-    LPCWSTR a2,
-    DWORD a3,
-    LPWSTR a4,
-    LPWSTR* a5)
-{
-    _PrintEnter("SearchPathW(%ls,%ls,%ls,%p,%p,%p)\n", a0, a1, a2, a3, a4, a5);
-
-    DWORD rv = 0;
-    __try {
-        rv = Real_SearchPathW(a0, a1, a2, a3, a4, a5);
-    }
-    __finally {
-        _PrintExit("SearchPathW(,,,,%ls,) -> %p\n", a4, rv);
-    };
-    return rv;
-}
+//DWORD __stdcall Mine_SearchPathW(LPCWSTR a0,
+//    LPCWSTR a1,
+//    LPCWSTR a2,
+//    DWORD a3,
+//    LPWSTR a4,
+//    LPWSTR* a5)
+//{
+//    _PrintEnter("SearchPathW(%ls,%ls,%ls,%p,%p,%p)\n", a0, a1, a2, a3, a4, a5);
+//
+//    DWORD rv = 0;
+//    __try {
+//        rv = Real_SearchPathW(a0, a1, a2, a3, a4, a5);
+//    }
+//    __finally {
+//        _PrintExit("SearchPathW(,,,,%ls,) -> %p\n", a4, rv);
+//    };
+//    return rv;
+//}
 
 BOOL __stdcall Mine_SelectClipPath(HDC a0,
     int a1)
@@ -28748,22 +28748,22 @@ BOOL __stdcall Mine_SendNotifyMessageA(HWND a0,
     return rv;
 }
 
-BOOL __stdcall Mine_SendNotifyMessageW(HWND a0,
-    UINT a1,
-    WPARAM a2,
-    LPARAM a3)
-{
-    _PrintEnter("SendNotifyMessageW(%p,%p,%p,%p)\n", a0, a1, a2, a3);
-
-    BOOL rv = 0;
-    __try {
-        rv = Real_SendNotifyMessageW(a0, a1, a2, a3);
-    }
-    __finally {
-        _PrintExit("SendNotifyMessageW(,,,) -> %p\n", rv);
-    };
-    return rv;
-}
+//BOOL __stdcall Mine_SendNotifyMessageW(HWND a0,
+//    UINT a1,
+//    WPARAM a2,
+//    LPARAM a3)
+//{
+//    _PrintEnter("SendNotifyMessageW(%p,%p,%p,%p)\n", a0, a1, a2, a3);
+//
+//    BOOL rv = 0;
+//    __try {
+//        rv = Real_SendNotifyMessageW(a0, a1, a2, a3);
+//    }
+//    __finally {
+//        _PrintExit("SendNotifyMessageW(,,,) -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 int __stdcall Mine_SetAbortProc(HDC a0,
     ABORTPROC a1)
@@ -29637,19 +29637,19 @@ BOOL __stdcall Mine_SetEnvironmentVariableW(LPCWSTR a0,
     return rv;
 }
 
-UINT __stdcall Mine_SetErrorMode(UINT a0)
-{
-    _PrintEnter("SetErrorMode(%p)\n", a0);
-
-    UINT rv = 0;
-    __try {
-        rv = Real_SetErrorMode(a0);
-    }
-    __finally {
-        _PrintExit("SetErrorMode() -> %p\n", rv);
-    };
-    return rv;
-}
+//UINT __stdcall Mine_SetErrorMode(UINT a0)
+//{
+//    _PrintEnter("SetErrorMode(%p)\n", a0);
+//
+//    UINT rv = 0;
+//    __try {
+//        rv = Real_SetErrorMode(a0);
+//    }
+//    __finally {
+//        _PrintExit("SetErrorMode() -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 BOOL __stdcall Mine_SetEvent(HANDLE a0)
 {
@@ -29736,22 +29736,22 @@ DWORD __stdcall Mine_SetFilePointer(HANDLE a0,
     return rv;
 }
 
-BOOL __stdcall Mine_SetFileTime(HANDLE a0,
-    FILETIME* a1,
-    FILETIME* a2,
-    FILETIME* a3)
-{
-    _PrintEnter("SetFileTime(%p,%p,%p,%p)\n", a0, a1, a2, a3);
-
-    BOOL rv = 0;
-    __try {
-        rv = Real_SetFileTime(a0, a1, a2, a3);
-    }
-    __finally {
-        _PrintExit("SetFileTime(,,,) -> %p\n", rv);
-    };
-    return rv;
-}
+//BOOL __stdcall Mine_SetFileTime(HANDLE a0,
+//    FILETIME* a1,
+//    FILETIME* a2,
+//    FILETIME* a3)
+//{
+//    _PrintEnter("SetFileTime(%p,%p,%p,%p)\n", a0, a1, a2, a3);
+//
+//    BOOL rv = 0;
+//    __try {
+//        rv = Real_SetFileTime(a0, a1, a2, a3);
+//    }
+//    __finally {
+//        _PrintExit("SetFileTime(,,,) -> %p\n", rv);
+//    };
+//    return rv;
+//}
 
 HWND __stdcall Mine_SetFocus(HWND a0)
 {
@@ -35257,3460 +35257,5 @@ SOCKET __stdcall Mine_socket(int a0,
     return rv;
 }
 
-////////////////////////////////////////////////////////////// AttachDetours.
-//
-static CHAR* DetRealName(const CHAR* psz)
-{
-    PCHAR retval = const_cast<PCHAR>(psz);
-    const CHAR* pszBeg = psz;
-    // Move to end of name.
-    while (*psz) {
-        psz++;
-    }
-    // Move back through A-Za-z0-9 names.
-    while (psz > pszBeg &&
-        ((psz[-1] >= 'A' && psz[-1] <= 'Z') ||
-            (psz[-1] >= 'a' && psz[-1] <= 'z') ||
-            (psz[-1] >= '0' && psz[-1] <= '9'))) {
-        psz--;
-    }
-    return retval;
-}
-
-static VOID Dump(PBYTE pbBytes, LONG nBytes, PBYTE pbTarget)
-{
-    CHAR szBuffer[256];
-    PCHAR pszBuffer = szBuffer;
-
-    for (LONG n = 0; n < nBytes; n += 12) {
-        pszBuffer += StringCchPrintfA(pszBuffer, sizeof(szBuffer), "  %p: ", pbBytes + n);
-        for (LONG m = n; m < n + 12; m++) {
-            if (m >= nBytes) {
-                pszBuffer += StringCchPrintfA(pszBuffer, sizeof(szBuffer), "   ");
-            }
-            else {
-                pszBuffer += StringCchPrintfA(pszBuffer, sizeof(szBuffer), "%02x ", pbBytes[m]);
-            }
-        }
-        if (n == 0) {
-            pszBuffer += StringCchPrintfA(pszBuffer, sizeof(szBuffer), "[%p]", pbTarget);
-        }
-        pszBuffer += StringCchPrintfA(pszBuffer, sizeof(szBuffer), "\n");
-    }
-
-    Syelog(SYELOG_SEVERITY_INFORMATION, "%s", szBuffer);
-}
-
-static VOID Decode(PBYTE pbCode, LONG nInst)
-{
-    PBYTE pbSrc = pbCode;
-    PBYTE pbEnd;
-    PBYTE pbTarget;
-    for (LONG n = 0; n < nInst; n++) {
-        pbTarget = NULL;
-        pbEnd = (PBYTE)DetourCopyInstruction(NULL, NULL, (PVOID)pbSrc, (PVOID*)&pbTarget, NULL);
-        Dump(pbSrc, (int)(pbEnd - pbSrc), pbTarget);
-        pbSrc = pbEnd;
-
-        if (pbTarget != NULL) {
-            break;
-        }
-    }
-}
-
-VOID DetAttach(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
-{
-    PVOID pvReal = NULL;
-    if (ppvReal == NULL) {
-        ppvReal = &pvReal;
-    }
-
-    LONG l = DetourAttach(ppvReal, pvMine);
-    if (l != 0) {
-        Syelog(SYELOG_SEVERITY_NOTICE,
-            "Attach failed: `%s': error %d\n", DetRealName(psz), l);
-
-        Decode((PBYTE)*ppvReal, 3);
-    }
-}
-
-VOID DetDetach(PVOID* ppvReal, PVOID pvMine, const CHAR* psz)
-{
-    LONG l = DetourDetach(ppvReal, pvMine);
-    if (l != 0) {
-#if 0
-        Syelog(SYELOG_SEVERITY_NOTICE,
-            "Detach failed: `%s': error %d\n", DetRealName(psz), l);
-#else
-        (void)psz;
-#endif
-    }
-}
-
-#define ATTACH(x)       DetAttach(&(PVOID&)Real_##x,Mine_##x,#x)
-#define DETACH(x)       DetDetach(&(PVOID&)Real_##x,Mine_##x,#x)
-
-LONG AttachDetours(VOID)
-{
-    DetourTransactionBegin();
-    DetourUpdateThread(GetCurrentThread());
-
-    // For this many APIs, we'll ignore one or two can't be detoured.
-    DetourSetIgnoreTooSmall(TRUE);
-
-    ATTACH(AbortDoc);
-    ATTACH(AbortPath);
-    ATTACH(ActivateKeyboardLayout);
-    ATTACH(AddAtomA);
-    ATTACH(AddAtomW);
-    ATTACH(AddFontResourceA);
-    ATTACH(AddFontResourceW);
-    ATTACH(AdjustWindowRect);
-    ATTACH(AdjustWindowRectEx);
-    ATTACH(AllocConsole);
-    ATTACH(AngleArc);
-    ATTACH(AnimatePalette);
-    ATTACH(AnyPopup);
-    ATTACH(AppendMenuA);
-    ATTACH(AppendMenuW);
-    ATTACH(Arc);
-    ATTACH(ArcTo);
-    ATTACH(AreFileApisANSI);
-    ATTACH(ArrangeIconicWindows);
-    ATTACH(AttachThreadInput);
-    ATTACH(BackupRead);
-    ATTACH(BackupSeek);
-    ATTACH(BackupWrite);
-    ATTACH(Beep);
-    ATTACH(BeginDeferWindowPos);
-    ATTACH(BeginPaint);
-    ATTACH(BeginPath);
-    ATTACH(BeginUpdateResourceA);
-    ATTACH(BeginUpdateResourceW);
-    ATTACH(BindMoniker);
-    ATTACH(BitBlt);
-    ATTACH(BringWindowToTop);
-    ATTACH(BroadcastSystemMessageA);
-    ATTACH(BroadcastSystemMessageW);
-    ATTACH(BuildCommDCBA);
-    ATTACH(BuildCommDCBAndTimeoutsA);
-    ATTACH(BuildCommDCBAndTimeoutsW);
-    ATTACH(BuildCommDCBW);
-    ATTACH(CLSIDFromProgID);
-    ATTACH(CLSIDFromString);
-    ATTACH(CallMsgFilterA);
-    ATTACH(CallMsgFilterW);
-    ATTACH(CallNamedPipeA);
-    ATTACH(CallNamedPipeW);
-    ATTACH(CallNextHookEx);
-    ATTACH(CallWindowProcA);
-    ATTACH(CallWindowProcW);
-    ATTACH(CancelDC);
-    ATTACH(CancelIo);
-    ATTACH(CancelWaitableTimer);
-    ATTACH(CascadeWindows);
-    ATTACH(ChangeClipboardChain);
-    ATTACH(ChangeDisplaySettingsA);
-    ATTACH(ChangeDisplaySettingsExA);
-    ATTACH(ChangeDisplaySettingsExW);
-    ATTACH(ChangeDisplaySettingsW);
-    ATTACH(ChangeMenuA);
-    ATTACH(ChangeMenuW);
-    ATTACH(CharLowerA);
-    ATTACH(CharLowerBuffA);
-    ATTACH(CharLowerBuffW);
-    ATTACH(CharLowerW);
-    ATTACH(CharNextA);
-    ATTACH(CharNextExA);
-    ATTACH(CharNextW);
-    ATTACH(CharPrevA);
-    ATTACH(CharPrevExA);
-    ATTACH(CharPrevW);
-    ATTACH(CharToOemA);
-    ATTACH(CharToOemBuffA);
-    ATTACH(CharToOemBuffW);
-    ATTACH(CharToOemW);
-    ATTACH(CharUpperA);
-    ATTACH(CharUpperBuffA);
-    ATTACH(CharUpperBuffW);
-    ATTACH(CharUpperW);
-    ATTACH(CheckColorsInGamut);
-    ATTACH(CheckDlgButton);
-    ATTACH(CheckMenuItem);
-    ATTACH(CheckMenuRadioItem);
-    ATTACH(CheckRadioButton);
-    ATTACH(ChildWindowFromPoint);
-    ATTACH(ChildWindowFromPointEx);
-    ATTACH(ChoosePixelFormat);
-    ATTACH(Chord);
-    ATTACH(ClearCommBreak);
-    ATTACH(ClearCommError);
-    ATTACH(ClientToScreen);
-    ATTACH(ClipCursor);
-    ATTACH(CloseClipboard);
-    ATTACH(CloseDesktop);
-    ATTACH(CloseEnhMetaFile);
-    ATTACH(CloseFigure);
-    ATTACH(CloseHandle);
-    ATTACH(CloseMetaFile);
-    ATTACH(CloseWindow);
-    ATTACH(CloseWindowStation);
-    ATTACH(CoAddRefServerProcess);
-    ATTACH(CoBuildVersion);
-    ATTACH(CoCopyProxy);
-    ATTACH(CoCreateFreeThreadedMarshaler);
-    ATTACH(CoCreateGuid);
-    ATTACH(CoCreateInstance);
-    ATTACH(CoCreateInstanceEx);
-    ATTACH(CoDisconnectObject);
-    ATTACH(CoDosDateTimeToFileTime);
-    ATTACH(CoFileTimeNow);
-    ATTACH(CoFileTimeToDosDateTime);
-    ATTACH(CoFreeAllLibraries);
-    ATTACH(CoFreeLibrary);
-    ATTACH(CoFreeUnusedLibraries);
-    ATTACH(CoGetCallContext);
-    ATTACH(CoGetClassObject);
-    ATTACH(CoGetCurrentProcess);
-    ATTACH(CoGetInstanceFromFile);
-    ATTACH(CoGetInstanceFromIStorage);
-    ATTACH(CoGetInterfaceAndReleaseStream);
-    ATTACH(CoGetMalloc);
-    ATTACH(CoGetMarshalSizeMax);
-    ATTACH(CoGetObject);
-    ATTACH(CoGetPSClsid);
-    ATTACH(CoGetStandardMarshal);
-    ATTACH(CoGetStdMarshalEx);
-    ATTACH(CoGetTreatAsClass);
-    ATTACH(CoImpersonateClient);
-    ATTACH(CoInitialize);
-    ATTACH(CoInitializeEx);
-    ATTACH(CoInitializeSecurity);
-    ATTACH(CoIsHandlerConnected);
-    ATTACH(CoIsOle1Class);
-    ATTACH(CoLoadLibrary);
-    ATTACH(CoLockObjectExternal);
-    ATTACH(CoMarshalHresult);
-    ATTACH(CoMarshalInterThreadInterfaceInStream);
-    ATTACH(CoMarshalInterface);
-    ATTACH(CoQueryAuthenticationServices);
-    ATTACH(CoQueryClientBlanket);
-    ATTACH(CoQueryProxyBlanket);
-    ATTACH(CoRegisterChannelHook);
-    ATTACH(CoRegisterClassObject);
-    ATTACH(CoRegisterMallocSpy);
-    ATTACH(CoRegisterMessageFilter);
-    ATTACH(CoRegisterPSClsid);
-    ATTACH(CoRegisterSurrogate);
-    ATTACH(CoReleaseMarshalData);
-    ATTACH(CoReleaseServerProcess);
-    ATTACH(CoResumeClassObjects);
-    ATTACH(CoRevertToSelf);
-    ATTACH(CoRevokeClassObject);
-    ATTACH(CoRevokeMallocSpy);
-    ATTACH(CoSetProxyBlanket);
-    ATTACH(CoSuspendClassObjects);
-    ATTACH(CoSwitchCallContext);
-    ATTACH(CoTaskMemAlloc);
-    ATTACH(CoTaskMemFree);
-    ATTACH(CoTaskMemRealloc);
-    ATTACH(CoTreatAsClass);
-    ATTACH(CoUninitialize);
-    ATTACH(CoUnmarshalHresult);
-    ATTACH(CoUnmarshalInterface);
-    ATTACH(ColorMatchToTarget);
-    ATTACH(CombineRgn);
-    ATTACH(CombineTransform);
-    ATTACH(CommConfigDialogA);
-    ATTACH(CommConfigDialogW);
-    ATTACH(CompareFileTime);
-    ATTACH(CompareStringA);
-    ATTACH(CompareStringW);
-    ATTACH(ConnectNamedPipe);
-#if !defined(DETOURS_ARM)
-    ATTACH(ContinueDebugEvent);
-#endif // !DETOURS_ARM
-    ATTACH(ConvertDefaultLocale);
-    ATTACH(ConvertThreadToFiber);
-    ATTACH(CopyAcceleratorTableA);
-    ATTACH(CopyAcceleratorTableW);
-    ATTACH(CopyEnhMetaFileA);
-    ATTACH(CopyEnhMetaFileW);
-    ATTACH(CopyFileA);
-    ATTACH(CopyFileExA);
-    ATTACH(CopyFileExW);
-    ATTACH(CopyFileW);
-    ATTACH(CopyIcon);
-    ATTACH(CopyImage);
-    ATTACH(CopyMetaFileA);
-    ATTACH(CopyMetaFileW);
-    ATTACH(CopyRect);
-    ATTACH(CountClipboardFormats);
-    ATTACH(CreateAcceleratorTableA);
-    ATTACH(CreateAcceleratorTableW);
-    ATTACH(CreateAntiMoniker);
-    ATTACH(CreateBindCtx);
-    ATTACH(CreateBitmap);
-    ATTACH(CreateBitmapIndirect);
-    ATTACH(CreateBrushIndirect);
-    ATTACH(CreateCaret);
-    ATTACH(CreateClassMoniker);
-    ATTACH(CreateColorSpaceA);
-    ATTACH(CreateColorSpaceW);
-    ATTACH(CreateCompatibleBitmap);
-    ATTACH(CreateCompatibleDC);
-    ATTACH(CreateConsoleScreenBuffer);
-    ATTACH(CreateCursor);
-    ATTACH(CreateDCA);
-    ATTACH(CreateDCW);
-    ATTACH(CreateDIBPatternBrush);
-    ATTACH(CreateDIBPatternBrushPt);
-    ATTACH(CreateDIBSection);
-    ATTACH(CreateDIBitmap);
-    ATTACH(CreateDataAdviseHolder);
-    ATTACH(CreateDataCache);
-    ATTACH(CreateDesktopA);
-    ATTACH(CreateDesktopW);
-    ATTACH(CreateDialogIndirectParamA);
-    ATTACH(CreateDialogIndirectParamW);
-    ATTACH(CreateDialogParamA);
-    ATTACH(CreateDialogParamW);
-    ATTACH(CreateDirectoryA);
-    ATTACH(CreateDirectoryExA);
-    ATTACH(CreateDirectoryExW);
-    ATTACH(CreateDirectoryW);
-    ATTACH(CreateDiscardableBitmap);
-    ATTACH(CreateEllipticRgn);
-    ATTACH(CreateEllipticRgnIndirect);
-    ATTACH(CreateEnhMetaFileA);
-    ATTACH(CreateEnhMetaFileW);
-    ATTACH(CreateEventA);
-    ATTACH(CreateEventW);
-    ATTACH(CreateFiber);
-    ATTACH(CreateFileA);
-    ATTACH(CreateFileMappingA);
-    ATTACH(CreateFileMappingW);
-    ATTACH(CreateFileMoniker);
-    ATTACH(CreateFileW);
-    ATTACH(CreateFontA);
-    ATTACH(CreateFontIndirectA);
-    ATTACH(CreateFontIndirectW);
-    ATTACH(CreateFontW);
-    ATTACH(CreateGenericComposite);
-    ATTACH(CreateHalftonePalette);
-    ATTACH(CreateHatchBrush);
-    ATTACH(CreateICA);
-    ATTACH(CreateICW);
-    ATTACH(CreateILockBytesOnHGlobal);
-    ATTACH(CreateIcon);
-    ATTACH(CreateIconFromResource);
-    ATTACH(CreateIconFromResourceEx);
-    ATTACH(CreateIconIndirect);
-    ATTACH(CreateIoCompletionPort);
-    ATTACH(CreateItemMoniker);
-    ATTACH(CreateMDIWindowA);
-    ATTACH(CreateMDIWindowW);
-    ATTACH(CreateMailslotA);
-    ATTACH(CreateMailslotW);
-    ATTACH(CreateMenu);
-    ATTACH(CreateMetaFileA);
-    ATTACH(CreateMetaFileW);
-    ATTACH(CreateMutexA);
-    ATTACH(CreateMutexW);
-    ATTACH(CreateNamedPipeA);
-    ATTACH(CreateNamedPipeW);
-    ATTACH(CreateOleAdviseHolder);
-    ATTACH(CreatePalette);
-    ATTACH(CreatePatternBrush);
-    ATTACH(CreatePen);
-    ATTACH(CreatePenIndirect);
-    ATTACH(CreatePipe);
-    ATTACH(CreatePointerMoniker);
-    ATTACH(CreatePolyPolygonRgn);
-    ATTACH(CreatePolygonRgn);
-    ATTACH(CreatePopupMenu);
-    ATTACH(CreateProcessA);
-    ATTACH(CreateProcessW);
-    ATTACH(CreateProcessAsUserA);
-    ATTACH(CreateProcessAsUserW);
-#if(_WIN32_WINNT >= 0x0500)
-    ATTACH(CreateProcessWithLogonW);
-    ATTACH(CreateProcessWithTokenW);
-#endif //(_WIN32_WINNT >= 0x0500)
-    ATTACH(CreateRectRgn);
-    ATTACH(CreateRectRgnIndirect);
-    ATTACH(CreateRemoteThread);
-    ATTACH(CreateRoundRectRgn);
-    ATTACH(CreateScalableFontResourceA);
-    ATTACH(CreateScalableFontResourceW);
-    ATTACH(CreateSemaphoreA);
-    ATTACH(CreateSemaphoreW);
-    ATTACH(CreateSolidBrush);
-    ATTACH(CreateStdProgressIndicator);
-    ATTACH(CreateStreamOnHGlobal);
-    ATTACH(CreateTapePartition);
-    ATTACH(CreateThread);
-    ATTACH(CreateWaitableTimerA);
-    ATTACH(CreateWaitableTimerW);
-    ATTACH(CreateWindowExA);
-    ATTACH(CreateWindowExW);
-    ATTACH(CreateWindowStationA);
-    ATTACH(CreateWindowStationW);
-    ATTACH(DPtoLP);
-    ATTACH(DdeAbandonTransaction);
-    ATTACH(DdeAccessData);
-    ATTACH(DdeAddData);
-    ATTACH(DdeClientTransaction);
-    ATTACH(DdeCmpStringHandles);
-    ATTACH(DdeConnect);
-    ATTACH(DdeConnectList);
-    ATTACH(DdeCreateDataHandle);
-    ATTACH(DdeCreateStringHandleA);
-    ATTACH(DdeCreateStringHandleW);
-    ATTACH(DdeDisconnect);
-    ATTACH(DdeDisconnectList);
-    ATTACH(DdeEnableCallback);
-    ATTACH(DdeFreeDataHandle);
-    ATTACH(DdeFreeStringHandle);
-    ATTACH(DdeGetData);
-    ATTACH(DdeGetLastError);
-    ATTACH(DdeImpersonateClient);
-    ATTACH(DdeKeepStringHandle);
-    ATTACH(DdeNameService);
-    ATTACH(DdePostAdvise);
-    ATTACH(DdeQueryConvInfo);
-    ATTACH(DdeQueryNextServer);
-    ATTACH(DdeQueryStringA);
-    ATTACH(DdeQueryStringW);
-    ATTACH(DdeReconnect);
-    ATTACH(DdeSetQualityOfService);
-    ATTACH(DdeSetUserHandle);
-    ATTACH(DdeUnaccessData);
-    ATTACH(DdeUninitialize);
-    ATTACH(DebugActiveProcess);
-    ATTACH(DebugActiveProcessStop);
-    ATTACH(DebugBreak);
-    ATTACH(DefDlgProcA);
-    ATTACH(DefDlgProcW);
-    ATTACH(DefFrameProcA);
-    ATTACH(DefFrameProcW);
-    ATTACH(DefMDIChildProcA);
-    ATTACH(DefMDIChildProcW);
-    ATTACH(DefWindowProcA);
-    ATTACH(DefWindowProcW);
-    ATTACH(DeferWindowPos);
-    ATTACH(DefineDosDeviceA);
-    ATTACH(DefineDosDeviceW);
-    ATTACH(DeleteAtom);
-    ATTACH(DeleteColorSpace);
-    ATTACH(DeleteDC);
-    ATTACH(DeleteEnhMetaFile);
-    ATTACH(DeleteFiber);
-    ATTACH(DeleteFileA);
-    ATTACH(DeleteFileW);
-    ATTACH(DeleteMenu);
-    ATTACH(DeleteMetaFile);
-    ATTACH(DeleteObject);
-    ATTACH(DescribePixelFormat);
-    ATTACH(DestroyAcceleratorTable);
-    ATTACH(DestroyCaret);
-    ATTACH(DestroyCursor);
-    ATTACH(DestroyIcon);
-    ATTACH(DestroyMenu);
-    ATTACH(DestroyWindow);
-    ATTACH(DeviceIoControl);
-    ATTACH(DialogBoxIndirectParamA);
-    ATTACH(DialogBoxIndirectParamW);
-    ATTACH(DialogBoxParamA);
-    ATTACH(DialogBoxParamW);
-    ATTACH(DisableThreadLibraryCalls);
-    ATTACH(DisconnectNamedPipe);
-    ATTACH(DispatchMessageA);
-    ATTACH(DispatchMessageW);
-    ATTACH(DlgDirListA);
-    ATTACH(DlgDirListComboBoxA);
-    ATTACH(DlgDirListComboBoxW);
-    ATTACH(DlgDirListW);
-    ATTACH(DlgDirSelectComboBoxExA);
-    ATTACH(DlgDirSelectComboBoxExW);
-    ATTACH(DlgDirSelectExA);
-    ATTACH(DlgDirSelectExW);
-    ATTACH(DoDragDrop);
-    ATTACH(DosDateTimeToFileTime);
-    ATTACH(DragDetect);
-    ATTACH(DragObject);
-    ATTACH(DrawAnimatedRects);
-    ATTACH(DrawCaption);
-    ATTACH(DrawEdge);
-    ATTACH(DrawEscape);
-    ATTACH(DrawFocusRect);
-    ATTACH(DrawFrameControl);
-    ATTACH(DrawIcon);
-    ATTACH(DrawIconEx);
-    ATTACH(DrawMenuBar);
-    ATTACH(DrawStateA);
-    ATTACH(DrawStateW);
-    ATTACH(DrawTextA);
-    ATTACH(DrawTextExA);
-    ATTACH(DrawTextExW);
-    ATTACH(DrawTextW);
-    ATTACH(DuplicateHandle);
-    ATTACH(Ellipse);
-    ATTACH(EmptyClipboard);
-    ATTACH(EnableMenuItem);
-    ATTACH(EnableScrollBar);
-    ATTACH(EnableWindow);
-    ATTACH(EndDeferWindowPos);
-    ATTACH(EndDialog);
-    ATTACH(EndDoc);
-    ATTACH(EndPage);
-    ATTACH(EndPaint);
-    ATTACH(EndPath);
-    ATTACH(EndUpdateResourceA);
-    ATTACH(EndUpdateResourceW);
-    ATTACH(EnumCalendarInfoA);
-    ATTACH(EnumCalendarInfoW);
-    ATTACH(EnumChildWindows);
-    ATTACH(EnumClipboardFormats);
-    ATTACH(EnumDateFormatsA);
-    ATTACH(EnumDateFormatsW);
-    ATTACH(EnumDesktopWindows);
-    ATTACH(EnumDesktopsA);
-    ATTACH(EnumDesktopsW);
-    ATTACH(EnumDisplaySettingsA);
-    ATTACH(EnumDisplaySettingsW);
-    ATTACH(EnumEnhMetaFile);
-    ATTACH(EnumFontFamiliesA);
-    ATTACH(EnumFontFamiliesExA);
-    ATTACH(EnumFontFamiliesExW);
-    ATTACH(EnumFontFamiliesW);
-    ATTACH(EnumFontsA);
-    ATTACH(EnumFontsW);
-    ATTACH(EnumICMProfilesA);
-    ATTACH(EnumICMProfilesW);
-    ATTACH(EnumMetaFile);
-    ATTACH(EnumObjects);
-    ATTACH(EnumPropsA);
-    ATTACH(EnumPropsExA);
-    ATTACH(EnumPropsExW);
-    ATTACH(EnumPropsW);
-    ATTACH(EnumResourceLanguagesA);
-    ATTACH(EnumResourceLanguagesW);
-    ATTACH(EnumResourceNamesA);
-    ATTACH(EnumResourceNamesW);
-    ATTACH(EnumResourceTypesA);
-    ATTACH(EnumResourceTypesW);
-    ATTACH(EnumSystemCodePagesA);
-    ATTACH(EnumSystemCodePagesW);
-#if(WINVER >= 0x0500)
-    ATTACH(EnumSystemLocalesA);
-    ATTACH(EnumSystemLocalesW);
-#endif // (WINVER >= 0x0500)
-    ATTACH(EnumThreadWindows);
-    ATTACH(EnumTimeFormatsA);
-    ATTACH(EnumTimeFormatsW);
-    ATTACH(EnumWindowStationsA);
-    ATTACH(EnumWindowStationsW);
-    ATTACH(EnumWindows);
-    ATTACH(EqualRect);
-    ATTACH(EqualRgn);
-    ATTACH(EraseTape);
-    ATTACH(Escape);
-    ATTACH(EscapeCommFunction);
-    ATTACH(ExcludeClipRect);
-    ATTACH(ExcludeUpdateRgn);
-    ATTACH(ExitProcess);
-    ATTACH(ExitThread);
-    ATTACH(ExitWindowsEx);
-    ATTACH(ExpandEnvironmentStringsA);
-    ATTACH(ExpandEnvironmentStringsW);
-    ATTACH(ExtCreatePen);
-    ATTACH(ExtCreateRegion);
-    ATTACH(ExtEscape);
-    ATTACH(ExtFloodFill);
-    ATTACH(ExtSelectClipRgn);
-    ATTACH(ExtTextOutA);
-    ATTACH(ExtTextOutW);
-    ATTACH(FatalAppExitA);
-    ATTACH(FatalAppExitW);
-    ATTACH(FatalExit);
-    ATTACH(FileTimeToDosDateTime);
-    ATTACH(FileTimeToLocalFileTime);
-    ATTACH(FileTimeToSystemTime);
-    ATTACH(FillConsoleOutputAttribute);
-    ATTACH(FillConsoleOutputCharacterA);
-    ATTACH(FillConsoleOutputCharacterW);
-    ATTACH(FillPath);
-    ATTACH(FillRect);
-    ATTACH(FillRgn);
-    ATTACH(FindAtomA);
-    ATTACH(FindAtomW);
-    ATTACH(FindClose);
-    ATTACH(FindCloseChangeNotification);
-    ATTACH(FindFirstChangeNotificationA);
-    ATTACH(FindFirstChangeNotificationW);
-    ATTACH(FindFirstFileA);
-    ATTACH(FindFirstFileExA);
-    ATTACH(FindFirstFileExW);
-    ATTACH(FindFirstFileW);
-    ATTACH(FindNextChangeNotification);
-    ATTACH(FindNextFileA);
-    ATTACH(FindNextFileW);
-    ATTACH(FindResourceA);
-    ATTACH(FindResourceExA);
-    ATTACH(FindResourceExW);
-    ATTACH(FindResourceW);
-    ATTACH(FindWindowA);
-    ATTACH(FindWindowExA);
-    ATTACH(FindWindowExW);
-    ATTACH(FindWindowW);
-    ATTACH(FixBrushOrgEx);
-    ATTACH(FlashWindow);
-    ATTACH(FlattenPath);
-    ATTACH(FloodFill);
-    ATTACH(FlushConsoleInputBuffer);
-    ATTACH(FlushFileBuffers);
-    ATTACH(FlushViewOfFile);
-    ATTACH(FmtIdToPropStgName);
-    ATTACH(FoldStringA);
-    ATTACH(FoldStringW);
-    ATTACH(FormatMessageA);
-    ATTACH(FormatMessageW);
-    ATTACH(FrameRect);
-    ATTACH(FrameRgn);
-    ATTACH(FreeConsole);
-    ATTACH(FreeDDElParam);
-    ATTACH(FreeEnvironmentStringsA);
-    ATTACH(FreeEnvironmentStringsW);
-    ATTACH(FreeLibrary);
-    ATTACH(FreeLibraryAndExitThread);
-    ATTACH(FreePropVariantArray);
-    ATTACH(FreeResource);
-    ATTACH(GdiComment);
-    ATTACH(GdiFlush);
-    ATTACH(GdiGetBatchLimit);
-    ATTACH(GdiSetBatchLimit);
-    ATTACH(GenerateConsoleCtrlEvent);
-    ATTACH(GetACP);
-    ATTACH(GetActiveWindow);
-    ATTACH(GetArcDirection);
-    ATTACH(GetAspectRatioFilterEx);
-    ATTACH(GetAsyncKeyState);
-    ATTACH(GetAtomNameA);
-    ATTACH(GetAtomNameW);
-    ATTACH(GetBinaryTypeA);
-    ATTACH(GetBinaryTypeW);
-    ATTACH(GetBitmapBits);
-    ATTACH(GetBitmapDimensionEx);
-    ATTACH(GetBkColor);
-    ATTACH(GetBkMode);
-    ATTACH(GetBoundsRect);
-    ATTACH(GetBrushOrgEx);
-    ATTACH(GetCPInfo);
-    ATTACH(GetCapture);
-    ATTACH(GetCaretBlinkTime);
-    ATTACH(GetCaretPos);
-    ATTACH(GetCharABCWidthsA);
-    ATTACH(GetCharABCWidthsFloatA);
-    ATTACH(GetCharABCWidthsFloatW);
-    ATTACH(GetCharABCWidthsW);
-    ATTACH(GetCharWidth32A);
-    ATTACH(GetCharWidth32W);
-    ATTACH(GetCharWidthA);
-    ATTACH(GetCharWidthFloatA);
-    ATTACH(GetCharWidthFloatW);
-    ATTACH(GetCharWidthW);
-    ATTACH(GetCharacterPlacementA);
-    ATTACH(GetCharacterPlacementW);
-    ATTACH(GetClassFile);
-    ATTACH(GetClassInfoA);
-    ATTACH(GetClassInfoExA);
-    ATTACH(GetClassInfoExW);
-    ATTACH(GetClassInfoW);
-    ATTACH(GetClassLongA);
-    ATTACH(GetClassLongW);
-    ATTACH(GetClassNameA);
-    ATTACH(GetClassNameW);
-    ATTACH(GetClassWord);
-    ATTACH(GetClientRect);
-    ATTACH(GetClipBox);
-    ATTACH(GetClipCursor);
-    ATTACH(GetClipRgn);
-    ATTACH(GetClipboardData);
-    ATTACH(GetClipboardFormatNameA);
-    ATTACH(GetClipboardFormatNameW);
-    ATTACH(GetClipboardOwner);
-    ATTACH(GetClipboardViewer);
-    ATTACH(GetColorAdjustment);
-    ATTACH(GetColorSpace);
-    ATTACH(GetCommConfig);
-    ATTACH(GetCommMask);
-    ATTACH(GetCommModemStatus);
-    ATTACH(GetCommProperties);
-    ATTACH(GetCommState);
-    ATTACH(GetCommTimeouts);
-    ATTACH(GetCommandLineA);
-    ATTACH(GetCommandLineW);
-    ATTACH(GetComputerNameA);
-    ATTACH(GetComputerNameW);
-    ATTACH(GetConsoleCP);
-    ATTACH(GetConsoleCursorInfo);
-    ATTACH(GetConsoleMode);
-    ATTACH(GetConsoleOutputCP);
-    ATTACH(GetConsoleScreenBufferInfo);
-    ATTACH(GetConsoleTitleA);
-    ATTACH(GetConsoleTitleW);
-    ATTACH(GetConvertStg);
-    ATTACH(GetCurrencyFormatA);
-    ATTACH(GetCurrencyFormatW);
-    ATTACH(GetCurrentDirectoryA);
-    ATTACH(GetCurrentDirectoryW);
-    ATTACH(GetCurrentObject);
-    ATTACH(GetCurrentPositionEx);
-    ATTACH(GetCurrentProcess);
-    ATTACH(GetCurrentProcessId);
-    ATTACH(GetCurrentThreadId);
-    ATTACH(GetCursor);
-    ATTACH(GetCursorPos);
-    ATTACH(GetDC);
-    ATTACH(GetDCEx);
-    ATTACH(GetDCOrgEx);
-    ATTACH(GetDIBColorTable);
-    ATTACH(GetDIBits);
-    ATTACH(GetDateFormatA);
-    ATTACH(GetDateFormatW);
-    ATTACH(GetDefaultCommConfigA);
-    ATTACH(GetDefaultCommConfigW);
-    ATTACH(GetDesktopWindow);
-    ATTACH(GetDeviceCaps);
-    ATTACH(GetDeviceGammaRamp);
-    ATTACH(GetDialogBaseUnits);
-    ATTACH(GetDiskFreeSpaceA);
-    ATTACH(GetDiskFreeSpaceExA);
-    ATTACH(GetDiskFreeSpaceExW);
-    ATTACH(GetDiskFreeSpaceW);
-    ATTACH(GetDlgCtrlID);
-    ATTACH(GetDlgItem);
-    ATTACH(GetDlgItemInt);
-    ATTACH(GetDlgItemTextA);
-    ATTACH(GetDlgItemTextW);
-    ATTACH(GetDoubleClickTime);
-    ATTACH(GetDriveTypeA);
-    ATTACH(GetDriveTypeW);
-    ATTACH(GetEnhMetaFileA);
-    ATTACH(GetEnhMetaFileBits);
-    ATTACH(GetEnhMetaFileDescriptionA);
-    ATTACH(GetEnhMetaFileDescriptionW);
-    ATTACH(GetEnhMetaFileHeader);
-    ATTACH(GetEnhMetaFilePaletteEntries);
-    ATTACH(GetEnhMetaFilePixelFormat);
-    ATTACH(GetEnhMetaFileW);
-    ATTACH(GetEnvironmentStrings);
-    ATTACH(GetEnvironmentStringsW);
-    ATTACH(GetEnvironmentVariableA);
-    ATTACH(GetEnvironmentVariableW);
-    ATTACH(GetExitCodeProcess);
-    ATTACH(GetExitCodeThread);
-    ATTACH(GetFileAttributesA);
-    ATTACH(GetFileAttributesExA);
-    ATTACH(GetFileAttributesExW);
-    ATTACH(GetFileAttributesW);
-    ATTACH(GetFileInformationByHandle);
-    ATTACH(GetFileSize);
-    ATTACH(GetFileTime);
-    ATTACH(GetFileType);
-    ATTACH(GetFocus);
-    ATTACH(GetFontData);
-    ATTACH(GetFontLanguageInfo);
-    ATTACH(GetForegroundWindow);
-    ATTACH(GetFullPathNameA);
-    ATTACH(GetFullPathNameW);
-    ATTACH(GetGlyphOutlineA);
-    ATTACH(GetGlyphOutlineW);
-    ATTACH(GetGraphicsMode);
-    ATTACH(GetHGlobalFromILockBytes);
-    ATTACH(GetHGlobalFromStream);
-    ATTACH(GetHandleInformation);
-    ATTACH(GetICMProfileA);
-    ATTACH(GetICMProfileW);
-    ATTACH(GetIconInfo);
-    ATTACH(GetInputState);
-    ATTACH(GetKBCodePage);
-    ATTACH(GetKerningPairsA);
-    ATTACH(GetKerningPairsW);
-    ATTACH(GetKeyNameTextA);
-    ATTACH(GetKeyNameTextW);
-    ATTACH(GetKeyState);
-    ATTACH(GetKeyboardLayout);
-    ATTACH(GetKeyboardLayoutList);
-    ATTACH(GetKeyboardLayoutNameA);
-    ATTACH(GetKeyboardLayoutNameW);
-    ATTACH(GetKeyboardState);
-    ATTACH(GetKeyboardType);
-    ATTACH(GetLastActivePopup);
-    ATTACH(GetLocalTime);
-    ATTACH(GetLocaleInfoA);
-    ATTACH(GetLocaleInfoW);
-    ATTACH(GetLogColorSpaceA);
-    ATTACH(GetLogColorSpaceW);
-    ATTACH(GetLogicalDriveStringsA);
-    ATTACH(GetLogicalDriveStringsW);
-    ATTACH(GetLogicalDrives);
-    ATTACH(GetMailslotInfo);
-    ATTACH(GetMapMode);
-    ATTACH(GetMenu);
-    ATTACH(GetMenuCheckMarkDimensions);
-    ATTACH(GetMenuContextHelpId);
-    ATTACH(GetMenuDefaultItem);
-    ATTACH(GetMenuItemCount);
-    ATTACH(GetMenuItemID);
-    ATTACH(GetMenuItemInfoA);
-    ATTACH(GetMenuItemInfoW);
-    ATTACH(GetMenuItemRect);
-    ATTACH(GetMenuState);
-    ATTACH(GetMenuStringA);
-    ATTACH(GetMenuStringW);
-    ATTACH(GetMessageA);
-    ATTACH(GetMessageExtraInfo);
-    ATTACH(GetMessagePos);
-    ATTACH(GetMessageTime);
-    ATTACH(GetMessageW);
-    ATTACH(GetMetaFileA);
-    ATTACH(GetMetaFileBitsEx);
-    ATTACH(GetMetaFileW);
-    ATTACH(GetMetaRgn);
-    ATTACH(GetMiterLimit);
-    ATTACH(GetModuleFileNameA);
-    ATTACH(GetModuleFileNameW);
-    ATTACH(GetModuleHandleA);
-    ATTACH(GetModuleHandleW);
-    ATTACH(GetNamedPipeHandleStateA);
-    ATTACH(GetNamedPipeHandleStateW);
-    ATTACH(GetNamedPipeInfo);
-    ATTACH(GetNearestColor);
-    ATTACH(GetNearestPaletteIndex);
-    ATTACH(GetNextDlgGroupItem);
-    ATTACH(GetNextDlgTabItem);
-    ATTACH(GetNumberFormatA);
-    ATTACH(GetNumberFormatW);
-    ATTACH(GetNumberOfConsoleInputEvents);
-    ATTACH(GetNumberOfConsoleMouseButtons);
-    ATTACH(GetOEMCP);
-    ATTACH(GetObjectA);
-    ATTACH(GetObjectType);
-    ATTACH(GetObjectW);
-    ATTACH(GetOpenClipboardWindow);
-    ATTACH(GetOutlineTextMetricsA);
-    ATTACH(GetOutlineTextMetricsW);
-    ATTACH(GetOverlappedResult);
-    ATTACH(GetPaletteEntries);
-    ATTACH(GetParent);
-    ATTACH(GetPath);
-    ATTACH(GetPixel);
-    ATTACH(GetPixelFormat);
-    ATTACH(GetPolyFillMode);
-    ATTACH(GetPriorityClass);
-    ATTACH(GetPriorityClipboardFormat);
-    ATTACH(GetPrivateProfileIntA);
-    ATTACH(GetPrivateProfileIntW);
-    ATTACH(GetPrivateProfileSectionA);
-    ATTACH(GetPrivateProfileSectionNamesA);
-    ATTACH(GetPrivateProfileSectionNamesW);
-    ATTACH(GetPrivateProfileSectionW);
-    ATTACH(GetPrivateProfileStringA);
-    ATTACH(GetPrivateProfileStringW);
-    ATTACH(GetPrivateProfileStructA);
-    ATTACH(GetPrivateProfileStructW);
-    ATTACH(GetProcAddress);
-    ATTACH(GetProcessAffinityMask);
-    ATTACH(GetProcessHeaps);
-    ATTACH(GetProcessShutdownParameters);
-    ATTACH(GetProcessTimes);
-    ATTACH(GetProcessVersion);
-    ATTACH(GetProcessWindowStation);
-    ATTACH(GetProcessWorkingSetSize);
-    ATTACH(GetProfileIntA);
-    ATTACH(GetProfileIntW);
-    ATTACH(GetProfileSectionA);
-    ATTACH(GetProfileSectionW);
-    ATTACH(GetProfileStringA);
-    ATTACH(GetProfileStringW);
-    ATTACH(GetPropA);
-    ATTACH(GetPropW);
-    ATTACH(GetQueueStatus);
-    ATTACH(GetQueuedCompletionStatus);
-    ATTACH(GetROP2);
-    ATTACH(GetRasterizerCaps);
-    ATTACH(GetRegionData);
-    ATTACH(GetRgnBox);
-    ATTACH(GetRunningObjectTable);
-    ATTACH(GetScrollInfo);
-    ATTACH(GetScrollPos);
-    ATTACH(GetScrollRange);
-    ATTACH(GetShortPathNameA);
-    ATTACH(GetShortPathNameW);
-    ATTACH(GetStartupInfoA);
-    ATTACH(GetStartupInfoW);
-    ATTACH(GetStdHandle);
-    ATTACH(GetStockObject);
-    ATTACH(GetStretchBltMode);
-    ATTACH(GetSubMenu);
-    ATTACH(GetSysColor);
-    ATTACH(GetSysColorBrush);
-    ATTACH(GetSystemDefaultLCID);
-    ATTACH(GetSystemDefaultLangID);
-    ATTACH(GetSystemDirectoryA);
-    ATTACH(GetSystemDirectoryW);
-    ATTACH(GetSystemInfo);
-    ATTACH(GetSystemMenu);
-    ATTACH(GetSystemMetrics);
-    ATTACH(GetSystemPaletteEntries);
-    ATTACH(GetSystemPaletteUse);
-    ATTACH(GetSystemPowerStatus);
-    ATTACH(GetSystemTime);
-    ATTACH(GetSystemTimeAdjustment);
-    ATTACH(GetSystemTimeAsFileTime);
-    ATTACH(GetTabbedTextExtentA);
-    ATTACH(GetTabbedTextExtentW);
-    ATTACH(GetTapeParameters);
-    ATTACH(GetTapePosition);
-    ATTACH(GetTapeStatus);
-    ATTACH(GetTempFileNameA);
-    ATTACH(GetTempFileNameW);
-    ATTACH(GetTempPathA);
-    ATTACH(GetTempPathW);
-    ATTACH(GetTextAlign);
-    ATTACH(GetTextCharacterExtra);
-    ATTACH(GetTextCharset);
-    ATTACH(GetTextCharsetInfo);
-    ATTACH(GetTextColor);
-    ATTACH(GetTextExtentExPointA);
-    ATTACH(GetTextExtentExPointW);
-    ATTACH(GetTextExtentPoint32A);
-    ATTACH(GetTextExtentPoint32W);
-    ATTACH(GetTextExtentPointA);
-    ATTACH(GetTextExtentPointW);
-    ATTACH(GetTextFaceA);
-    ATTACH(GetTextFaceW);
-    ATTACH(GetTextMetricsA);
-    ATTACH(GetTextMetricsW);
-    ATTACH(GetThreadContext);
-    ATTACH(GetThreadDesktop);
-#if(WINVER >= 0x0500)
-    ATTACH(GetThreadLocale);
-#endif // (WINVER >= 0x0500)
-    ATTACH(GetThreadPriority);
-    ATTACH(GetThreadPriorityBoost);
-    ATTACH(GetThreadSelectorEntry);
-    ATTACH(GetThreadTimes);
-    ATTACH(GetTickCount);
-    ATTACH(GetTimeFormatA);
-    ATTACH(GetTimeFormatW);
-    ATTACH(GetTimeZoneInformation);
-    ATTACH(GetTopWindow);
-    ATTACH(GetUpdateRect);
-    ATTACH(GetUpdateRgn);
-    ATTACH(GetUserDefaultLCID);
-    ATTACH(GetUserDefaultLangID);
-    ATTACH(GetUserObjectInformationA);
-    ATTACH(GetUserObjectInformationW);
-    ATTACH(GetUserObjectSecurity);
-    ATTACH(GetVersion);
-    ATTACH(GetVersionExA);
-    ATTACH(GetVersionExW);
-    ATTACH(GetViewportExtEx);
-    ATTACH(GetViewportOrgEx);
-    ATTACH(GetVolumeInformationA);
-    ATTACH(GetVolumeInformationW);
-    ATTACH(GetWinMetaFileBits);
-    ATTACH(GetWindow);
-    ATTACH(GetWindowContextHelpId);
-    ATTACH(GetWindowDC);
-    ATTACH(GetWindowExtEx);
-    ATTACH(GetWindowLongA);
-    ATTACH(GetWindowLongW);
-    ATTACH(GetWindowOrgEx);
-    ATTACH(GetWindowPlacement);
-    ATTACH(GetWindowRect);
-    ATTACH(GetWindowRgn);
-    ATTACH(GetWindowTextA);
-    ATTACH(GetWindowTextLengthA);
-    ATTACH(GetWindowTextLengthW);
-    ATTACH(GetWindowTextW);
-    ATTACH(GetWindowThreadProcessId);
-    ATTACH(GetWindowWord);
-    ATTACH(GetWindowsDirectoryA);
-    ATTACH(GetWindowsDirectoryW);
-    ATTACH(GetWorldTransform);
-    ATTACH(GlobalAddAtomA);
-    ATTACH(GlobalAddAtomW);
-    ATTACH(GlobalAlloc);
-    ATTACH(GlobalCompact);
-    ATTACH(GlobalDeleteAtom);
-    ATTACH(GlobalFindAtomA);
-    ATTACH(GlobalFindAtomW);
-    ATTACH(GlobalFix);
-    ATTACH(GlobalFlags);
-    ATTACH(GlobalFree);
-    ATTACH(GlobalGetAtomNameA);
-    ATTACH(GlobalGetAtomNameW);
-    ATTACH(GlobalHandle);
-    ATTACH(GlobalLock);
-    ATTACH(GlobalMemoryStatus);
-    ATTACH(GlobalReAlloc);
-    ATTACH(GlobalSize);
-    ATTACH(GlobalUnWire);
-    ATTACH(GlobalUnfix);
-    ATTACH(GlobalUnlock);
-    ATTACH(GlobalWire);
-    ATTACH(GrayStringA);
-    ATTACH(GrayStringW);
-    ATTACH(HeapLock);
-    ATTACH(HeapUnlock);
-    ATTACH(HideCaret);
-    ATTACH(HiliteMenuItem);
-    ATTACH(IIDFromString);
-    ATTACH(ImpersonateDdeClientWindow);
-    ATTACH(InSendMessage);
-    ATTACH(InflateRect);
-    ATTACH(InitAtomTable);
-    ATTACH(InsertMenuA);
-    ATTACH(InsertMenuItemA);
-    ATTACH(InsertMenuItemW);
-    ATTACH(InsertMenuW);
-    ATTACH(IntersectClipRect);
-    ATTACH(IntersectRect);
-    ATTACH(InvalidateRect);
-    ATTACH(InvalidateRgn);
-    ATTACH(InvertRect);
-    ATTACH(InvertRgn);
-    ATTACH(IsAccelerator);
-    ATTACH(IsBadCodePtr);
-    ATTACH(IsBadHugeReadPtr);
-    ATTACH(IsBadHugeWritePtr);
-    ATTACH(IsBadReadPtr);
-    ATTACH(IsBadStringPtrA);
-    ATTACH(IsBadStringPtrW);
-    ATTACH(IsBadWritePtr);
-    ATTACH(IsCharAlphaA);
-    ATTACH(IsCharAlphaNumericA);
-    ATTACH(IsCharAlphaNumericW);
-    ATTACH(IsCharAlphaW);
-    ATTACH(IsCharLowerA);
-    ATTACH(IsCharLowerW);
-    ATTACH(IsCharUpperA);
-    ATTACH(IsCharUpperW);
-    ATTACH(IsChild);
-    ATTACH(IsClipboardFormatAvailable);
-    ATTACH(IsDBCSLeadByte);
-    ATTACH(IsDBCSLeadByteEx);
-    ATTACH(IsDebuggerPresent);
-    ATTACH(IsDialogMessageA);
-    ATTACH(IsDialogMessageW);
-    ATTACH(IsDlgButtonChecked);
-    ATTACH(IsIconic);
-    ATTACH(IsMenu);
-#if !defined(DETOURS_ARM)
-    ATTACH(IsProcessorFeaturePresent);
-#endif // !DETOURS_ARM
-    ATTACH(IsRectEmpty);
-    ATTACH(IsValidCodePage);
-    ATTACH(IsValidLocale);
-    ATTACH(IsWindow);
-    ATTACH(IsWindowEnabled);
-    ATTACH(IsWindowUnicode);
-    ATTACH(IsWindowVisible);
-    ATTACH(IsZoomed);
-    ATTACH(KillTimer);
-    ATTACH(LPtoDP);
-    ATTACH(LineDDA);
-    ATTACH(LineTo);
-    ATTACH(LoadAcceleratorsA);
-    ATTACH(LoadAcceleratorsW);
-    ATTACH(LoadBitmapA);
-    ATTACH(LoadBitmapW);
-    ATTACH(LoadCursorA);
-    ATTACH(LoadCursorFromFileA);
-    ATTACH(LoadCursorFromFileW);
-    ATTACH(LoadCursorW);
-    ATTACH(LoadIconA);
-    ATTACH(LoadIconW);
-    ATTACH(LoadImageA);
-    ATTACH(LoadImageW);
-    ATTACH(LoadKeyboardLayoutA);
-    ATTACH(LoadKeyboardLayoutW);
-    ATTACH(LoadLibraryA);
-    ATTACH(LoadLibraryExA);
-    ATTACH(LoadLibraryExW);
-    ATTACH(LoadLibraryW);
-    ATTACH(LoadMenuA);
-    ATTACH(LoadMenuIndirectA);
-    ATTACH(LoadMenuIndirectW);
-    ATTACH(LoadMenuW);
-    ATTACH(LoadModule);
-    ATTACH(LoadResource);
-    ATTACH(LoadStringA);
-    ATTACH(LoadStringW);
-    ATTACH(LocalAlloc);
-    ATTACH(LocalCompact);
-    ATTACH(LocalFileTimeToFileTime);
-    ATTACH(LocalFlags);
-    ATTACH(LocalFree);
-    ATTACH(LocalHandle);
-    ATTACH(LocalLock);
-    ATTACH(LocalReAlloc);
-    ATTACH(LocalShrink);
-    ATTACH(LocalSize);
-    ATTACH(LocalUnlock);
-    ATTACH(LockFile);
-    ATTACH(LockFileEx);
-    ATTACH(LockResource);
-    ATTACH(LockWindowUpdate);
-    ATTACH(LookupIconIdFromDirectory);
-    ATTACH(LookupIconIdFromDirectoryEx);
-    ATTACH(MapDialogRect);
-    ATTACH(MapViewOfFile);
-    ATTACH(MapViewOfFileEx);
-    ATTACH(MapVirtualKeyA);
-    ATTACH(MapVirtualKeyExA);
-    ATTACH(MapVirtualKeyExW);
-    ATTACH(MapVirtualKeyW);
-    ATTACH(MapWindowPoints);
-    ATTACH(MaskBlt);
-    ATTACH(MenuItemFromPoint);
-    ATTACH(MessageBeep);
-    ATTACH(MessageBoxA);
-    ATTACH(MessageBoxExA);
-    ATTACH(MessageBoxExW);
-    ATTACH(MessageBoxIndirectA);
-    ATTACH(MessageBoxIndirectW);
-    ATTACH(MessageBoxW);
-    ATTACH(MkParseDisplayName);
-    ATTACH(ModifyMenuA);
-    ATTACH(ModifyMenuW);
-    ATTACH(ModifyWorldTransform);
-    ATTACH(MonikerCommonPrefixWith);
-    ATTACH(MonikerRelativePathTo);
-    ATTACH(MoveFileA);
-    ATTACH(MoveFileExA);
-    ATTACH(MoveFileExW);
-    ATTACH(MoveFileW);
-    ATTACH(MoveToEx);
-    ATTACH(MoveWindow);
-    ATTACH(MsgWaitForMultipleObjects);
-    ATTACH(MsgWaitForMultipleObjectsEx);
-    ATTACH(MulDiv);
-    ATTACH(OemKeyScan);
-    ATTACH(OemToCharA);
-    ATTACH(OemToCharBuffA);
-    ATTACH(OemToCharBuffW);
-    ATTACH(OemToCharW);
-    ATTACH(OffsetClipRgn);
-    ATTACH(OffsetRect);
-    ATTACH(OffsetRgn);
-    ATTACH(OffsetViewportOrgEx);
-    ATTACH(OffsetWindowOrgEx);
-    ATTACH(OleBuildVersion);
-    ATTACH(OleConvertIStorageToOLESTREAM);
-    ATTACH(OleConvertIStorageToOLESTREAMEx);
-    ATTACH(OleConvertOLESTREAMToIStorage);
-    ATTACH(OleConvertOLESTREAMToIStorageEx);
-    ATTACH(OleCreate);
-    ATTACH(OleCreateDefaultHandler);
-    ATTACH(OleCreateEmbeddingHelper);
-    ATTACH(OleCreateEx);
-    ATTACH(OleCreateFromData);
-    ATTACH(OleCreateFromDataEx);
-    ATTACH(OleCreateFromFile);
-    ATTACH(OleCreateFromFileEx);
-    ATTACH(OleCreateLink);
-    ATTACH(OleCreateLinkEx);
-    ATTACH(OleCreateLinkFromData);
-    ATTACH(OleCreateLinkFromDataEx);
-    ATTACH(OleCreateLinkToFile);
-    ATTACH(OleCreateLinkToFileEx);
-    ATTACH(OleCreateMenuDescriptor);
-    ATTACH(OleCreateStaticFromData);
-    ATTACH(OleDestroyMenuDescriptor);
-    ATTACH(OleDoAutoConvert);
-    ATTACH(OleDraw);
-    ATTACH(OleDuplicateData);
-    ATTACH(OleFlushClipboard);
-    ATTACH(OleGetAutoConvert);
-    ATTACH(OleGetClipboard);
-    ATTACH(OleGetIconOfClass);
-    ATTACH(OleGetIconOfFile);
-    ATTACH(OleInitialize);
-    ATTACH(OleIsCurrentClipboard);
-    ATTACH(OleIsRunning);
-    ATTACH(OleLoad);
-    ATTACH(OleLoadFromStream);
-    ATTACH(OleLockRunning);
-    ATTACH(OleMetafilePictFromIconAndLabel);
-    ATTACH(OleNoteObjectVisible);
-    ATTACH(OleQueryCreateFromData);
-    ATTACH(OleQueryLinkFromData);
-    ATTACH(OleRegEnumFormatEtc);
-    ATTACH(OleRegEnumVerbs);
-    ATTACH(OleRegGetMiscStatus);
-    ATTACH(OleRegGetUserType);
-    ATTACH(OleRun);
-    ATTACH(OleSave);
-    ATTACH(OleSaveToStream);
-    ATTACH(OleSetAutoConvert);
-    ATTACH(OleSetClipboard);
-    ATTACH(OleSetContainedObject);
-    ATTACH(OleSetMenuDescriptor);
-    ATTACH(OleTranslateAccelerator);
-    ATTACH(OleUninitialize);
-    ATTACH(OpenClipboard);
-    ATTACH(OpenDesktopA);
-    ATTACH(OpenDesktopW);
-    ATTACH(OpenEventA);
-    ATTACH(OpenEventW);
-    ATTACH(OpenFile);
-    ATTACH(OpenFileMappingA);
-    ATTACH(OpenFileMappingW);
-    ATTACH(OpenIcon);
-    ATTACH(OpenInputDesktop);
-    ATTACH(OpenMutexA);
-    ATTACH(OpenMutexW);
-    ATTACH(OpenProcess);
-    ATTACH(OpenProcessToken);
-    ATTACH(OpenSemaphoreA);
-    ATTACH(OpenSemaphoreW);
-    ATTACH(OpenWaitableTimerA);
-    ATTACH(OpenWaitableTimerW);
-    ATTACH(OpenWindowStationA);
-    ATTACH(OpenWindowStationW);
-    ATTACH(OutputDebugStringA);
-    ATTACH(OutputDebugStringW);
-    ATTACH(PackDDElParam);
-    ATTACH(PaintDesktop);
-    ATTACH(PaintRgn);
-    ATTACH(PatBlt);
-    ATTACH(PathToRegion);
-    ATTACH(PeekConsoleInputA);
-    ATTACH(PeekConsoleInputW);
-    ATTACH(PeekMessageA);
-    ATTACH(PeekMessageW);
-    ATTACH(PeekNamedPipe);
-    ATTACH(Pie);
-    ATTACH(PlayEnhMetaFile);
-    ATTACH(PlayEnhMetaFileRecord);
-    ATTACH(PlayMetaFile);
-    ATTACH(PlayMetaFileRecord);
-    ATTACH(PlgBlt);
-    ATTACH(PolyBezier);
-    ATTACH(PolyBezierTo);
-    ATTACH(PolyDraw);
-    ATTACH(PolyPolygon);
-    ATTACH(PolyPolyline);
-    ATTACH(PolyTextOutA);
-    ATTACH(PolyTextOutW);
-    ATTACH(Polygon);
-    ATTACH(Polyline);
-    ATTACH(PolylineTo);
-    ATTACH(PostMessageA);
-    ATTACH(PostMessageW);
-    ATTACH(PostQueuedCompletionStatus);
-    ATTACH(PostQuitMessage);
-    ATTACH(PostThreadMessageA);
-    ATTACH(PostThreadMessageW);
-    ATTACH(PrepareTape);
-    ATTACH(ProgIDFromCLSID);
-    ATTACH(PropVariantClear);
-    ATTACH(PropVariantCopy);
-    ATTACH(PtInRect);
-    ATTACH(PtInRegion);
-    ATTACH(PtVisible);
-    ATTACH(PulseEvent);
-    ATTACH(PurgeComm);
-    ATTACH(QueryDosDeviceA);
-    ATTACH(QueryDosDeviceW);
-    ATTACH(QueryPerformanceCounter);
-    ATTACH(QueryPerformanceFrequency);
-    ATTACH(QueueUserAPC);
-    ATTACH(RaiseException);
-    ATTACH(ReadClassStg);
-    ATTACH(ReadClassStm);
-    ATTACH(ReadConsoleA);
-    ATTACH(ReadConsoleInputA);
-    ATTACH(ReadConsoleInputW);
-    ATTACH(ReadConsoleOutputA);
-    ATTACH(ReadConsoleOutputAttribute);
-    ATTACH(ReadConsoleOutputCharacterA);
-    ATTACH(ReadConsoleOutputCharacterW);
-    ATTACH(ReadConsoleOutputW);
-    ATTACH(ReadConsoleW);
-    ATTACH(ReadDirectoryChangesW);
-    ATTACH(ReadFile);
-    ATTACH(ReadFileEx);
-    ATTACH(ReadFmtUserTypeStg);
-    ATTACH(ReadProcessMemory);
-    ATTACH(RealizePalette);
-    ATTACH(RectInRegion);
-    ATTACH(RectVisible);
-    ATTACH(Rectangle);
-    ATTACH(RedrawWindow);
-    ATTACH(RegisterClassA);
-    ATTACH(RegisterClassExA);
-    ATTACH(RegisterClassExW);
-    ATTACH(RegisterClassW);
-    ATTACH(RegisterClipboardFormatA);
-    ATTACH(RegisterClipboardFormatW);
-    ATTACH(RegisterDragDrop);
-    ATTACH(RegisterHotKey);
-    ATTACH(RegisterWindowMessageA);
-    ATTACH(RegisterWindowMessageW);
-    ATTACH(ReleaseCapture);
-    ATTACH(ReleaseDC);
-    ATTACH(ReleaseMutex);
-    ATTACH(ReleaseSemaphore);
-    ATTACH(ReleaseStgMedium);
-    ATTACH(RemoveDirectoryA);
-    ATTACH(RemoveDirectoryW);
-    ATTACH(RemoveFontResourceA);
-    ATTACH(RemoveFontResourceW);
-    ATTACH(RemoveMenu);
-    ATTACH(RemovePropA);
-    ATTACH(RemovePropW);
-    ATTACH(ReplyMessage);
-    ATTACH(ResetDCA);
-    ATTACH(ResetDCW);
-    ATTACH(ResetEvent);
-    ATTACH(ResizePalette);
-    ATTACH(RestoreDC);
-    ATTACH(ResumeThread);
-    ATTACH(ReuseDDElParam);
-    ATTACH(RevokeDragDrop);
-    ATTACH(RoundRect);
-    ATTACH(SaveDC);
-    ATTACH(ScaleViewportExtEx);
-    ATTACH(ScaleWindowExtEx);
-    ATTACH(ScreenToClient);
-    ATTACH(ScrollConsoleScreenBufferA);
-    ATTACH(ScrollConsoleScreenBufferW);
-    ATTACH(ScrollDC);
-    ATTACH(ScrollWindow);
-    ATTACH(ScrollWindowEx);
-    ATTACH(SearchPathA);
-    ATTACH(SearchPathW);
-    ATTACH(SelectClipPath);
-    ATTACH(SelectClipRgn);
-    ATTACH(SelectObject);
-    ATTACH(SelectPalette);
-    ATTACH(SendDlgItemMessageA);
-    ATTACH(SendDlgItemMessageW);
-    ATTACH(SendMessageA);
-    ATTACH(SendMessageCallbackA);
-    ATTACH(SendMessageCallbackW);
-    ATTACH(SendMessageTimeoutA);
-    ATTACH(SendMessageTimeoutW);
-    ATTACH(SendMessageW);
-    ATTACH(SendNotifyMessageA);
-    ATTACH(SendNotifyMessageW);
-    ATTACH(SetAbortProc);
-    ATTACH(SetActiveWindow);
-    ATTACH(SetArcDirection);
-    ATTACH(SetBitmapBits);
-    ATTACH(SetBitmapDimensionEx);
-    ATTACH(SetBkColor);
-    ATTACH(SetBkMode);
-    ATTACH(SetBoundsRect);
-    ATTACH(SetBrushOrgEx);
-    ATTACH(SetCapture);
-    ATTACH(SetCaretBlinkTime);
-    ATTACH(SetCaretPos);
-    ATTACH(SetClassLongA);
-    ATTACH(SetClassLongW);
-    ATTACH(SetClassWord);
-    ATTACH(SetClipboardData);
-    ATTACH(SetClipboardViewer);
-    ATTACH(SetColorAdjustment);
-    ATTACH(SetColorSpace);
-    ATTACH(SetCommBreak);
-    ATTACH(SetCommConfig);
-    ATTACH(SetCommMask);
-    ATTACH(SetCommState);
-    ATTACH(SetCommTimeouts);
-    ATTACH(SetComputerNameA);
-    ATTACH(SetComputerNameW);
-    ATTACH(SetConsoleActiveScreenBuffer);
-    ATTACH(SetConsoleCP);
-    ATTACH(SetConsoleCtrlHandler);
-    ATTACH(SetConsoleCursorInfo);
-    ATTACH(SetConsoleCursorPosition);
-    ATTACH(SetConsoleMode);
-    ATTACH(SetConsoleOutputCP);
-    ATTACH(SetConsoleScreenBufferSize);
-    ATTACH(SetConsoleTextAttribute);
-    ATTACH(SetConsoleTitleA);
-    ATTACH(SetConsoleTitleW);
-    ATTACH(SetConsoleWindowInfo);
-    ATTACH(SetConvertStg);
-    ATTACH(SetCurrentDirectoryA);
-    ATTACH(SetCurrentDirectoryW);
-    ATTACH(SetCursor);
-    ATTACH(SetCursorPos);
-    ATTACH(SetDIBColorTable);
-    ATTACH(SetDIBits);
-    ATTACH(SetDIBitsToDevice);
-    ATTACH(SetDefaultCommConfigA);
-    ATTACH(SetDefaultCommConfigW);
-    ATTACH(SetDeviceGammaRamp);
-    ATTACH(SetDlgItemInt);
-    ATTACH(SetDlgItemTextA);
-    ATTACH(SetDlgItemTextW);
-    ATTACH(SetDoubleClickTime);
-    ATTACH(SetEndOfFile);
-    ATTACH(SetEnhMetaFileBits);
-    ATTACH(SetEnvironmentVariableA);
-    ATTACH(SetEnvironmentVariableW);
-    ATTACH(SetErrorMode);
-    ATTACH(SetEvent);
-    ATTACH(SetFileApisToANSI);
-    ATTACH(SetFileApisToOEM);
-    ATTACH(SetFileAttributesA);
-    ATTACH(SetFileAttributesW);
-    ATTACH(SetFilePointer);
-    ATTACH(SetFileTime);
-    ATTACH(SetFocus);
-    ATTACH(SetForegroundWindow);
-    ATTACH(SetGraphicsMode);
-    ATTACH(SetHandleCount);
-    ATTACH(SetHandleInformation);
-    ATTACH(SetICMMode);
-    ATTACH(SetICMProfileA);
-    ATTACH(SetICMProfileW);
-    ATTACH(SetKeyboardState);
-    ATTACH(SetLocalTime);
-    ATTACH(SetLocaleInfoA);
-    ATTACH(SetLocaleInfoW);
-    ATTACH(SetMailslotInfo);
-    ATTACH(SetMapMode);
-    ATTACH(SetMapperFlags);
-    ATTACH(SetMenu);
-    ATTACH(SetMenuContextHelpId);
-    ATTACH(SetMenuDefaultItem);
-    ATTACH(SetMenuItemBitmaps);
-    ATTACH(SetMenuItemInfoA);
-    ATTACH(SetMenuItemInfoW);
-    ATTACH(SetMessageExtraInfo);
-    ATTACH(SetMessageQueue);
-    ATTACH(SetMetaFileBitsEx);
-    ATTACH(SetMetaRgn);
-    ATTACH(SetMiterLimit);
-    ATTACH(SetNamedPipeHandleState);
-    ATTACH(SetPaletteEntries);
-    ATTACH(SetParent);
-    ATTACH(SetPixel);
-    ATTACH(SetPixelFormat);
-    ATTACH(SetPixelV);
-    ATTACH(SetPolyFillMode);
-    ATTACH(SetPriorityClass);
-    ATTACH(SetProcessAffinityMask);
-    ATTACH(SetProcessShutdownParameters);
-    ATTACH(SetProcessWindowStation);
-    ATTACH(SetProcessWorkingSetSize);
-    ATTACH(SetPropA);
-    ATTACH(SetPropW);
-    ATTACH(SetROP2);
-    ATTACH(SetRect);
-    ATTACH(SetRectEmpty);
-    ATTACH(SetRectRgn);
-    ATTACH(SetScrollInfo);
-    ATTACH(SetScrollPos);
-    ATTACH(SetScrollRange);
-    ATTACH(SetStdHandle);
-    ATTACH(SetStretchBltMode);
-    ATTACH(SetSysColors);
-    ATTACH(SetSystemCursor);
-    ATTACH(SetSystemPaletteUse);
-    ATTACH(SetSystemPowerState);
-    ATTACH(SetSystemTime);
-    ATTACH(SetSystemTimeAdjustment);
-    ATTACH(SetTapeParameters);
-    ATTACH(SetTapePosition);
-    ATTACH(SetTextAlign);
-    ATTACH(SetTextCharacterExtra);
-    ATTACH(SetTextColor);
-    ATTACH(SetTextJustification);
-    ATTACH(SetThreadAffinityMask);
-    ATTACH(SetThreadContext);
-    ATTACH(SetThreadDesktop);
-    ATTACH(SetThreadIdealProcessor);
-#if(WINVER >= 0x0500)
-    ATTACH(SetThreadLocale);
-#endif // (WINVER >= 0x0500)
-    ATTACH(SetThreadPriority);
-    ATTACH(SetThreadPriorityBoost);
-    ATTACH(SetTimeZoneInformation);
-    ATTACH(SetTimer);
-    ATTACH(SetUnhandledExceptionFilter);
-    ATTACH(SetUserObjectInformationA);
-    ATTACH(SetUserObjectInformationW);
-    ATTACH(SetUserObjectSecurity);
-    ATTACH(SetViewportExtEx);
-    ATTACH(SetViewportOrgEx);
-    ATTACH(SetVolumeLabelA);
-    ATTACH(SetVolumeLabelW);
-    ATTACH(SetWaitableTimer);
-    ATTACH(SetWinMetaFileBits);
-    ATTACH(SetWindowContextHelpId);
-    ATTACH(SetWindowExtEx);
-    ATTACH(SetWindowLongA);
-    ATTACH(SetWindowLongW);
-    ATTACH(SetWindowOrgEx);
-    ATTACH(SetWindowPlacement);
-    ATTACH(SetWindowPos);
-    ATTACH(SetWindowRgn);
-    ATTACH(SetWindowTextA);
-    ATTACH(SetWindowTextW);
-    ATTACH(SetWindowWord);
-    ATTACH(SetWindowsHookA);
-    ATTACH(SetWindowsHookExA);
-    ATTACH(SetWindowsHookExW);
-    ATTACH(SetWindowsHookW);
-    ATTACH(SetWorldTransform);
-    ATTACH(SetupComm);
-    ATTACH(ShowCaret);
-    ATTACH(ShowCursor);
-    ATTACH(ShowOwnedPopups);
-    ATTACH(ShowScrollBar);
-    ATTACH(ShowWindow);
-    ATTACH(ShowWindowAsync);
-    ATTACH(SignalObjectAndWait);
-    ATTACH(SizeofResource);
-    ATTACH(SleepEx);
-    ATTACH(StartDocA);
-    ATTACH(StartDocW);
-    ATTACH(StartPage);
-    ATTACH(StgCreateDocfile);
-    ATTACH(StgCreateDocfileOnILockBytes);
-    ATTACH(StgCreatePropSetStg);
-    ATTACH(StgCreatePropStg);
-    ATTACH(StgCreateStorageEx);
-    ATTACH(StgGetIFillLockBytesOnFile);
-    ATTACH(StgGetIFillLockBytesOnILockBytes);
-    ATTACH(StgIsStorageFile);
-    ATTACH(StgIsStorageILockBytes);
-    ATTACH(StgOpenAsyncDocfileOnIFillLockBytes);
-    ATTACH(StgOpenPropStg);
-    ATTACH(StgOpenStorage);
-    ATTACH(StgOpenStorageEx);
-    ATTACH(StgOpenStorageOnILockBytes);
-    ATTACH(StgSetTimes);
-    ATTACH(StretchBlt);
-    ATTACH(StretchDIBits);
-    ATTACH(StringFromCLSID);
-    ATTACH(StringFromGUID2);
-    ATTACH(StringFromIID);
-    ATTACH(StrokeAndFillPath);
-    ATTACH(StrokePath);
-    ATTACH(SubtractRect);
-    ATTACH(SuspendThread);
-    ATTACH(SwapBuffers);
-    ATTACH(SwapMouseButton);
-    ATTACH(SwitchDesktop);
-    ATTACH(SwitchToFiber);
-    ATTACH(SwitchToThread);
-    ATTACH(SystemParametersInfoA);
-    ATTACH(SystemParametersInfoW);
-    ATTACH(SystemTimeToFileTime);
-    ATTACH(SystemTimeToTzSpecificLocalTime);
-    ATTACH(TabbedTextOutA);
-    ATTACH(TabbedTextOutW);
-    ATTACH(TerminateProcess);
-    ATTACH(TerminateThread);
-    ATTACH(TextOutA);
-    ATTACH(TextOutW);
-    ATTACH(TileWindows);
-    ATTACH(ToAscii);
-    ATTACH(ToAsciiEx);
-    ATTACH(ToUnicode);
-    ATTACH(ToUnicodeEx);
-    ATTACH(TrackMouseEvent);
-    ATTACH(TrackPopupMenu);
-    ATTACH(TrackPopupMenuEx);
-    ATTACH(TransactNamedPipe);
-    ATTACH(TranslateAcceleratorA);
-    ATTACH(TranslateAcceleratorW);
-    ATTACH(TranslateCharsetInfo);
-    ATTACH(TranslateMDISysAccel);
-    ATTACH(TranslateMessage);
-    ATTACH(TransmitCommChar);
-#if DETOUR_TryEnterCriticalSection_EVEN_IF_IT_EXERCISES_A_BUG_IN_RtlLookupFunctionTable
-    ATTACH(TryEnterCriticalSection);
-#endif
-    ATTACH(UnhookWindowsHook);
-    ATTACH(UnhookWindowsHookEx);
-    ATTACH(UnionRect);
-    ATTACH(UnloadKeyboardLayout);
-    ATTACH(UnlockFile);
-    ATTACH(UnlockFileEx);
-    ATTACH(UnmapViewOfFile);
-    ATTACH(UnpackDDElParam);
-    ATTACH(UnrealizeObject);
-    ATTACH(UnregisterClassA);
-    ATTACH(UnregisterClassW);
-    ATTACH(UnregisterHotKey);
-    ATTACH(UpdateColors);
-    ATTACH(UpdateResourceA);
-    ATTACH(UpdateResourceW);
-    ATTACH(UpdateWindow);
-    ATTACH(ValidateRect);
-    ATTACH(ValidateRgn);
-    ATTACH(VerLanguageNameA);
-    ATTACH(VerLanguageNameW);
-    ATTACH(VirtualAllocEx);
-    ATTACH(VirtualFreeEx);
-    ATTACH(VirtualProtectEx);
-    ATTACH(VirtualQueryEx);
-    ATTACH(VkKeyScanA);
-    ATTACH(VkKeyScanExA);
-    ATTACH(VkKeyScanExW);
-    ATTACH(VkKeyScanW);
-    ATTACH(WSAAccept);
-    ATTACH(WSAAddressToStringA);
-    ATTACH(WSAAddressToStringW);
-    ATTACH(WSAAsyncGetHostByAddr);
-    ATTACH(WSAAsyncGetHostByName);
-    ATTACH(WSAAsyncGetProtoByName);
-    ATTACH(WSAAsyncGetProtoByNumber);
-    ATTACH(WSAAsyncGetServByName);
-    ATTACH(WSAAsyncGetServByPort);
-    ATTACH(WSAAsyncSelect);
-    ATTACH(WSACancelAsyncRequest);
-    ATTACH(WSACancelBlockingCall);
-    ATTACH(WSACleanup);
-    ATTACH(WSACloseEvent);
-    ATTACH(WSAConnect);
-    ATTACH(WSACreateEvent);
-    ATTACH(WSADuplicateSocketA);
-    ATTACH(WSADuplicateSocketW);
-    ATTACH(WSAEnumNameSpaceProvidersA);
-    ATTACH(WSAEnumNameSpaceProvidersW);
-    ATTACH(WSAEnumNetworkEvents);
-    ATTACH(WSAEnumProtocolsA);
-    ATTACH(WSAEnumProtocolsW);
-    ATTACH(WSAEventSelect);
-    ATTACH(WSAGetOverlappedResult);
-    ATTACH(WSAGetQOSByName);
-    ATTACH(WSAGetServiceClassInfoA);
-    ATTACH(WSAGetServiceClassInfoW);
-    ATTACH(WSAGetServiceClassNameByClassIdA);
-    ATTACH(WSAGetServiceClassNameByClassIdW);
-    ATTACH(WSAHtonl);
-    ATTACH(WSAHtons);
-    ATTACH(WSAInstallServiceClassA);
-    ATTACH(WSAInstallServiceClassW);
-    ATTACH(WSAIoctl);
-    ATTACH(WSAIsBlocking);
-    ATTACH(WSAJoinLeaf);
-    ATTACH(WSALookupServiceBeginA);
-    ATTACH(WSALookupServiceBeginW);
-    ATTACH(WSALookupServiceEnd);
-    ATTACH(WSALookupServiceNextA);
-    ATTACH(WSALookupServiceNextW);
-    ATTACH(WSANtohl);
-    ATTACH(WSANtohs);
-    ATTACH(WSAProviderConfigChange);
-    ATTACH(WSARecv);
-    ATTACH(WSARecvDisconnect);
-    ATTACH(WSARecvFrom);
-    ATTACH(WSARemoveServiceClass);
-    ATTACH(WSAResetEvent);
-    ATTACH(WSASend);
-    ATTACH(WSASendDisconnect);
-    ATTACH(WSASendTo);
-    ATTACH(WSASetBlockingHook);
-    ATTACH(WSASetEvent);
-    ATTACH(WSASetServiceA);
-    ATTACH(WSASetServiceW);
-    ATTACH(WSASocketA);
-    ATTACH(WSASocketW);
-    ATTACH(WSAStartup);
-    ATTACH(WSAStringToAddressA);
-    ATTACH(WSAStringToAddressW);
-    ATTACH(WSAUnhookBlockingHook);
-    ATTACH(WSAWaitForMultipleEvents);
-    ATTACH(WaitCommEvent);
-#if !defined(DETOURS_ARM)
-    ATTACH(WaitForDebugEvent);
-#endif // !DETOURS_ARM
-    ATTACH(WaitForInputIdle);
-    ATTACH(WaitForMultipleObjects);
-    ATTACH(WaitForMultipleObjectsEx);
-    ATTACH(WaitForSingleObject);
-    ATTACH(WaitForSingleObjectEx);
-    ATTACH(WaitMessage);
-    ATTACH(WaitNamedPipeA);
-    ATTACH(WaitNamedPipeW);
-    ATTACH(WidenPath);
-    ATTACH(WinExec);
-    ATTACH(WinHelpA);
-    ATTACH(WinHelpW);
-    ATTACH(WindowFromDC);
-    ATTACH(WindowFromPoint);
-    ATTACH(WriteClassStg);
-    ATTACH(WriteClassStm);
-    ATTACH(WriteConsoleA);
-    ATTACH(WriteConsoleInputA);
-    ATTACH(WriteConsoleInputW);
-    ATTACH(WriteConsoleOutputA);
-    ATTACH(WriteConsoleOutputAttribute);
-    ATTACH(WriteConsoleOutputCharacterA);
-    ATTACH(WriteConsoleOutputCharacterW);
-    ATTACH(WriteConsoleOutputW);
-    ATTACH(WriteConsoleW);
-    ATTACH(WriteFile);
-    ATTACH(WriteFileEx);
-    ATTACH(WriteFmtUserTypeStg);
-    ATTACH(WritePrivateProfileSectionA);
-    ATTACH(WritePrivateProfileSectionW);
-    ATTACH(WritePrivateProfileStringA);
-    ATTACH(WritePrivateProfileStringW);
-    ATTACH(WritePrivateProfileStructA);
-    ATTACH(WritePrivateProfileStructW);
-    ATTACH(WriteProcessMemory);
-    ATTACH(WriteProfileSectionA);
-    ATTACH(WriteProfileSectionW);
-    ATTACH(WriteProfileStringA);
-    ATTACH(WriteProfileStringW);
-    ATTACH(WriteTapemark);
-    ATTACH(__WSAFDIsSet);
-    ATTACH(_hread);
-    ATTACH(_hwrite);
-    ATTACH(_lclose);
-    ATTACH(_lcreat);
-    ATTACH(_llseek);
-    ATTACH(_lopen);
-    ATTACH(_lread);
-    ATTACH(_lwrite);
-    ATTACH(accept);
-    ATTACH(bind);
-    ATTACH(closesocket);
-    ATTACH(connect);
-    ATTACH(gethostbyaddr);
-    ATTACH(gethostbyname);
-    ATTACH(gethostname);
-    ATTACH(getpeername);
-    ATTACH(getprotobyname);
-    ATTACH(getprotobynumber);
-    ATTACH(getservbyname);
-    ATTACH(getservbyport);
-    ATTACH(getsockname);
-    ATTACH(getsockopt);
-    ATTACH(htonl);
-    ATTACH(htons);
-    ATTACH(inet_addr);
-    ATTACH(inet_ntoa);
-    ATTACH(ioctlsocket);
-    ATTACH(keybd_event);
-    ATTACH(listen);
-    ATTACH(mouse_event);
-    ATTACH(ntohl);
-    ATTACH(ntohs);
-    ATTACH(recv);
-    ATTACH(recvfrom);
-    ATTACH(select);
-    ATTACH(send);
-    ATTACH(sendto);
-    ATTACH(setsockopt);
-    ATTACH(shutdown);
-    ATTACH(socket);
-
-    PVOID* ppbFailedPointer = NULL;
-    LONG error = DetourTransactionCommitEx(&ppbFailedPointer);
-    if (error != 0) {
-        printf("traceapi.dll: Attach transaction failed to commit. Error %ld (%p/%p)",
-            error, ppbFailedPointer, *ppbFailedPointer);
-        return error;
-    }
-    return 0;
-}
-
-LONG DetachDetours(VOID)
-{
-    DetourTransactionBegin();
-    DetourUpdateThread(GetCurrentThread());
-
-    // For this many APIs, we'll ignore one or two can't be detoured.
-    DetourSetIgnoreTooSmall(TRUE);
-
-    DETACH(AbortDoc);
-    DETACH(AbortPath);
-    DETACH(ActivateKeyboardLayout);
-    DETACH(AddAtomA);
-    DETACH(AddAtomW);
-    DETACH(AddFontResourceA);
-    DETACH(AddFontResourceW);
-    DETACH(AdjustWindowRect);
-    DETACH(AdjustWindowRectEx);
-    DETACH(AllocConsole);
-    DETACH(AngleArc);
-    DETACH(AnimatePalette);
-    DETACH(AnyPopup);
-    DETACH(AppendMenuA);
-    DETACH(AppendMenuW);
-    DETACH(Arc);
-    DETACH(ArcTo);
-    DETACH(AreFileApisANSI);
-    DETACH(ArrangeIconicWindows);
-    DETACH(AttachThreadInput);
-    DETACH(BackupRead);
-    DETACH(BackupSeek);
-    DETACH(BackupWrite);
-    DETACH(Beep);
-    DETACH(BeginDeferWindowPos);
-    DETACH(BeginPaint);
-    DETACH(BeginPath);
-    DETACH(BeginUpdateResourceA);
-    DETACH(BeginUpdateResourceW);
-    DETACH(BindMoniker);
-    DETACH(BitBlt);
-    DETACH(BringWindowToTop);
-    DETACH(BroadcastSystemMessageA);
-    DETACH(BroadcastSystemMessageW);
-    DETACH(BuildCommDCBA);
-    DETACH(BuildCommDCBAndTimeoutsA);
-    DETACH(BuildCommDCBAndTimeoutsW);
-    DETACH(BuildCommDCBW);
-    DETACH(CLSIDFromProgID);
-    DETACH(CLSIDFromString);
-    DETACH(CallMsgFilterA);
-    DETACH(CallMsgFilterW);
-    DETACH(CallNamedPipeA);
-    DETACH(CallNamedPipeW);
-    DETACH(CallNextHookEx);
-    DETACH(CallWindowProcA);
-    DETACH(CallWindowProcW);
-    DETACH(CancelDC);
-    DETACH(CancelIo);
-    DETACH(CancelWaitableTimer);
-    DETACH(CascadeWindows);
-    DETACH(ChangeClipboardChain);
-    DETACH(ChangeDisplaySettingsA);
-    DETACH(ChangeDisplaySettingsExA);
-    DETACH(ChangeDisplaySettingsExW);
-    DETACH(ChangeDisplaySettingsW);
-    DETACH(ChangeMenuA);
-    DETACH(ChangeMenuW);
-    DETACH(CharLowerA);
-    DETACH(CharLowerBuffA);
-    DETACH(CharLowerBuffW);
-    DETACH(CharLowerW);
-    DETACH(CharNextA);
-    DETACH(CharNextExA);
-    DETACH(CharNextW);
-    DETACH(CharPrevA);
-    DETACH(CharPrevExA);
-    DETACH(CharPrevW);
-    DETACH(CharToOemA);
-    DETACH(CharToOemBuffA);
-    DETACH(CharToOemBuffW);
-    DETACH(CharToOemW);
-    DETACH(CharUpperA);
-    DETACH(CharUpperBuffA);
-    DETACH(CharUpperBuffW);
-    DETACH(CharUpperW);
-    DETACH(CheckColorsInGamut);
-    DETACH(CheckDlgButton);
-    DETACH(CheckMenuItem);
-    DETACH(CheckMenuRadioItem);
-    DETACH(CheckRadioButton);
-    DETACH(ChildWindowFromPoint);
-    DETACH(ChildWindowFromPointEx);
-    DETACH(ChoosePixelFormat);
-    DETACH(Chord);
-    DETACH(ClearCommBreak);
-    DETACH(ClearCommError);
-    DETACH(ClientToScreen);
-    DETACH(ClipCursor);
-    DETACH(CloseClipboard);
-    DETACH(CloseDesktop);
-    DETACH(CloseEnhMetaFile);
-    DETACH(CloseFigure);
-    DETACH(CloseHandle);
-    DETACH(CloseMetaFile);
-    DETACH(CloseWindow);
-    DETACH(CloseWindowStation);
-    DETACH(CoAddRefServerProcess);
-    DETACH(CoBuildVersion);
-    DETACH(CoCopyProxy);
-    DETACH(CoCreateFreeThreadedMarshaler);
-    DETACH(CoCreateGuid);
-    DETACH(CoCreateInstance);
-    DETACH(CoCreateInstanceEx);
-    DETACH(CoDisconnectObject);
-    DETACH(CoDosDateTimeToFileTime);
-    DETACH(CoFileTimeNow);
-    DETACH(CoFileTimeToDosDateTime);
-    DETACH(CoFreeAllLibraries);
-    DETACH(CoFreeLibrary);
-    DETACH(CoFreeUnusedLibraries);
-    DETACH(CoGetCallContext);
-    DETACH(CoGetClassObject);
-    DETACH(CoGetCurrentProcess);
-    DETACH(CoGetInstanceFromFile);
-    DETACH(CoGetInstanceFromIStorage);
-    DETACH(CoGetInterfaceAndReleaseStream);
-    DETACH(CoGetMalloc);
-    DETACH(CoGetMarshalSizeMax);
-    DETACH(CoGetObject);
-    DETACH(CoGetPSClsid);
-    DETACH(CoGetStandardMarshal);
-    DETACH(CoGetStdMarshalEx);
-    DETACH(CoGetTreatAsClass);
-    DETACH(CoImpersonateClient);
-    DETACH(CoInitialize);
-    DETACH(CoInitializeEx);
-    DETACH(CoInitializeSecurity);
-    DETACH(CoIsHandlerConnected);
-    DETACH(CoIsOle1Class);
-    DETACH(CoLoadLibrary);
-    DETACH(CoLockObjectExternal);
-    DETACH(CoMarshalHresult);
-    DETACH(CoMarshalInterThreadInterfaceInStream);
-    DETACH(CoMarshalInterface);
-    DETACH(CoQueryAuthenticationServices);
-    DETACH(CoQueryClientBlanket);
-    DETACH(CoQueryProxyBlanket);
-    DETACH(CoRegisterChannelHook);
-    DETACH(CoRegisterClassObject);
-    DETACH(CoRegisterMallocSpy);
-    DETACH(CoRegisterMessageFilter);
-    DETACH(CoRegisterPSClsid);
-    DETACH(CoRegisterSurrogate);
-    DETACH(CoReleaseMarshalData);
-    DETACH(CoReleaseServerProcess);
-    DETACH(CoResumeClassObjects);
-    DETACH(CoRevertToSelf);
-    DETACH(CoRevokeClassObject);
-    DETACH(CoRevokeMallocSpy);
-    DETACH(CoSetProxyBlanket);
-    DETACH(CoSuspendClassObjects);
-    DETACH(CoSwitchCallContext);
-    DETACH(CoTaskMemAlloc);
-    DETACH(CoTaskMemFree);
-    DETACH(CoTaskMemRealloc);
-    DETACH(CoTreatAsClass);
-    DETACH(CoUninitialize);
-    DETACH(CoUnmarshalHresult);
-    DETACH(CoUnmarshalInterface);
-    DETACH(ColorMatchToTarget);
-    DETACH(CombineRgn);
-    DETACH(CombineTransform);
-    DETACH(CommConfigDialogA);
-    DETACH(CommConfigDialogW);
-    DETACH(CompareFileTime);
-    DETACH(CompareStringA);
-    DETACH(CompareStringW);
-    DETACH(ConnectNamedPipe);
-#if !defined(DETOURS_ARM)
-    DETACH(ContinueDebugEvent);
-#endif // !DETOURS_ARM
-    DETACH(ConvertDefaultLocale);
-    DETACH(ConvertThreadToFiber);
-    DETACH(CopyAcceleratorTableA);
-    DETACH(CopyAcceleratorTableW);
-    DETACH(CopyEnhMetaFileA);
-    DETACH(CopyEnhMetaFileW);
-    DETACH(CopyFileA);
-    DETACH(CopyFileExA);
-    DETACH(CopyFileExW);
-    DETACH(CopyFileW);
-    DETACH(CopyIcon);
-    DETACH(CopyImage);
-    DETACH(CopyMetaFileA);
-    DETACH(CopyMetaFileW);
-    DETACH(CopyRect);
-    DETACH(CountClipboardFormats);
-    DETACH(CreateAcceleratorTableA);
-    DETACH(CreateAcceleratorTableW);
-    DETACH(CreateAntiMoniker);
-    DETACH(CreateBindCtx);
-    DETACH(CreateBitmap);
-    DETACH(CreateBitmapIndirect);
-    DETACH(CreateBrushIndirect);
-    DETACH(CreateCaret);
-    DETACH(CreateClassMoniker);
-    DETACH(CreateColorSpaceA);
-    DETACH(CreateColorSpaceW);
-    DETACH(CreateCompatibleBitmap);
-    DETACH(CreateCompatibleDC);
-    DETACH(CreateConsoleScreenBuffer);
-    DETACH(CreateCursor);
-    DETACH(CreateDCA);
-    DETACH(CreateDCW);
-    DETACH(CreateDIBPatternBrush);
-    DETACH(CreateDIBPatternBrushPt);
-    DETACH(CreateDIBSection);
-    DETACH(CreateDIBitmap);
-    DETACH(CreateDataAdviseHolder);
-    DETACH(CreateDataCache);
-    DETACH(CreateDesktopA);
-    DETACH(CreateDesktopW);
-    DETACH(CreateDialogIndirectParamA);
-    DETACH(CreateDialogIndirectParamW);
-    DETACH(CreateDialogParamA);
-    DETACH(CreateDialogParamW);
-    DETACH(CreateDirectoryA);
-    DETACH(CreateDirectoryExA);
-    DETACH(CreateDirectoryExW);
-    DETACH(CreateDirectoryW);
-    DETACH(CreateDiscardableBitmap);
-    DETACH(CreateEllipticRgn);
-    DETACH(CreateEllipticRgnIndirect);
-    DETACH(CreateEnhMetaFileA);
-    DETACH(CreateEnhMetaFileW);
-    DETACH(CreateEventA);
-    DETACH(CreateEventW);
-    DETACH(CreateFiber);
-    DETACH(CreateFileA);
-    DETACH(CreateFileMappingA);
-    DETACH(CreateFileMappingW);
-    DETACH(CreateFileMoniker);
-    DETACH(CreateFileW);
-    DETACH(CreateFontA);
-    DETACH(CreateFontIndirectA);
-    DETACH(CreateFontIndirectW);
-    DETACH(CreateFontW);
-    DETACH(CreateGenericComposite);
-    DETACH(CreateHalftonePalette);
-    DETACH(CreateHatchBrush);
-    DETACH(CreateICA);
-    DETACH(CreateICW);
-    DETACH(CreateILockBytesOnHGlobal);
-    DETACH(CreateIcon);
-    DETACH(CreateIconFromResource);
-    DETACH(CreateIconFromResourceEx);
-    DETACH(CreateIconIndirect);
-    DETACH(CreateIoCompletionPort);
-    DETACH(CreateItemMoniker);
-    DETACH(CreateMDIWindowA);
-    DETACH(CreateMDIWindowW);
-    DETACH(CreateMailslotA);
-    DETACH(CreateMailslotW);
-    DETACH(CreateMenu);
-    DETACH(CreateMetaFileA);
-    DETACH(CreateMetaFileW);
-    DETACH(CreateMutexA);
-    DETACH(CreateMutexW);
-    DETACH(CreateNamedPipeA);
-    DETACH(CreateNamedPipeW);
-    DETACH(CreateOleAdviseHolder);
-    DETACH(CreatePalette);
-    DETACH(CreatePatternBrush);
-    DETACH(CreatePen);
-    DETACH(CreatePenIndirect);
-    DETACH(CreatePipe);
-    DETACH(CreatePointerMoniker);
-    DETACH(CreatePolyPolygonRgn);
-    DETACH(CreatePolygonRgn);
-    DETACH(CreatePopupMenu);
-    DETACH(CreateProcessA);
-    DETACH(CreateProcessW);
-    DETACH(CreateProcessAsUserA);
-    DETACH(CreateProcessAsUserW);
-#if(_WIN32_WINNT >= 0x0500)
-    DETACH(CreateProcessWithLogonW);
-    DETACH(CreateProcessWithTokenW);
-#endif //(_WIN32_WINNT >= 0x0500)
-    DETACH(CreateRectRgn);
-    DETACH(CreateRectRgnIndirect);
-    DETACH(CreateRemoteThread);
-    DETACH(CreateRoundRectRgn);
-    DETACH(CreateScalableFontResourceA);
-    DETACH(CreateScalableFontResourceW);
-    DETACH(CreateSemaphoreA);
-    DETACH(CreateSemaphoreW);
-    DETACH(CreateSolidBrush);
-    DETACH(CreateStdProgressIndicator);
-    DETACH(CreateStreamOnHGlobal);
-    DETACH(CreateTapePartition);
-    DETACH(CreateThread);
-    DETACH(CreateWaitableTimerA);
-    DETACH(CreateWaitableTimerW);
-    DETACH(CreateWindowExA);
-    DETACH(CreateWindowExW);
-    DETACH(CreateWindowStationA);
-    DETACH(CreateWindowStationW);
-    DETACH(DPtoLP);
-    DETACH(DdeAbandonTransaction);
-    DETACH(DdeAccessData);
-    DETACH(DdeAddData);
-    DETACH(DdeClientTransaction);
-    DETACH(DdeCmpStringHandles);
-    DETACH(DdeConnect);
-    DETACH(DdeConnectList);
-    DETACH(DdeCreateDataHandle);
-    DETACH(DdeCreateStringHandleA);
-    DETACH(DdeCreateStringHandleW);
-    DETACH(DdeDisconnect);
-    DETACH(DdeDisconnectList);
-    DETACH(DdeEnableCallback);
-    DETACH(DdeFreeDataHandle);
-    DETACH(DdeFreeStringHandle);
-    DETACH(DdeGetData);
-    DETACH(DdeGetLastError);
-    DETACH(DdeImpersonateClient);
-    DETACH(DdeKeepStringHandle);
-    DETACH(DdeNameService);
-    DETACH(DdePostAdvise);
-    DETACH(DdeQueryConvInfo);
-    DETACH(DdeQueryNextServer);
-    DETACH(DdeQueryStringA);
-    DETACH(DdeQueryStringW);
-    DETACH(DdeReconnect);
-    DETACH(DdeSetQualityOfService);
-    DETACH(DdeSetUserHandle);
-    DETACH(DdeUnaccessData);
-    DETACH(DdeUninitialize);
-    DETACH(DebugActiveProcess);
-    DETACH(DebugActiveProcessStop);
-    DETACH(DebugBreak);
-    DETACH(DefDlgProcA);
-    DETACH(DefDlgProcW);
-    DETACH(DefFrameProcA);
-    DETACH(DefFrameProcW);
-    DETACH(DefMDIChildProcA);
-    DETACH(DefMDIChildProcW);
-    DETACH(DefWindowProcA);
-    DETACH(DefWindowProcW);
-    DETACH(DeferWindowPos);
-    DETACH(DefineDosDeviceA);
-    DETACH(DefineDosDeviceW);
-    DETACH(DeleteAtom);
-    DETACH(DeleteColorSpace);
-    DETACH(DeleteDC);
-    DETACH(DeleteEnhMetaFile);
-    DETACH(DeleteFiber);
-    DETACH(DeleteFileA);
-    DETACH(DeleteFileW);
-    DETACH(DeleteMenu);
-    DETACH(DeleteMetaFile);
-    DETACH(DeleteObject);
-    DETACH(DescribePixelFormat);
-    DETACH(DestroyAcceleratorTable);
-    DETACH(DestroyCaret);
-    DETACH(DestroyCursor);
-    DETACH(DestroyIcon);
-    DETACH(DestroyMenu);
-    DETACH(DestroyWindow);
-    DETACH(DeviceIoControl);
-    DETACH(DialogBoxIndirectParamA);
-    DETACH(DialogBoxIndirectParamW);
-    DETACH(DialogBoxParamA);
-    DETACH(DialogBoxParamW);
-    DETACH(DisableThreadLibraryCalls);
-    DETACH(DisconnectNamedPipe);
-    DETACH(DispatchMessageA);
-    DETACH(DispatchMessageW);
-    DETACH(DlgDirListA);
-    DETACH(DlgDirListComboBoxA);
-    DETACH(DlgDirListComboBoxW);
-    DETACH(DlgDirListW);
-    DETACH(DlgDirSelectComboBoxExA);
-    DETACH(DlgDirSelectComboBoxExW);
-    DETACH(DlgDirSelectExA);
-    DETACH(DlgDirSelectExW);
-    DETACH(DoDragDrop);
-    DETACH(DosDateTimeToFileTime);
-    DETACH(DragDetect);
-    DETACH(DragObject);
-    DETACH(DrawAnimatedRects);
-    DETACH(DrawCaption);
-    DETACH(DrawEdge);
-    DETACH(DrawEscape);
-    DETACH(DrawFocusRect);
-    DETACH(DrawFrameControl);
-    DETACH(DrawIcon);
-    DETACH(DrawIconEx);
-    DETACH(DrawMenuBar);
-    DETACH(DrawStateA);
-    DETACH(DrawStateW);
-    DETACH(DrawTextA);
-    DETACH(DrawTextExA);
-    DETACH(DrawTextExW);
-    DETACH(DrawTextW);
-    DETACH(DuplicateHandle);
-    DETACH(Ellipse);
-    DETACH(EmptyClipboard);
-    DETACH(EnableMenuItem);
-    DETACH(EnableScrollBar);
-    DETACH(EnableWindow);
-    DETACH(EndDeferWindowPos);
-    DETACH(EndDialog);
-    DETACH(EndDoc);
-    DETACH(EndPage);
-    DETACH(EndPaint);
-    DETACH(EndPath);
-    DETACH(EndUpdateResourceA);
-    DETACH(EndUpdateResourceW);
-    DETACH(EnumCalendarInfoA);
-    DETACH(EnumCalendarInfoW);
-    DETACH(EnumChildWindows);
-    DETACH(EnumClipboardFormats);
-    DETACH(EnumDateFormatsA);
-    DETACH(EnumDateFormatsW);
-    DETACH(EnumDesktopWindows);
-    DETACH(EnumDesktopsA);
-    DETACH(EnumDesktopsW);
-    DETACH(EnumDisplaySettingsA);
-    DETACH(EnumDisplaySettingsW);
-    DETACH(EnumEnhMetaFile);
-    DETACH(EnumFontFamiliesA);
-    DETACH(EnumFontFamiliesExA);
-    DETACH(EnumFontFamiliesExW);
-    DETACH(EnumFontFamiliesW);
-    DETACH(EnumFontsA);
-    DETACH(EnumFontsW);
-    DETACH(EnumICMProfilesA);
-    DETACH(EnumICMProfilesW);
-    DETACH(EnumMetaFile);
-    DETACH(EnumObjects);
-    DETACH(EnumPropsA);
-    DETACH(EnumPropsExA);
-    DETACH(EnumPropsExW);
-    DETACH(EnumPropsW);
-    DETACH(EnumResourceLanguagesA);
-    DETACH(EnumResourceLanguagesW);
-    DETACH(EnumResourceNamesA);
-    DETACH(EnumResourceNamesW);
-    DETACH(EnumResourceTypesA);
-    DETACH(EnumResourceTypesW);
-    DETACH(EnumSystemCodePagesA);
-    DETACH(EnumSystemCodePagesW);
-#if(WINVER >= 0x0500)
-    DETACH(EnumSystemLocalesA);
-    DETACH(EnumSystemLocalesW);
-#endif // (WINVER >= 0x0500)
-    DETACH(EnumThreadWindows);
-    DETACH(EnumTimeFormatsA);
-    DETACH(EnumTimeFormatsW);
-    DETACH(EnumWindowStationsA);
-    DETACH(EnumWindowStationsW);
-    DETACH(EnumWindows);
-    DETACH(EqualRect);
-    DETACH(EqualRgn);
-    DETACH(EraseTape);
-    DETACH(Escape);
-    DETACH(EscapeCommFunction);
-    DETACH(ExcludeClipRect);
-    DETACH(ExcludeUpdateRgn);
-    DETACH(ExitProcess);
-    DETACH(ExitThread);
-    DETACH(ExitWindowsEx);
-    DETACH(ExpandEnvironmentStringsA);
-    DETACH(ExpandEnvironmentStringsW);
-    DETACH(ExtCreatePen);
-    DETACH(ExtCreateRegion);
-    DETACH(ExtEscape);
-    DETACH(ExtFloodFill);
-    DETACH(ExtSelectClipRgn);
-    DETACH(ExtTextOutA);
-    DETACH(ExtTextOutW);
-    DETACH(FatalAppExitA);
-    DETACH(FatalAppExitW);
-    DETACH(FatalExit);
-    DETACH(FileTimeToDosDateTime);
-    DETACH(FileTimeToLocalFileTime);
-    DETACH(FileTimeToSystemTime);
-    DETACH(FillConsoleOutputAttribute);
-    DETACH(FillConsoleOutputCharacterA);
-    DETACH(FillConsoleOutputCharacterW);
-    DETACH(FillPath);
-    DETACH(FillRect);
-    DETACH(FillRgn);
-    DETACH(FindAtomA);
-    DETACH(FindAtomW);
-    DETACH(FindClose);
-    DETACH(FindCloseChangeNotification);
-    DETACH(FindFirstChangeNotificationA);
-    DETACH(FindFirstChangeNotificationW);
-    DETACH(FindFirstFileA);
-    DETACH(FindFirstFileExA);
-    DETACH(FindFirstFileExW);
-    DETACH(FindFirstFileW);
-    DETACH(FindNextChangeNotification);
-    DETACH(FindNextFileA);
-    DETACH(FindNextFileW);
-    DETACH(FindResourceA);
-    DETACH(FindResourceExA);
-    DETACH(FindResourceExW);
-    DETACH(FindResourceW);
-    DETACH(FindWindowA);
-    DETACH(FindWindowExA);
-    DETACH(FindWindowExW);
-    DETACH(FindWindowW);
-    DETACH(FixBrushOrgEx);
-    DETACH(FlashWindow);
-    DETACH(FlattenPath);
-    DETACH(FloodFill);
-    DETACH(FlushConsoleInputBuffer);
-    DETACH(FlushFileBuffers);
-    DETACH(FlushViewOfFile);
-    DETACH(FmtIdToPropStgName);
-    DETACH(FoldStringA);
-    DETACH(FoldStringW);
-    DETACH(FormatMessageA);
-    DETACH(FormatMessageW);
-    DETACH(FrameRect);
-    DETACH(FrameRgn);
-    DETACH(FreeConsole);
-    DETACH(FreeDDElParam);
-    DETACH(FreeEnvironmentStringsA);
-    DETACH(FreeEnvironmentStringsW);
-    DETACH(FreeLibrary);
-    DETACH(FreeLibraryAndExitThread);
-    DETACH(FreePropVariantArray);
-    DETACH(FreeResource);
-    DETACH(GdiComment);
-    DETACH(GdiFlush);
-    DETACH(GdiGetBatchLimit);
-    DETACH(GdiSetBatchLimit);
-    DETACH(GenerateConsoleCtrlEvent);
-    DETACH(GetACP);
-    DETACH(GetActiveWindow);
-    DETACH(GetArcDirection);
-    DETACH(GetAspectRatioFilterEx);
-    DETACH(GetAsyncKeyState);
-    DETACH(GetAtomNameA);
-    DETACH(GetAtomNameW);
-    DETACH(GetBinaryTypeA);
-    DETACH(GetBinaryTypeW);
-    DETACH(GetBitmapBits);
-    DETACH(GetBitmapDimensionEx);
-    DETACH(GetBkColor);
-    DETACH(GetBkMode);
-    DETACH(GetBoundsRect);
-    DETACH(GetBrushOrgEx);
-    DETACH(GetCPInfo);
-    DETACH(GetCapture);
-    DETACH(GetCaretBlinkTime);
-    DETACH(GetCaretPos);
-    DETACH(GetCharABCWidthsA);
-    DETACH(GetCharABCWidthsFloatA);
-    DETACH(GetCharABCWidthsFloatW);
-    DETACH(GetCharABCWidthsW);
-    DETACH(GetCharWidth32A);
-    DETACH(GetCharWidth32W);
-    DETACH(GetCharWidthA);
-    DETACH(GetCharWidthFloatA);
-    DETACH(GetCharWidthFloatW);
-    DETACH(GetCharWidthW);
-    DETACH(GetCharacterPlacementA);
-    DETACH(GetCharacterPlacementW);
-    DETACH(GetClassFile);
-    DETACH(GetClassInfoA);
-    DETACH(GetClassInfoExA);
-    DETACH(GetClassInfoExW);
-    DETACH(GetClassInfoW);
-    DETACH(GetClassLongA);
-    DETACH(GetClassLongW);
-    DETACH(GetClassNameA);
-    DETACH(GetClassNameW);
-    DETACH(GetClassWord);
-    DETACH(GetClientRect);
-    DETACH(GetClipBox);
-    DETACH(GetClipCursor);
-    DETACH(GetClipRgn);
-    DETACH(GetClipboardData);
-    DETACH(GetClipboardFormatNameA);
-    DETACH(GetClipboardFormatNameW);
-    DETACH(GetClipboardOwner);
-    DETACH(GetClipboardViewer);
-    DETACH(GetColorAdjustment);
-    DETACH(GetColorSpace);
-    DETACH(GetCommConfig);
-    DETACH(GetCommMask);
-    DETACH(GetCommModemStatus);
-    DETACH(GetCommProperties);
-    DETACH(GetCommState);
-    DETACH(GetCommTimeouts);
-    DETACH(GetCommandLineA);
-    DETACH(GetCommandLineW);
-    DETACH(GetComputerNameA);
-    DETACH(GetComputerNameW);
-    DETACH(GetConsoleCP);
-    DETACH(GetConsoleCursorInfo);
-    DETACH(GetConsoleMode);
-    DETACH(GetConsoleOutputCP);
-    DETACH(GetConsoleScreenBufferInfo);
-    DETACH(GetConsoleTitleA);
-    DETACH(GetConsoleTitleW);
-    DETACH(GetConvertStg);
-    DETACH(GetCurrencyFormatA);
-    DETACH(GetCurrencyFormatW);
-    DETACH(GetCurrentDirectoryA);
-    DETACH(GetCurrentDirectoryW);
-    DETACH(GetCurrentObject);
-    DETACH(GetCurrentPositionEx);
-    DETACH(GetCurrentProcess);
-    DETACH(GetCurrentProcessId);
-    DETACH(GetCurrentThreadId);
-    DETACH(GetCursor);
-    DETACH(GetCursorPos);
-    DETACH(GetDC);
-    DETACH(GetDCEx);
-    DETACH(GetDCOrgEx);
-    DETACH(GetDIBColorTable);
-    DETACH(GetDIBits);
-    DETACH(GetDateFormatA);
-    DETACH(GetDateFormatW);
-    DETACH(GetDefaultCommConfigA);
-    DETACH(GetDefaultCommConfigW);
-    DETACH(GetDesktopWindow);
-    DETACH(GetDeviceCaps);
-    DETACH(GetDeviceGammaRamp);
-    DETACH(GetDialogBaseUnits);
-    DETACH(GetDiskFreeSpaceA);
-    DETACH(GetDiskFreeSpaceExA);
-    DETACH(GetDiskFreeSpaceExW);
-    DETACH(GetDiskFreeSpaceW);
-    DETACH(GetDlgCtrlID);
-    DETACH(GetDlgItem);
-    DETACH(GetDlgItemInt);
-    DETACH(GetDlgItemTextA);
-    DETACH(GetDlgItemTextW);
-    DETACH(GetDoubleClickTime);
-    DETACH(GetDriveTypeA);
-    DETACH(GetDriveTypeW);
-    DETACH(GetEnhMetaFileA);
-    DETACH(GetEnhMetaFileBits);
-    DETACH(GetEnhMetaFileDescriptionA);
-    DETACH(GetEnhMetaFileDescriptionW);
-    DETACH(GetEnhMetaFileHeader);
-    DETACH(GetEnhMetaFilePaletteEntries);
-    DETACH(GetEnhMetaFilePixelFormat);
-    DETACH(GetEnhMetaFileW);
-    DETACH(GetEnvironmentStrings);
-    DETACH(GetEnvironmentStringsW);
-    DETACH(GetEnvironmentVariableA);
-    DETACH(GetEnvironmentVariableW);
-    DETACH(GetExitCodeProcess);
-    DETACH(GetExitCodeThread);
-    DETACH(GetFileAttributesA);
-    DETACH(GetFileAttributesExA);
-    DETACH(GetFileAttributesExW);
-    DETACH(GetFileAttributesW);
-    DETACH(GetFileInformationByHandle);
-    DETACH(GetFileSize);
-    DETACH(GetFileTime);
-    DETACH(GetFileType);
-    DETACH(GetFocus);
-    DETACH(GetFontData);
-    DETACH(GetFontLanguageInfo);
-    DETACH(GetForegroundWindow);
-    DETACH(GetFullPathNameA);
-    DETACH(GetFullPathNameW);
-    DETACH(GetGlyphOutlineA);
-    DETACH(GetGlyphOutlineW);
-    DETACH(GetGraphicsMode);
-    DETACH(GetHGlobalFromILockBytes);
-    DETACH(GetHGlobalFromStream);
-    DETACH(GetHandleInformation);
-    DETACH(GetICMProfileA);
-    DETACH(GetICMProfileW);
-    DETACH(GetIconInfo);
-    DETACH(GetInputState);
-    DETACH(GetKBCodePage);
-    DETACH(GetKerningPairsA);
-    DETACH(GetKerningPairsW);
-    DETACH(GetKeyNameTextA);
-    DETACH(GetKeyNameTextW);
-    DETACH(GetKeyState);
-    DETACH(GetKeyboardLayout);
-    DETACH(GetKeyboardLayoutList);
-    DETACH(GetKeyboardLayoutNameA);
-    DETACH(GetKeyboardLayoutNameW);
-    DETACH(GetKeyboardState);
-    DETACH(GetKeyboardType);
-    DETACH(GetLastActivePopup);
-    DETACH(GetLocalTime);
-    DETACH(GetLocaleInfoA);
-    DETACH(GetLocaleInfoW);
-    DETACH(GetLogColorSpaceA);
-    DETACH(GetLogColorSpaceW);
-    DETACH(GetLogicalDriveStringsA);
-    DETACH(GetLogicalDriveStringsW);
-    DETACH(GetLogicalDrives);
-    DETACH(GetMailslotInfo);
-    DETACH(GetMapMode);
-    DETACH(GetMenu);
-    DETACH(GetMenuCheckMarkDimensions);
-    DETACH(GetMenuContextHelpId);
-    DETACH(GetMenuDefaultItem);
-    DETACH(GetMenuItemCount);
-    DETACH(GetMenuItemID);
-    DETACH(GetMenuItemInfoA);
-    DETACH(GetMenuItemInfoW);
-    DETACH(GetMenuItemRect);
-    DETACH(GetMenuState);
-    DETACH(GetMenuStringA);
-    DETACH(GetMenuStringW);
-    DETACH(GetMessageA);
-    DETACH(GetMessageExtraInfo);
-    DETACH(GetMessagePos);
-    DETACH(GetMessageTime);
-    DETACH(GetMessageW);
-    DETACH(GetMetaFileA);
-    DETACH(GetMetaFileBitsEx);
-    DETACH(GetMetaFileW);
-    DETACH(GetMetaRgn);
-    DETACH(GetMiterLimit);
-    DETACH(GetModuleFileNameA);
-    DETACH(GetModuleFileNameW);
-    DETACH(GetModuleHandleA);
-    DETACH(GetModuleHandleW);
-    DETACH(GetNamedPipeHandleStateA);
-    DETACH(GetNamedPipeHandleStateW);
-    DETACH(GetNamedPipeInfo);
-    DETACH(GetNearestColor);
-    DETACH(GetNearestPaletteIndex);
-    DETACH(GetNextDlgGroupItem);
-    DETACH(GetNextDlgTabItem);
-    DETACH(GetNumberFormatA);
-    DETACH(GetNumberFormatW);
-    DETACH(GetNumberOfConsoleInputEvents);
-    DETACH(GetNumberOfConsoleMouseButtons);
-    DETACH(GetOEMCP);
-    DETACH(GetObjectA);
-    DETACH(GetObjectType);
-    DETACH(GetObjectW);
-    DETACH(GetOpenClipboardWindow);
-    DETACH(GetOutlineTextMetricsA);
-    DETACH(GetOutlineTextMetricsW);
-    DETACH(GetOverlappedResult);
-    DETACH(GetPaletteEntries);
-    DETACH(GetParent);
-    DETACH(GetPath);
-    DETACH(GetPixel);
-    DETACH(GetPixelFormat);
-    DETACH(GetPolyFillMode);
-    DETACH(GetPriorityClass);
-    DETACH(GetPriorityClipboardFormat);
-    DETACH(GetPrivateProfileIntA);
-    DETACH(GetPrivateProfileIntW);
-    DETACH(GetPrivateProfileSectionA);
-    DETACH(GetPrivateProfileSectionNamesA);
-    DETACH(GetPrivateProfileSectionNamesW);
-    DETACH(GetPrivateProfileSectionW);
-    DETACH(GetPrivateProfileStringA);
-    DETACH(GetPrivateProfileStringW);
-    DETACH(GetPrivateProfileStructA);
-    DETACH(GetPrivateProfileStructW);
-    DETACH(GetProcAddress);
-    DETACH(GetProcessAffinityMask);
-    DETACH(GetProcessHeaps);
-    DETACH(GetProcessShutdownParameters);
-    DETACH(GetProcessTimes);
-    DETACH(GetProcessVersion);
-    DETACH(GetProcessWindowStation);
-    DETACH(GetProcessWorkingSetSize);
-    DETACH(GetProfileIntA);
-    DETACH(GetProfileIntW);
-    DETACH(GetProfileSectionA);
-    DETACH(GetProfileSectionW);
-    DETACH(GetProfileStringA);
-    DETACH(GetProfileStringW);
-    DETACH(GetPropA);
-    DETACH(GetPropW);
-    DETACH(GetQueueStatus);
-    DETACH(GetQueuedCompletionStatus);
-    DETACH(GetROP2);
-    DETACH(GetRasterizerCaps);
-    DETACH(GetRegionData);
-    DETACH(GetRgnBox);
-    DETACH(GetRunningObjectTable);
-    DETACH(GetScrollInfo);
-    DETACH(GetScrollPos);
-    DETACH(GetScrollRange);
-    DETACH(GetShortPathNameA);
-    DETACH(GetShortPathNameW);
-    DETACH(GetStartupInfoA);
-    DETACH(GetStartupInfoW);
-    DETACH(GetStdHandle);
-    DETACH(GetStockObject);
-    DETACH(GetStretchBltMode);
-    DETACH(GetSubMenu);
-    DETACH(GetSysColor);
-    DETACH(GetSysColorBrush);
-    DETACH(GetSystemDefaultLCID);
-    DETACH(GetSystemDefaultLangID);
-    DETACH(GetSystemDirectoryA);
-    DETACH(GetSystemDirectoryW);
-    DETACH(GetSystemInfo);
-    DETACH(GetSystemMenu);
-    DETACH(GetSystemMetrics);
-    DETACH(GetSystemPaletteEntries);
-    DETACH(GetSystemPaletteUse);
-    DETACH(GetSystemPowerStatus);
-    DETACH(GetSystemTime);
-    DETACH(GetSystemTimeAdjustment);
-    DETACH(GetSystemTimeAsFileTime);
-    DETACH(GetTabbedTextExtentA);
-    DETACH(GetTabbedTextExtentW);
-    DETACH(GetTapeParameters);
-    DETACH(GetTapePosition);
-    DETACH(GetTapeStatus);
-    DETACH(GetTempFileNameA);
-    DETACH(GetTempFileNameW);
-    DETACH(GetTempPathA);
-    DETACH(GetTempPathW);
-    DETACH(GetTextAlign);
-    DETACH(GetTextCharacterExtra);
-    DETACH(GetTextCharset);
-    DETACH(GetTextCharsetInfo);
-    DETACH(GetTextColor);
-    DETACH(GetTextExtentExPointA);
-    DETACH(GetTextExtentExPointW);
-    DETACH(GetTextExtentPoint32A);
-    DETACH(GetTextExtentPoint32W);
-    DETACH(GetTextExtentPointA);
-    DETACH(GetTextExtentPointW);
-    DETACH(GetTextFaceA);
-    DETACH(GetTextFaceW);
-    DETACH(GetTextMetricsA);
-    DETACH(GetTextMetricsW);
-    DETACH(GetThreadContext);
-    DETACH(GetThreadDesktop);
-#if(WINVER >= 0x0500)
-    DETACH(GetThreadLocale);
-#endif // (WINVER >= 0x0500)
-    DETACH(GetThreadPriority);
-    DETACH(GetThreadPriorityBoost);
-    DETACH(GetThreadSelectorEntry);
-    DETACH(GetThreadTimes);
-    DETACH(GetTickCount);
-    DETACH(GetTimeFormatA);
-    DETACH(GetTimeFormatW);
-    DETACH(GetTimeZoneInformation);
-    DETACH(GetTopWindow);
-    DETACH(GetUpdateRect);
-    DETACH(GetUpdateRgn);
-    DETACH(GetUserDefaultLCID);
-    DETACH(GetUserDefaultLangID);
-    DETACH(GetUserObjectInformationA);
-    DETACH(GetUserObjectInformationW);
-    DETACH(GetUserObjectSecurity);
-    DETACH(GetVersion);
-    DETACH(GetVersionExA);
-    DETACH(GetVersionExW);
-    DETACH(GetViewportExtEx);
-    DETACH(GetViewportOrgEx);
-    DETACH(GetVolumeInformationA);
-    DETACH(GetVolumeInformationW);
-    DETACH(GetWinMetaFileBits);
-    DETACH(GetWindow);
-    DETACH(GetWindowContextHelpId);
-    DETACH(GetWindowDC);
-    DETACH(GetWindowExtEx);
-    DETACH(GetWindowLongA);
-    DETACH(GetWindowLongW);
-    DETACH(GetWindowOrgEx);
-    DETACH(GetWindowPlacement);
-    DETACH(GetWindowRect);
-    DETACH(GetWindowRgn);
-    DETACH(GetWindowTextA);
-    DETACH(GetWindowTextLengthA);
-    DETACH(GetWindowTextLengthW);
-    DETACH(GetWindowTextW);
-    DETACH(GetWindowThreadProcessId);
-    DETACH(GetWindowWord);
-    DETACH(GetWindowsDirectoryA);
-    DETACH(GetWindowsDirectoryW);
-    DETACH(GetWorldTransform);
-    DETACH(GlobalAddAtomA);
-    DETACH(GlobalAddAtomW);
-    DETACH(GlobalAlloc);
-    DETACH(GlobalCompact);
-    DETACH(GlobalDeleteAtom);
-    DETACH(GlobalFindAtomA);
-    DETACH(GlobalFindAtomW);
-    DETACH(GlobalFix);
-    DETACH(GlobalFlags);
-    DETACH(GlobalFree);
-    DETACH(GlobalGetAtomNameA);
-    DETACH(GlobalGetAtomNameW);
-    DETACH(GlobalHandle);
-    DETACH(GlobalLock);
-    DETACH(GlobalMemoryStatus);
-    DETACH(GlobalReAlloc);
-    DETACH(GlobalSize);
-    DETACH(GlobalUnWire);
-    DETACH(GlobalUnfix);
-    DETACH(GlobalUnlock);
-    DETACH(GlobalWire);
-    DETACH(GrayStringA);
-    DETACH(GrayStringW);
-    DETACH(HeapLock);
-    DETACH(HeapUnlock);
-    DETACH(HideCaret);
-    DETACH(HiliteMenuItem);
-    DETACH(IIDFromString);
-    DETACH(ImpersonateDdeClientWindow);
-    DETACH(InSendMessage);
-    DETACH(InflateRect);
-    DETACH(InitAtomTable);
-    DETACH(InsertMenuA);
-    DETACH(InsertMenuItemA);
-    DETACH(InsertMenuItemW);
-    DETACH(InsertMenuW);
-    DETACH(IntersectClipRect);
-    DETACH(IntersectRect);
-    DETACH(InvalidateRect);
-    DETACH(InvalidateRgn);
-    DETACH(InvertRect);
-    DETACH(InvertRgn);
-    DETACH(IsAccelerator);
-    DETACH(IsBadCodePtr);
-    DETACH(IsBadHugeReadPtr);
-    DETACH(IsBadHugeWritePtr);
-    DETACH(IsBadReadPtr);
-    DETACH(IsBadStringPtrA);
-    DETACH(IsBadStringPtrW);
-    DETACH(IsBadWritePtr);
-    DETACH(IsCharAlphaA);
-    DETACH(IsCharAlphaNumericA);
-    DETACH(IsCharAlphaNumericW);
-    DETACH(IsCharAlphaW);
-    DETACH(IsCharLowerA);
-    DETACH(IsCharLowerW);
-    DETACH(IsCharUpperA);
-    DETACH(IsCharUpperW);
-    DETACH(IsChild);
-    DETACH(IsClipboardFormatAvailable);
-    DETACH(IsDBCSLeadByte);
-    DETACH(IsDBCSLeadByteEx);
-    DETACH(IsDebuggerPresent);
-    DETACH(IsDialogMessageA);
-    DETACH(IsDialogMessageW);
-    DETACH(IsDlgButtonChecked);
-    DETACH(IsIconic);
-    DETACH(IsMenu);
-#if !defined(DETOURS_ARM)
-    DETACH(IsProcessorFeaturePresent);
-#endif // !DETOURS_ARM
-    DETACH(IsRectEmpty);
-    DETACH(IsValidCodePage);
-    DETACH(IsValidLocale);
-    DETACH(IsWindow);
-    DETACH(IsWindowEnabled);
-    DETACH(IsWindowUnicode);
-    DETACH(IsWindowVisible);
-    DETACH(IsZoomed);
-    DETACH(KillTimer);
-    DETACH(LPtoDP);
-    DETACH(LineDDA);
-    DETACH(LineTo);
-    DETACH(LoadAcceleratorsA);
-    DETACH(LoadAcceleratorsW);
-    DETACH(LoadBitmapA);
-    DETACH(LoadBitmapW);
-    DETACH(LoadCursorA);
-    DETACH(LoadCursorFromFileA);
-    DETACH(LoadCursorFromFileW);
-    DETACH(LoadCursorW);
-    DETACH(LoadIconA);
-    DETACH(LoadIconW);
-    DETACH(LoadImageA);
-    DETACH(LoadImageW);
-    DETACH(LoadKeyboardLayoutA);
-    DETACH(LoadKeyboardLayoutW);
-    DETACH(LoadLibraryA);
-    DETACH(LoadLibraryExA);
-    DETACH(LoadLibraryExW);
-    DETACH(LoadLibraryW);
-    DETACH(LoadMenuA);
-    DETACH(LoadMenuIndirectA);
-    DETACH(LoadMenuIndirectW);
-    DETACH(LoadMenuW);
-    DETACH(LoadModule);
-    DETACH(LoadResource);
-    DETACH(LoadStringA);
-    DETACH(LoadStringW);
-    DETACH(LocalAlloc);
-    DETACH(LocalCompact);
-    DETACH(LocalFileTimeToFileTime);
-    DETACH(LocalFlags);
-    DETACH(LocalFree);
-    DETACH(LocalHandle);
-    DETACH(LocalLock);
-    DETACH(LocalReAlloc);
-    DETACH(LocalShrink);
-    DETACH(LocalSize);
-    DETACH(LocalUnlock);
-    DETACH(LockFile);
-    DETACH(LockFileEx);
-    DETACH(LockResource);
-    DETACH(LockWindowUpdate);
-    DETACH(LookupIconIdFromDirectory);
-    DETACH(LookupIconIdFromDirectoryEx);
-    DETACH(MapDialogRect);
-    DETACH(MapViewOfFile);
-    DETACH(MapViewOfFileEx);
-    DETACH(MapVirtualKeyA);
-    DETACH(MapVirtualKeyExA);
-    DETACH(MapVirtualKeyExW);
-    DETACH(MapVirtualKeyW);
-    DETACH(MapWindowPoints);
-    DETACH(MaskBlt);
-    DETACH(MenuItemFromPoint);
-    DETACH(MessageBeep);
-    DETACH(MessageBoxA);
-    DETACH(MessageBoxExA);
-    DETACH(MessageBoxExW);
-    DETACH(MessageBoxIndirectA);
-    DETACH(MessageBoxIndirectW);
-    DETACH(MessageBoxW);
-    DETACH(MkParseDisplayName);
-    DETACH(ModifyMenuA);
-    DETACH(ModifyMenuW);
-    DETACH(ModifyWorldTransform);
-    DETACH(MonikerCommonPrefixWith);
-    DETACH(MonikerRelativePathTo);
-    DETACH(MoveFileA);
-    DETACH(MoveFileExA);
-    DETACH(MoveFileExW);
-    DETACH(MoveFileW);
-    DETACH(MoveToEx);
-    DETACH(MoveWindow);
-    DETACH(MsgWaitForMultipleObjects);
-    DETACH(MsgWaitForMultipleObjectsEx);
-    DETACH(MulDiv);
-    DETACH(OemKeyScan);
-    DETACH(OemToCharA);
-    DETACH(OemToCharBuffA);
-    DETACH(OemToCharBuffW);
-    DETACH(OemToCharW);
-    DETACH(OffsetClipRgn);
-    DETACH(OffsetRect);
-    DETACH(OffsetRgn);
-    DETACH(OffsetViewportOrgEx);
-    DETACH(OffsetWindowOrgEx);
-    DETACH(OleBuildVersion);
-    DETACH(OleConvertIStorageToOLESTREAM);
-    DETACH(OleConvertIStorageToOLESTREAMEx);
-    DETACH(OleConvertOLESTREAMToIStorage);
-    DETACH(OleConvertOLESTREAMToIStorageEx);
-    DETACH(OleCreate);
-    DETACH(OleCreateDefaultHandler);
-    DETACH(OleCreateEmbeddingHelper);
-    DETACH(OleCreateEx);
-    DETACH(OleCreateFromData);
-    DETACH(OleCreateFromDataEx);
-    DETACH(OleCreateFromFile);
-    DETACH(OleCreateFromFileEx);
-    DETACH(OleCreateLink);
-    DETACH(OleCreateLinkEx);
-    DETACH(OleCreateLinkFromData);
-    DETACH(OleCreateLinkFromDataEx);
-    DETACH(OleCreateLinkToFile);
-    DETACH(OleCreateLinkToFileEx);
-    DETACH(OleCreateMenuDescriptor);
-    DETACH(OleCreateStaticFromData);
-    DETACH(OleDestroyMenuDescriptor);
-    DETACH(OleDoAutoConvert);
-    DETACH(OleDraw);
-    DETACH(OleDuplicateData);
-    DETACH(OleFlushClipboard);
-    DETACH(OleGetAutoConvert);
-    DETACH(OleGetClipboard);
-    DETACH(OleGetIconOfClass);
-    DETACH(OleGetIconOfFile);
-    DETACH(OleInitialize);
-    DETACH(OleIsCurrentClipboard);
-    DETACH(OleIsRunning);
-    DETACH(OleLoad);
-    DETACH(OleLoadFromStream);
-    DETACH(OleLockRunning);
-    DETACH(OleMetafilePictFromIconAndLabel);
-    DETACH(OleNoteObjectVisible);
-    DETACH(OleQueryCreateFromData);
-    DETACH(OleQueryLinkFromData);
-    DETACH(OleRegEnumFormatEtc);
-    DETACH(OleRegEnumVerbs);
-    DETACH(OleRegGetMiscStatus);
-    DETACH(OleRegGetUserType);
-    DETACH(OleRun);
-    DETACH(OleSave);
-    DETACH(OleSaveToStream);
-    DETACH(OleSetAutoConvert);
-    DETACH(OleSetClipboard);
-    DETACH(OleSetContainedObject);
-    DETACH(OleSetMenuDescriptor);
-    DETACH(OleTranslateAccelerator);
-    DETACH(OleUninitialize);
-    DETACH(OpenClipboard);
-    DETACH(OpenDesktopA);
-    DETACH(OpenDesktopW);
-    DETACH(OpenEventA);
-    DETACH(OpenEventW);
-    DETACH(OpenFile);
-    DETACH(OpenFileMappingA);
-    DETACH(OpenFileMappingW);
-    DETACH(OpenIcon);
-    DETACH(OpenInputDesktop);
-    DETACH(OpenMutexA);
-    DETACH(OpenMutexW);
-    DETACH(OpenProcess);
-    DETACH(OpenProcessToken);
-    DETACH(OpenSemaphoreA);
-    DETACH(OpenSemaphoreW);
-    DETACH(OpenWaitableTimerA);
-    DETACH(OpenWaitableTimerW);
-    DETACH(OpenWindowStationA);
-    DETACH(OpenWindowStationW);
-    DETACH(OutputDebugStringA);
-    DETACH(OutputDebugStringW);
-    DETACH(PackDDElParam);
-    DETACH(PaintDesktop);
-    DETACH(PaintRgn);
-    DETACH(PatBlt);
-    DETACH(PathToRegion);
-    DETACH(PeekConsoleInputA);
-    DETACH(PeekConsoleInputW);
-    DETACH(PeekMessageA);
-    DETACH(PeekMessageW);
-    DETACH(PeekNamedPipe);
-    DETACH(Pie);
-    DETACH(PlayEnhMetaFile);
-    DETACH(PlayEnhMetaFileRecord);
-    DETACH(PlayMetaFile);
-    DETACH(PlayMetaFileRecord);
-    DETACH(PlgBlt);
-    DETACH(PolyBezier);
-    DETACH(PolyBezierTo);
-    DETACH(PolyDraw);
-    DETACH(PolyPolygon);
-    DETACH(PolyPolyline);
-    DETACH(PolyTextOutA);
-    DETACH(PolyTextOutW);
-    DETACH(Polygon);
-    DETACH(Polyline);
-    DETACH(PolylineTo);
-    DETACH(PostMessageA);
-    DETACH(PostMessageW);
-    DETACH(PostQueuedCompletionStatus);
-    DETACH(PostQuitMessage);
-    DETACH(PostThreadMessageA);
-    DETACH(PostThreadMessageW);
-    DETACH(PrepareTape);
-    DETACH(ProgIDFromCLSID);
-    DETACH(PropVariantClear);
-    DETACH(PropVariantCopy);
-    DETACH(PtInRect);
-    DETACH(PtInRegion);
-    DETACH(PtVisible);
-    DETACH(PulseEvent);
-    DETACH(PurgeComm);
-    DETACH(QueryDosDeviceA);
-    DETACH(QueryDosDeviceW);
-    DETACH(QueryPerformanceCounter);
-    DETACH(QueryPerformanceFrequency);
-    DETACH(QueueUserAPC);
-    DETACH(RaiseException);
-    DETACH(ReadClassStg);
-    DETACH(ReadClassStm);
-    DETACH(ReadConsoleA);
-    DETACH(ReadConsoleInputA);
-    DETACH(ReadConsoleInputW);
-    DETACH(ReadConsoleOutputA);
-    DETACH(ReadConsoleOutputAttribute);
-    DETACH(ReadConsoleOutputCharacterA);
-    DETACH(ReadConsoleOutputCharacterW);
-    DETACH(ReadConsoleOutputW);
-    DETACH(ReadConsoleW);
-    DETACH(ReadDirectoryChangesW);
-    DETACH(ReadFile);
-    DETACH(ReadFileEx);
-    DETACH(ReadFmtUserTypeStg);
-    DETACH(ReadProcessMemory);
-    DETACH(RealizePalette);
-    DETACH(RectInRegion);
-    DETACH(RectVisible);
-    DETACH(Rectangle);
-    DETACH(RedrawWindow);
-    DETACH(RegisterClassA);
-    DETACH(RegisterClassExA);
-    DETACH(RegisterClassExW);
-    DETACH(RegisterClassW);
-    DETACH(RegisterClipboardFormatA);
-    DETACH(RegisterClipboardFormatW);
-    DETACH(RegisterDragDrop);
-    DETACH(RegisterHotKey);
-    DETACH(RegisterWindowMessageA);
-    DETACH(RegisterWindowMessageW);
-    DETACH(ReleaseCapture);
-    DETACH(ReleaseDC);
-    DETACH(ReleaseMutex);
-    DETACH(ReleaseSemaphore);
-    DETACH(ReleaseStgMedium);
-    DETACH(RemoveDirectoryA);
-    DETACH(RemoveDirectoryW);
-    DETACH(RemoveFontResourceA);
-    DETACH(RemoveFontResourceW);
-    DETACH(RemoveMenu);
-    DETACH(RemovePropA);
-    DETACH(RemovePropW);
-    DETACH(ReplyMessage);
-    DETACH(ResetDCA);
-    DETACH(ResetDCW);
-    DETACH(ResetEvent);
-    DETACH(ResizePalette);
-    DETACH(RestoreDC);
-    DETACH(ResumeThread);
-    DETACH(ReuseDDElParam);
-    DETACH(RevokeDragDrop);
-    DETACH(RoundRect);
-    DETACH(SaveDC);
-    DETACH(ScaleViewportExtEx);
-    DETACH(ScaleWindowExtEx);
-    DETACH(ScreenToClient);
-    DETACH(ScrollConsoleScreenBufferA);
-    DETACH(ScrollConsoleScreenBufferW);
-    DETACH(ScrollDC);
-    DETACH(ScrollWindow);
-    DETACH(ScrollWindowEx);
-    DETACH(SearchPathA);
-    DETACH(SearchPathW);
-    DETACH(SelectClipPath);
-    DETACH(SelectClipRgn);
-    DETACH(SelectObject);
-    DETACH(SelectPalette);
-    DETACH(SendDlgItemMessageA);
-    DETACH(SendDlgItemMessageW);
-    DETACH(SendMessageA);
-    DETACH(SendMessageCallbackA);
-    DETACH(SendMessageCallbackW);
-    DETACH(SendMessageTimeoutA);
-    DETACH(SendMessageTimeoutW);
-    DETACH(SendMessageW);
-    DETACH(SendNotifyMessageA);
-    DETACH(SendNotifyMessageW);
-    DETACH(SetAbortProc);
-    DETACH(SetActiveWindow);
-    DETACH(SetArcDirection);
-    DETACH(SetBitmapBits);
-    DETACH(SetBitmapDimensionEx);
-    DETACH(SetBkColor);
-    DETACH(SetBkMode);
-    DETACH(SetBoundsRect);
-    DETACH(SetBrushOrgEx);
-    DETACH(SetCapture);
-    DETACH(SetCaretBlinkTime);
-    DETACH(SetCaretPos);
-    DETACH(SetClassLongA);
-    DETACH(SetClassLongW);
-    DETACH(SetClassWord);
-    DETACH(SetClipboardData);
-    DETACH(SetClipboardViewer);
-    DETACH(SetColorAdjustment);
-    DETACH(SetColorSpace);
-    DETACH(SetCommBreak);
-    DETACH(SetCommConfig);
-    DETACH(SetCommMask);
-    DETACH(SetCommState);
-    DETACH(SetCommTimeouts);
-    DETACH(SetComputerNameA);
-    DETACH(SetComputerNameW);
-    DETACH(SetConsoleActiveScreenBuffer);
-    DETACH(SetConsoleCP);
-    DETACH(SetConsoleCtrlHandler);
-    DETACH(SetConsoleCursorInfo);
-    DETACH(SetConsoleCursorPosition);
-    DETACH(SetConsoleMode);
-    DETACH(SetConsoleOutputCP);
-    DETACH(SetConsoleScreenBufferSize);
-    DETACH(SetConsoleTextAttribute);
-    DETACH(SetConsoleTitleA);
-    DETACH(SetConsoleTitleW);
-    DETACH(SetConsoleWindowInfo);
-    DETACH(SetConvertStg);
-    DETACH(SetCurrentDirectoryA);
-    DETACH(SetCurrentDirectoryW);
-    DETACH(SetCursor);
-    DETACH(SetCursorPos);
-    DETACH(SetDIBColorTable);
-    DETACH(SetDIBits);
-    DETACH(SetDIBitsToDevice);
-    DETACH(SetDefaultCommConfigA);
-    DETACH(SetDefaultCommConfigW);
-    DETACH(SetDeviceGammaRamp);
-    DETACH(SetDlgItemInt);
-    DETACH(SetDlgItemTextA);
-    DETACH(SetDlgItemTextW);
-    DETACH(SetDoubleClickTime);
-    DETACH(SetEndOfFile);
-    DETACH(SetEnhMetaFileBits);
-    DETACH(SetEnvironmentVariableA);
-    DETACH(SetEnvironmentVariableW);
-    DETACH(SetErrorMode);
-    DETACH(SetEvent);
-    DETACH(SetFileApisToANSI);
-    DETACH(SetFileApisToOEM);
-    DETACH(SetFileAttributesA);
-    DETACH(SetFileAttributesW);
-    DETACH(SetFilePointer);
-    DETACH(SetFileTime);
-    DETACH(SetFocus);
-    DETACH(SetForegroundWindow);
-    DETACH(SetGraphicsMode);
-    DETACH(SetHandleCount);
-    DETACH(SetHandleInformation);
-    DETACH(SetICMMode);
-    DETACH(SetICMProfileA);
-    DETACH(SetICMProfileW);
-    DETACH(SetKeyboardState);
-    DETACH(SetLocalTime);
-    DETACH(SetLocaleInfoA);
-    DETACH(SetLocaleInfoW);
-    DETACH(SetMailslotInfo);
-    DETACH(SetMapMode);
-    DETACH(SetMapperFlags);
-    DETACH(SetMenu);
-    DETACH(SetMenuContextHelpId);
-    DETACH(SetMenuDefaultItem);
-    DETACH(SetMenuItemBitmaps);
-    DETACH(SetMenuItemInfoA);
-    DETACH(SetMenuItemInfoW);
-    DETACH(SetMessageExtraInfo);
-    DETACH(SetMessageQueue);
-    DETACH(SetMetaFileBitsEx);
-    DETACH(SetMetaRgn);
-    DETACH(SetMiterLimit);
-    DETACH(SetNamedPipeHandleState);
-    DETACH(SetPaletteEntries);
-    DETACH(SetParent);
-    DETACH(SetPixel);
-    DETACH(SetPixelFormat);
-    DETACH(SetPixelV);
-    DETACH(SetPolyFillMode);
-    DETACH(SetPriorityClass);
-    DETACH(SetProcessAffinityMask);
-    DETACH(SetProcessShutdownParameters);
-    DETACH(SetProcessWindowStation);
-    DETACH(SetProcessWorkingSetSize);
-    DETACH(SetPropA);
-    DETACH(SetPropW);
-    DETACH(SetROP2);
-    DETACH(SetRect);
-    DETACH(SetRectEmpty);
-    DETACH(SetRectRgn);
-    DETACH(SetScrollInfo);
-    DETACH(SetScrollPos);
-    DETACH(SetScrollRange);
-    DETACH(SetStdHandle);
-    DETACH(SetStretchBltMode);
-    DETACH(SetSysColors);
-    DETACH(SetSystemCursor);
-    DETACH(SetSystemPaletteUse);
-    DETACH(SetSystemPowerState);
-    DETACH(SetSystemTime);
-    DETACH(SetSystemTimeAdjustment);
-    DETACH(SetTapeParameters);
-    DETACH(SetTapePosition);
-    DETACH(SetTextAlign);
-    DETACH(SetTextCharacterExtra);
-    DETACH(SetTextColor);
-    DETACH(SetTextJustification);
-    DETACH(SetThreadAffinityMask);
-    DETACH(SetThreadContext);
-    DETACH(SetThreadDesktop);
-    DETACH(SetThreadIdealProcessor);
-#if(WINVER >= 0x0500)
-    DETACH(SetThreadLocale);
-#endif // (WINVER >= 0x0500)
-    DETACH(SetThreadPriority);
-    DETACH(SetThreadPriorityBoost);
-    DETACH(SetTimeZoneInformation);
-    DETACH(SetTimer);
-    DETACH(SetUnhandledExceptionFilter);
-    DETACH(SetUserObjectInformationA);
-    DETACH(SetUserObjectInformationW);
-    DETACH(SetUserObjectSecurity);
-    DETACH(SetViewportExtEx);
-    DETACH(SetViewportOrgEx);
-    DETACH(SetVolumeLabelA);
-    DETACH(SetVolumeLabelW);
-    DETACH(SetWaitableTimer);
-    DETACH(SetWinMetaFileBits);
-    DETACH(SetWindowContextHelpId);
-    DETACH(SetWindowExtEx);
-    DETACH(SetWindowLongA);
-    DETACH(SetWindowLongW);
-    DETACH(SetWindowOrgEx);
-    DETACH(SetWindowPlacement);
-    DETACH(SetWindowPos);
-    DETACH(SetWindowRgn);
-    DETACH(SetWindowTextA);
-    DETACH(SetWindowTextW);
-    DETACH(SetWindowWord);
-    DETACH(SetWindowsHookA);
-    DETACH(SetWindowsHookExA);
-    DETACH(SetWindowsHookExW);
-    DETACH(SetWindowsHookW);
-    DETACH(SetWorldTransform);
-    DETACH(SetupComm);
-    DETACH(ShowCaret);
-    DETACH(ShowCursor);
-    DETACH(ShowOwnedPopups);
-    DETACH(ShowScrollBar);
-    DETACH(ShowWindow);
-    DETACH(ShowWindowAsync);
-    DETACH(SignalObjectAndWait);
-    DETACH(SizeofResource);
-    DETACH(SleepEx);
-    DETACH(StartDocA);
-    DETACH(StartDocW);
-    DETACH(StartPage);
-    DETACH(StgCreateDocfile);
-    DETACH(StgCreateDocfileOnILockBytes);
-    DETACH(StgCreatePropSetStg);
-    DETACH(StgCreatePropStg);
-    DETACH(StgCreateStorageEx);
-    DETACH(StgGetIFillLockBytesOnFile);
-    DETACH(StgGetIFillLockBytesOnILockBytes);
-    DETACH(StgIsStorageFile);
-    DETACH(StgIsStorageILockBytes);
-    DETACH(StgOpenAsyncDocfileOnIFillLockBytes);
-    DETACH(StgOpenPropStg);
-    DETACH(StgOpenStorage);
-    DETACH(StgOpenStorageEx);
-    DETACH(StgOpenStorageOnILockBytes);
-    DETACH(StgSetTimes);
-    DETACH(StretchBlt);
-    DETACH(StretchDIBits);
-    DETACH(StringFromCLSID);
-    DETACH(StringFromGUID2);
-    DETACH(StringFromIID);
-    DETACH(StrokeAndFillPath);
-    DETACH(StrokePath);
-    DETACH(SubtractRect);
-    DETACH(SuspendThread);
-    DETACH(SwapBuffers);
-    DETACH(SwapMouseButton);
-    DETACH(SwitchDesktop);
-    DETACH(SwitchToFiber);
-    DETACH(SwitchToThread);
-    DETACH(SystemParametersInfoA);
-    DETACH(SystemParametersInfoW);
-    DETACH(SystemTimeToFileTime);
-    DETACH(SystemTimeToTzSpecificLocalTime);
-    DETACH(TabbedTextOutA);
-    DETACH(TabbedTextOutW);
-    DETACH(TerminateProcess);
-    DETACH(TerminateThread);
-    DETACH(TextOutA);
-    DETACH(TextOutW);
-    DETACH(TileWindows);
-    DETACH(ToAscii);
-    DETACH(ToAsciiEx);
-    DETACH(ToUnicode);
-    DETACH(ToUnicodeEx);
-    DETACH(TrackMouseEvent);
-    DETACH(TrackPopupMenu);
-    DETACH(TrackPopupMenuEx);
-    DETACH(TransactNamedPipe);
-    DETACH(TranslateAcceleratorA);
-    DETACH(TranslateAcceleratorW);
-    DETACH(TranslateCharsetInfo);
-    DETACH(TranslateMDISysAccel);
-    DETACH(TranslateMessage);
-    DETACH(TransmitCommChar);
-#if DETOUR_TryEnterCriticalSection_EVEN_IF_IT_EXERCISES_A_BUG_IN_RtlLookupFunctionTable
-    DETACH(TryEnterCriticalSection);
-#endif
-    DETACH(UnhookWindowsHook);
-    DETACH(UnhookWindowsHookEx);
-    DETACH(UnionRect);
-    DETACH(UnloadKeyboardLayout);
-    DETACH(UnlockFile);
-    DETACH(UnlockFileEx);
-    DETACH(UnmapViewOfFile);
-    DETACH(UnpackDDElParam);
-    DETACH(UnrealizeObject);
-    DETACH(UnregisterClassA);
-    DETACH(UnregisterClassW);
-    DETACH(UnregisterHotKey);
-    DETACH(UpdateColors);
-    DETACH(UpdateResourceA);
-    DETACH(UpdateResourceW);
-    DETACH(UpdateWindow);
-    DETACH(ValidateRect);
-    DETACH(ValidateRgn);
-    DETACH(VerLanguageNameA);
-    DETACH(VerLanguageNameW);
-    DETACH(VirtualAllocEx);
-    DETACH(VirtualFreeEx);
-    DETACH(VirtualProtectEx);
-    DETACH(VirtualQueryEx);
-    DETACH(VkKeyScanA);
-    DETACH(VkKeyScanExA);
-    DETACH(VkKeyScanExW);
-    DETACH(VkKeyScanW);
-    DETACH(WSAAccept);
-    DETACH(WSAAddressToStringA);
-    DETACH(WSAAddressToStringW);
-    DETACH(WSAAsyncGetHostByAddr);
-    DETACH(WSAAsyncGetHostByName);
-    DETACH(WSAAsyncGetProtoByName);
-    DETACH(WSAAsyncGetProtoByNumber);
-    DETACH(WSAAsyncGetServByName);
-    DETACH(WSAAsyncGetServByPort);
-    DETACH(WSAAsyncSelect);
-    DETACH(WSACancelAsyncRequest);
-    DETACH(WSACancelBlockingCall);
-    DETACH(WSACleanup);
-    DETACH(WSACloseEvent);
-    DETACH(WSAConnect);
-    DETACH(WSACreateEvent);
-    DETACH(WSADuplicateSocketA);
-    DETACH(WSADuplicateSocketW);
-    DETACH(WSAEnumNameSpaceProvidersA);
-    DETACH(WSAEnumNameSpaceProvidersW);
-    DETACH(WSAEnumNetworkEvents);
-    DETACH(WSAEnumProtocolsA);
-    DETACH(WSAEnumProtocolsW);
-    DETACH(WSAEventSelect);
-    DETACH(WSAGetOverlappedResult);
-    DETACH(WSAGetQOSByName);
-    DETACH(WSAGetServiceClassInfoA);
-    DETACH(WSAGetServiceClassInfoW);
-    DETACH(WSAGetServiceClassNameByClassIdA);
-    DETACH(WSAGetServiceClassNameByClassIdW);
-    DETACH(WSAHtonl);
-    DETACH(WSAHtons);
-    DETACH(WSAInstallServiceClassA);
-    DETACH(WSAInstallServiceClassW);
-    DETACH(WSAIoctl);
-    DETACH(WSAIsBlocking);
-    DETACH(WSAJoinLeaf);
-    DETACH(WSALookupServiceBeginA);
-    DETACH(WSALookupServiceBeginW);
-    DETACH(WSALookupServiceEnd);
-    DETACH(WSALookupServiceNextA);
-    DETACH(WSALookupServiceNextW);
-    DETACH(WSANtohl);
-    DETACH(WSANtohs);
-    DETACH(WSAProviderConfigChange);
-    DETACH(WSARecv);
-    DETACH(WSARecvDisconnect);
-    DETACH(WSARecvFrom);
-    DETACH(WSARemoveServiceClass);
-    DETACH(WSAResetEvent);
-    DETACH(WSASend);
-    DETACH(WSASendDisconnect);
-    DETACH(WSASendTo);
-    DETACH(WSASetBlockingHook);
-    DETACH(WSASetEvent);
-    DETACH(WSASetServiceA);
-    DETACH(WSASetServiceW);
-    DETACH(WSASocketA);
-    DETACH(WSASocketW);
-    DETACH(WSAStartup);
-    DETACH(WSAStringToAddressA);
-    DETACH(WSAStringToAddressW);
-    DETACH(WSAUnhookBlockingHook);
-    DETACH(WSAWaitForMultipleEvents);
-    DETACH(WaitCommEvent);
-#if !defined(DETOURS_ARM)
-    DETACH(WaitForDebugEvent);
-#endif // !DETOURS_ARM
-    DETACH(WaitForInputIdle);
-    DETACH(WaitForMultipleObjects);
-    DETACH(WaitForMultipleObjectsEx);
-    DETACH(WaitForSingleObject);
-    DETACH(WaitForSingleObjectEx);
-    DETACH(WaitMessage);
-    DETACH(WaitNamedPipeA);
-    DETACH(WaitNamedPipeW);
-    DETACH(WidenPath);
-    DETACH(WinExec);
-    DETACH(WinHelpA);
-    DETACH(WinHelpW);
-    DETACH(WindowFromDC);
-    DETACH(WindowFromPoint);
-    DETACH(WriteClassStg);
-    DETACH(WriteClassStm);
-    DETACH(WriteConsoleA);
-    DETACH(WriteConsoleInputA);
-    DETACH(WriteConsoleInputW);
-    DETACH(WriteConsoleOutputA);
-    DETACH(WriteConsoleOutputAttribute);
-    DETACH(WriteConsoleOutputCharacterA);
-    DETACH(WriteConsoleOutputCharacterW);
-    DETACH(WriteConsoleOutputW);
-    DETACH(WriteConsoleW);
-    DETACH(WriteFile);
-    DETACH(WriteFileEx);
-    DETACH(WriteFmtUserTypeStg);
-    DETACH(WritePrivateProfileSectionA);
-    DETACH(WritePrivateProfileSectionW);
-    DETACH(WritePrivateProfileStringA);
-    DETACH(WritePrivateProfileStringW);
-    DETACH(WritePrivateProfileStructA);
-    DETACH(WritePrivateProfileStructW);
-    DETACH(WriteProcessMemory);
-    DETACH(WriteProfileSectionA);
-    DETACH(WriteProfileSectionW);
-    DETACH(WriteProfileStringA);
-    DETACH(WriteProfileStringW);
-    DETACH(WriteTapemark);
-    DETACH(__WSAFDIsSet);
-    DETACH(_hread);
-    DETACH(_hwrite);
-    DETACH(_lclose);
-    DETACH(_lcreat);
-    DETACH(_llseek);
-    DETACH(_lopen);
-    DETACH(_lread);
-    DETACH(_lwrite);
-    DETACH(accept);
-    DETACH(bind);
-    DETACH(closesocket);
-    DETACH(connect);
-    DETACH(gethostbyaddr);
-    DETACH(gethostbyname);
-    DETACH(gethostname);
-    DETACH(getpeername);
-    DETACH(getprotobyname);
-    DETACH(getprotobynumber);
-    DETACH(getservbyname);
-    DETACH(getservbyport);
-    DETACH(getsockname);
-    DETACH(getsockopt);
-    DETACH(htonl);
-    DETACH(htons);
-    DETACH(inet_addr);
-    DETACH(inet_ntoa);
-    DETACH(ioctlsocket);
-    DETACH(keybd_event);
-    DETACH(listen);
-    DETACH(mouse_event);
-    DETACH(ntohl);
-    DETACH(ntohs);
-    DETACH(recv);
-    DETACH(recvfrom);
-    DETACH(select);
-    DETACH(send);
-    DETACH(sendto);
-    DETACH(setsockopt);
-    DETACH(shutdown);
-    DETACH(socket);
-
-    if (DetourTransactionCommit() != 0) {
-        PVOID* ppbFailedPointer = NULL;
-        LONG error = DetourTransactionCommitEx(&ppbFailedPointer);
-
-        printf("traceapi.dll: Detach transaction failed to commit. Error %ld (%p/%p)",
-            error, ppbFailedPointer, *ppbFailedPointer);
-        return error;
-    }
-    return 0;
-}
 //
 ///////////////////////////////////////////////////////////////// End of File.

@@ -62,6 +62,9 @@
 
 #define UNUSED(c)    (c) = (c)
 
+#define SECURITY_WIN32
+#include <chrono>
+
 //////////////////////////////////////////////////////////////////////////////
 static HMODULE s_hInst = NULL;
 static WCHAR s_wzDllPath[MAX_PATH];
@@ -110,14 +113,18 @@ extern "C" {
         = LeaveCriticalSection;
 }
 
-#include "_win32_hooks.cpp"
-
 ////////////////////////////////////////////////////////////// Logging System.
 //
 static BOOL s_bLog = FALSE;
 static LONG s_nTlsIndent = -1;
 static LONG s_nTlsThread = -1;
 static LONG s_nThreadCnt = 0;
+std::chrono::high_resolution_clock::time_point start_time;
+
+#include "_win32_hooks.cpp"
+#include "_winnt_hooks.cpp"
+#include "attach_hooks_libs.cpp"
+#include "attach_hooks.cpp"
 
 VOID _PrintEnter(const CHAR* psz, ...)
 {
