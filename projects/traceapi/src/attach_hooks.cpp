@@ -234,7 +234,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(CoGetTreatAsClass);
     ATTACH(CoImpersonateClient);
     ATTACH(CoInitialize);
-    ATTACH(CoInitializeEx);
+    //ATTACH(CoInitializeEx);
     ATTACH(CoInitializeSecurity);
     ATTACH(CoIsHandlerConnected);
     ATTACH(CoIsOle1Class);
@@ -328,7 +328,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(CreateDirectoryA);
     ATTACH(CreateDirectoryExA);
     ATTACH(CreateDirectoryExW);
-    ATTACH(CreateDirectoryW);
+    //ATTACH(CreateDirectoryW);
     ATTACH(CreateDiscardableBitmap);
     ATTACH(CreateEllipticRgn);
     ATTACH(CreateEllipticRgnIndirect);
@@ -468,7 +468,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(DestroyIcon);
     ATTACH(DestroyMenu);
     ATTACH(DestroyWindow);
-    ATTACH(DeviceIoControl);
+    //ATTACH(DeviceIoControl);
     ATTACH(DialogBoxIndirectParamA);
     ATTACH(DialogBoxIndirectParamW);
     ATTACH(DialogBoxParamA);
@@ -502,7 +502,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(DrawStateW);
     ATTACH(DrawTextA);
     ATTACH(DrawTextExA);
-    ATTACH(DrawTextExW);
+    //ATTACH(DrawTextExW);
     ATTACH(DrawTextW);
     ATTACH(DuplicateHandle);
     ATTACH(Ellipse);
@@ -561,7 +561,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(EnumTimeFormatsW);
     ATTACH(EnumWindowStationsA);
     ATTACH(EnumWindowStationsW);
-    ATTACH(EnumWindows);
+    //ATTACH(EnumWindows);
     ATTACH(EqualRect);
     ATTACH(EqualRgn);
     ATTACH(EraseTape);
@@ -737,7 +737,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(GetDialogBaseUnits);
     ATTACH(GetDiskFreeSpaceA);
     ATTACH(GetDiskFreeSpaceExA);
-    ATTACH(GetDiskFreeSpaceExW);
+    //ATTACH(GetDiskFreeSpaceExW);
     ATTACH(GetDiskFreeSpaceW);
     ATTACH(GetDlgCtrlID);
     ATTACH(GetDlgItem);
@@ -772,7 +772,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(GetFocus);
     ATTACH(GetFontData);
     ATTACH(GetFontLanguageInfo);
-    ATTACH(GetForegroundWindow);
+    //ATTACH(GetForegroundWindow);
     ATTACH(GetFullPathNameA);
     ATTACH(GetFullPathNameW);
     ATTACH(GetGlyphOutlineA);
@@ -790,7 +790,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(GetKerningPairsW);
     ATTACH(GetKeyNameTextA);
     ATTACH(GetKeyNameTextW);
-    ATTACH(GetKeyState);
+    //ATTACH(GetKeyState);
     ATTACH(GetKeyboardLayout);
     ATTACH(GetKeyboardLayoutList);
     ATTACH(GetKeyboardLayoutNameA);
@@ -913,13 +913,13 @@ void AttachWin32Hooks(VOID) {
     ATTACH(GetSystemDirectoryW);
     ATTACH(GetSystemInfo);
     ATTACH(GetSystemMenu);
-    ATTACH(GetSystemMetrics);
+    //ATTACH(GetSystemMetrics);
     ATTACH(GetSystemPaletteEntries);
     ATTACH(GetSystemPaletteUse);
     ATTACH(GetSystemPowerStatus);
     ATTACH(GetSystemTime);
     ATTACH(GetSystemTimeAdjustment);
-    ATTACH(GetSystemTimeAsFileTime);
+    //ATTACH(GetSystemTimeAsFileTime);
     ATTACH(GetTabbedTextExtentA);
     ATTACH(GetTabbedTextExtentW);
     ATTACH(GetTapeParameters);
@@ -1098,7 +1098,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(LoadMenuIndirectW);
     ATTACH(LoadMenuW);
     ATTACH(LoadModule);
-    ATTACH(LoadResource);
+    //ATTACH(LoadResource);
     ATTACH(LoadStringA);
     ATTACH(LoadStringW);
     ATTACH(LocalAlloc);
@@ -1345,7 +1345,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(ScrollWindow);
     ATTACH(ScrollWindowEx);
     ATTACH(SearchPathA);
-    ATTACH(SearchPathW);
+    //ATTACH(SearchPathW);
     ATTACH(SelectClipPath);
     ATTACH(SelectClipRgn);
     ATTACH(SelectObject);
@@ -1359,7 +1359,7 @@ void AttachWin32Hooks(VOID) {
     ATTACH(SendMessageTimeoutW);
     ATTACH(SendMessageW);
     ATTACH(SendNotifyMessageA);
-    ATTACH(SendNotifyMessageW);
+    //ATTACH(SendNotifyMessageW);
     ATTACH(SetAbortProc);
     ATTACH(SetActiveWindow);
     ATTACH(SetArcDirection);
@@ -1417,14 +1417,14 @@ void AttachWin32Hooks(VOID) {
     ATTACH(SetEnhMetaFileBits);
     ATTACH(SetEnvironmentVariableA);
     ATTACH(SetEnvironmentVariableW);
-    ATTACH(SetErrorMode);
+    //ATTACH(SetErrorMode);
     ATTACH(SetEvent);
     ATTACH(SetFileApisToANSI);
     ATTACH(SetFileApisToOEM);
     ATTACH(SetFileAttributesA);
     ATTACH(SetFileAttributesW);
     ATTACH(SetFilePointer);
-    ATTACH(SetFileTime);
+    //ATTACH(SetFileTime);
     ATTACH(SetFocus);
     ATTACH(SetForegroundWindow);
     ATTACH(SetGraphicsMode);
@@ -1900,7 +1900,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(CoGetTreatAsClass);
     DETACH(CoImpersonateClient);
     DETACH(CoInitialize);
-    DETACH(CoInitializeEx);
+    //DETACH(CoInitializeEx);
     DETACH(CoInitializeSecurity);
     DETACH(CoIsHandlerConnected);
     DETACH(CoIsOle1Class);
@@ -1994,7 +1994,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(CreateDirectoryA);
     DETACH(CreateDirectoryExA);
     DETACH(CreateDirectoryExW);
-    DETACH(CreateDirectoryW);
+    //DETACH(CreateDirectoryW);
     DETACH(CreateDiscardableBitmap);
     DETACH(CreateEllipticRgn);
     DETACH(CreateEllipticRgnIndirect);
@@ -2134,7 +2134,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(DestroyIcon);
     DETACH(DestroyMenu);
     DETACH(DestroyWindow);
-    DETACH(DeviceIoControl);
+    //DETACH(DeviceIoControl);
     DETACH(DialogBoxIndirectParamA);
     DETACH(DialogBoxIndirectParamW);
     DETACH(DialogBoxParamA);
@@ -2168,7 +2168,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(DrawStateW);
     DETACH(DrawTextA);
     DETACH(DrawTextExA);
-    DETACH(DrawTextExW);
+    //DETACH(DrawTextExW);
     DETACH(DrawTextW);
     DETACH(DuplicateHandle);
     DETACH(Ellipse);
@@ -2227,7 +2227,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(EnumTimeFormatsW);
     DETACH(EnumWindowStationsA);
     DETACH(EnumWindowStationsW);
-    DETACH(EnumWindows);
+    //DETACH(EnumWindows);
     DETACH(EqualRect);
     DETACH(EqualRgn);
     DETACH(EraseTape);
@@ -2403,7 +2403,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(GetDialogBaseUnits);
     DETACH(GetDiskFreeSpaceA);
     DETACH(GetDiskFreeSpaceExA);
-    DETACH(GetDiskFreeSpaceExW);
+    //DETACH(GetDiskFreeSpaceExW);
     DETACH(GetDiskFreeSpaceW);
     DETACH(GetDlgCtrlID);
     DETACH(GetDlgItem);
@@ -2438,7 +2438,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(GetFocus);
     DETACH(GetFontData);
     DETACH(GetFontLanguageInfo);
-    DETACH(GetForegroundWindow);
+    //DETACH(GetForegroundWindow);
     DETACH(GetFullPathNameA);
     DETACH(GetFullPathNameW);
     DETACH(GetGlyphOutlineA);
@@ -2456,7 +2456,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(GetKerningPairsW);
     DETACH(GetKeyNameTextA);
     DETACH(GetKeyNameTextW);
-    DETACH(GetKeyState);
+    //DETACH(GetKeyState);
     DETACH(GetKeyboardLayout);
     DETACH(GetKeyboardLayoutList);
     DETACH(GetKeyboardLayoutNameA);
@@ -2579,13 +2579,13 @@ void DetachWin32Hooks(VOID) {
     DETACH(GetSystemDirectoryW);
     DETACH(GetSystemInfo);
     DETACH(GetSystemMenu);
-    DETACH(GetSystemMetrics);
+    //DETACH(GetSystemMetrics);
     DETACH(GetSystemPaletteEntries);
     DETACH(GetSystemPaletteUse);
     DETACH(GetSystemPowerStatus);
     DETACH(GetSystemTime);
     DETACH(GetSystemTimeAdjustment);
-    DETACH(GetSystemTimeAsFileTime);
+    //DETACH(GetSystemTimeAsFileTime);
     DETACH(GetTabbedTextExtentA);
     DETACH(GetTabbedTextExtentW);
     DETACH(GetTapeParameters);
@@ -2764,7 +2764,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(LoadMenuIndirectW);
     DETACH(LoadMenuW);
     DETACH(LoadModule);
-    DETACH(LoadResource);
+    //DETACH(LoadResource);
     DETACH(LoadStringA);
     DETACH(LoadStringW);
     DETACH(LocalAlloc);
@@ -3011,7 +3011,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(ScrollWindow);
     DETACH(ScrollWindowEx);
     DETACH(SearchPathA);
-    DETACH(SearchPathW);
+    //DETACH(SearchPathW);
     DETACH(SelectClipPath);
     DETACH(SelectClipRgn);
     DETACH(SelectObject);
@@ -3025,7 +3025,7 @@ void DetachWin32Hooks(VOID) {
     DETACH(SendMessageTimeoutW);
     DETACH(SendMessageW);
     DETACH(SendNotifyMessageA);
-    DETACH(SendNotifyMessageW);
+    //DETACH(SendNotifyMessageW);
     DETACH(SetAbortProc);
     DETACH(SetActiveWindow);
     DETACH(SetArcDirection);
@@ -3083,14 +3083,14 @@ void DetachWin32Hooks(VOID) {
     DETACH(SetEnhMetaFileBits);
     DETACH(SetEnvironmentVariableA);
     DETACH(SetEnvironmentVariableW);
-    DETACH(SetErrorMode);
+    //DETACH(SetErrorMode);
     DETACH(SetEvent);
     DETACH(SetFileApisToANSI);
     DETACH(SetFileApisToOEM);
     DETACH(SetFileAttributesA);
     DETACH(SetFileAttributesW);
     DETACH(SetFilePointer);
-    DETACH(SetFileTime);
+    //DETACH(SetFileTime);
     DETACH(SetFocus);
     DETACH(SetForegroundWindow);
     DETACH(SetGraphicsMode);
@@ -3439,111 +3439,111 @@ void DetachWin32Hooks(VOID) {
 }
 
 
-void AttachNTHooks()
-{
-    ATTACH(RegEnumKeyExW);
-    ATTACH(CreateDirectoryW);
-    ATTACH(DrawTextExW);
-    ATTACH_LIB(CoInitializeEx, L"ole32.dll");
-    ATTACH_LIB(NtDeleteKey, L"ntdll.dll");
-    ATTACH(SHGetFolderPathW);
-    ATTACH_LIB(GetFileInformationByHandleEx, L"kernel32.dll");
-    ATTACH(GetForegroundWindow);
-    ATTACH_LIB(NtQueryAttributesFile, L"ntdll.dll");
-    ATTACH(DeviceIoControl);
-    ATTACH(SearchPathW);
-    ATTACH(SetFileTime);
-    ATTACH(SendNotifyMessageW);
-    ATTACH(GetSystemMetrics);
-    ATTACH(GetKeyState);
-    ATTACH_LIB(NtCreateKey, L"ntdll.dll");
-    ATTACH(LoadResource);
-    ATTACH(GetDiskFreeSpaceExW);
-    ATTACH(EnumWindows);
-    ATTACH(RegOpenKeyExW);
-    ATTACH_LIB(NtQueryKey, L"ntdll.dll");
-    ATTACH_LIB(NtQueryValueKey, L"ntdll.dll");
-    ATTACH_LIB(NtSetValueKey, L"ntdll.dll");
-    ATTACH(CreateActCtxW);
-    ATTACH(GetSystemTimeAsFileTime);
-    ATTACH(GetSystemWindowsDirectoryW);
-    ATTACH(SetErrorMode);
-    ATTACH_LIB(GetFileVersionInfoSizeW, L"version.dll");
-    ATTACH_LIB(NtOpenMutant, L"ntdll.dll");
-    ATTACH_LIB(NtOpenKey, L"ntdll.dll");
-    ATTACH_LIB(NtClose, L"ntdll.dll");
-    ATTACH_LIB(NtCreateFile, L"ntdll.dll");
-    ATTACH_LIB(NtReadFile, L"ntdll.dll");
-    ATTACH_LIB(NtWriteFile, L"ntdll.dll");
-    ATTACH_LIB(LdrGetDllHandle, L"ntdll.dll");
-    ATTACH_LIB(NtOpenFile, L"ntdll.dll");
-    ATTACH_LIB(NtFreeVirtualMemory, L"ntdll.dll");
-
-    // _TODO: Figure a better logging system, possibly static
-    // These hooks may break the program because logging is done within the memory
-    // ATTACH_LIB(NtAllocateVirtualMemory, L"ntdll.dll");
-
-    ATTACH_LIB(NtProtectVirtualMemory, L"ntdll.dll");
-
-    // _TODO: investigate infinite looping
-    // ATTACH_LIB(LdrLoadDll, L"ntdll.dll");
-
-    ATTACH_LIB(NtQueryInformationFile, L"ntdll.dll");
-    ATTACH_LIB(NtQueryDirectoryFile, L"ntdll.dll");
-}
-
-void DetachNTHooks()
-{
-    DETACH(RegEnumKeyExW);
-    //DETACH(CreateDirectoryW);
-    DETACH(DrawTextExW);
-    DETACH(CoInitializeEx);
-    DETACH(NtDeleteKey);
-    DETACH(SHGetFolderPathW);
-    DETACH(GetFileInformationByHandleEx);
-    DETACH(GetForegroundWindow);
-    DETACH(NtQueryAttributesFile);
-    DETACH(DeviceIoControl);
-    DETACH(SearchPathW);
-    DETACH(SetFileTime);
-    DETACH(SendNotifyMessageW);
-    DETACH(GetSystemMetrics);
-    DETACH(GetKeyState);
-    DETACH(NtCreateKey);
-    DETACH(LoadResource);
-    DETACH(GetDiskFreeSpaceExW);
-    DETACH(EnumWindows);
-    DETACH(RegOpenKeyExW);
-    DETACH(NtQueryKey);
-    DETACH(NtQueryValueKey);
-    DETACH(NtSetValueKey);
-    DETACH(CreateActCtxW);
-    DETACH(GetSystemTimeAsFileTime);
-    DETACH(GetSystemWindowsDirectoryW);
-    DETACH(SetErrorMode);
-    DETACH(GetFileVersionInfoSizeW);
-    DETACH(NtOpenMutant);
-    DETACH(NtOpenKey);
-    DETACH(NtClose);
-    DETACH(NtCreateFile);
-    DETACH(NtReadFile);
-    DETACH(NtWriteFile);
-    DETACH(LdrGetDllHandle);
-    DETACH(NtOpenFile);
-    DETACH(NtFreeVirtualMemory);
-
-    // _TODO: Figure a better logging system, possibly static
-    // These hooks may break the program because logging is done within the memory
-    // DETACH(NtAllocateVirtualMemory);
-
-    DETACH(NtProtectVirtualMemory);
-
-    // _TODO: investigate infinite looping
-    // DETACH(LdrLoadDll);
-
-    DETACH(NtQueryInformationFile);
-    DETACH(NtQueryDirectoryFile);
-}
+//void AttachNTHooks()
+//{
+//    ATTACH(RegEnumKeyExW);
+//    ATTACH(CreateDirectoryW);
+//    ATTACH(DrawTextExW);
+//    ATTACH_LIB(CoInitializeEx, L"ole32.dll");
+//    ATTACH_LIB(NtDeleteKey, L"ntdll.dll");
+//    ATTACH(SHGetFolderPathW);
+//    ATTACH_LIB(GetFileInformationByHandleEx, L"kernel32.dll");
+//    ATTACH(GetForegroundWindow);
+//    ATTACH_LIB(NtQueryAttributesFile, L"ntdll.dll");
+//    ATTACH(DeviceIoControl);
+//    ATTACH(SearchPathW);
+//    ATTACH(SetFileTime);
+//    ATTACH(SendNotifyMessageW);
+//    ATTACH(GetSystemMetrics);
+//    ATTACH(GetKeyState);
+//    ATTACH_LIB(NtCreateKey, L"ntdll.dll");
+//    ATTACH(LoadResource);
+//    ATTACH(GetDiskFreeSpaceExW);
+//    ATTACH(EnumWindows);
+//    ATTACH(RegOpenKeyExW);
+//    ATTACH_LIB(NtQueryKey, L"ntdll.dll");
+//    ATTACH_LIB(NtQueryValueKey, L"ntdll.dll");
+//    ATTACH_LIB(NtSetValueKey, L"ntdll.dll");
+//    ATTACH(CreateActCtxW);
+//    ATTACH(GetSystemTimeAsFileTime);
+//    ATTACH(GetSystemWindowsDirectoryW);
+//    ATTACH(SetErrorMode);
+//    ATTACH_LIB(GetFileVersionInfoSizeW, L"version.dll");
+//    ATTACH_LIB(NtOpenMutant, L"ntdll.dll");
+//    ATTACH_LIB(NtOpenKey, L"ntdll.dll");
+//    ATTACH_LIB(NtClose, L"ntdll.dll");
+//    ATTACH_LIB(NtCreateFile, L"ntdll.dll");
+//    ATTACH_LIB(NtReadFile, L"ntdll.dll");
+//    ATTACH_LIB(NtWriteFile, L"ntdll.dll");
+//    ATTACH_LIB(LdrGetDllHandle, L"ntdll.dll");
+//    ATTACH_LIB(NtOpenFile, L"ntdll.dll");
+//    ATTACH_LIB(NtFreeVirtualMemory, L"ntdll.dll");
+//
+//    // _TODO: Figure a better logging system, possibly static
+//    // These hooks may break the program because logging is done within the memory
+//    // ATTACH_LIB(NtAllocateVirtualMemory, L"ntdll.dll");
+//
+//    ATTACH_LIB(NtProtectVirtualMemory, L"ntdll.dll");
+//
+//    // _TODO: investigate infinite looping
+//    // ATTACH_LIB(LdrLoadDll, L"ntdll.dll");
+//
+//    ATTACH_LIB(NtQueryInformationFile, L"ntdll.dll");
+//    ATTACH_LIB(NtQueryDirectoryFile, L"ntdll.dll");
+//}
+//
+//void DetachNTHooks()
+//{
+//    DETACH(RegEnumKeyExW);
+//    DETACH(CreateDirectoryW);
+//    DETACH(DrawTextExW);
+//    DETACH(CoInitializeEx);
+//    DETACH(NtDeleteKey);
+//    DETACH(SHGetFolderPathW);
+//    DETACH(GetFileInformationByHandleEx);
+//    DETACH(GetForegroundWindow);
+//    DETACH(NtQueryAttributesFile);
+//    DETACH(DeviceIoControl);
+//    DETACH(SearchPathW);
+//    DETACH(SetFileTime);
+//    DETACH(SendNotifyMessageW);
+//    DETACH(GetSystemMetrics);
+//    DETACH(GetKeyState);
+//    DETACH(NtCreateKey);
+//    DETACH(LoadResource);
+//    DETACH(GetDiskFreeSpaceExW);
+//    DETACH(EnumWindows);
+//    DETACH(RegOpenKeyExW);
+//    DETACH(NtQueryKey);
+//    DETACH(NtQueryValueKey);
+//    DETACH(NtSetValueKey);
+//    DETACH(CreateActCtxW);
+//    DETACH(GetSystemTimeAsFileTime);
+//    DETACH(GetSystemWindowsDirectoryW);
+//    DETACH(SetErrorMode);
+//    DETACH(GetFileVersionInfoSizeW);
+//    DETACH(NtOpenMutant);
+//    DETACH(NtOpenKey);
+//    DETACH(NtClose);
+//    DETACH(NtCreateFile);
+//    DETACH(NtReadFile);
+//    DETACH(NtWriteFile);
+//    DETACH(LdrGetDllHandle);
+//    DETACH(NtOpenFile);
+//    DETACH(NtFreeVirtualMemory);
+//
+//    // _TODO: Figure a better logging system, possibly static
+//    // These hooks may break the program because logging is done within the memory
+//    // DETACH(NtAllocateVirtualMemory);
+//
+//    DETACH(NtProtectVirtualMemory);
+//
+//    // _TODO: investigate infinite looping
+//    // DETACH(LdrLoadDll);
+//
+//    DETACH(NtQueryInformationFile);
+//    DETACH(NtQueryDirectoryFile);
+//}
 
 LONG AttachDetours(VOID)
 {
@@ -3554,7 +3554,7 @@ LONG AttachDetours(VOID)
     DetourSetIgnoreTooSmall(TRUE);
 
     AttachWin32Hooks();
-    // AttachNTHooks();
+     //AttachNTHooks();
 
     PVOID* ppbFailedPointer = NULL;
     LONG error = DetourTransactionCommitEx(&ppbFailedPointer);
@@ -3575,7 +3575,7 @@ LONG DetachDetours(VOID)
     DetourSetIgnoreTooSmall(TRUE);
 
     DetachWin32Hooks();
-    // DetachNTHooks();
+     //DetachNTHooks();
 
     if (DetourTransactionCommit() != 0) {
         PVOID* ppbFailedPointer = NULL;
