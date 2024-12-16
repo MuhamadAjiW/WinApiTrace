@@ -155,15 +155,14 @@ void AttachNTHooks()
     ATTACH_NT(GetFileVersionInfoSizeW, L"version.dll");
     ATTACH_NT(NtOpenMutant, L"ntdll.dll");
     ATTACH_NT(NtOpenKey, L"ntdll.dll");
-    ATTACH_NT(NtClose, L"ntdll.dll");
-    ATTACH_NT(NtCreateFile, L"ntdll.dll");
+    //ATTACH_NT(NtClose, L"ntdll.dll");
+    //ATTACH_NT(NtCreateFile, L"ntdll.dll");
     ATTACH_NT(NtReadFile, L"ntdll.dll");
-    ATTACH_NT(NtWriteFile, L"ntdll.dll");
+    //ATTACH_NT(NtWriteFile, L"ntdll.dll");
     ATTACH_NT(LdrGetDllHandle, L"ntdll.dll");
     ATTACH_NT(NtOpenFile, L"ntdll.dll");
     ATTACH_NT(NtFreeVirtualMemory, L"ntdll.dll");
-     ATTACH_NT(NtAllocateVirtualMemory, L"ntdll.dll");
-
+    //ATTACH_NT(NtAllocateVirtualMemory, L"ntdll.dll");
     ATTACH_NT(NtProtectVirtualMemory, L"ntdll.dll");
 
     // _TODO: investigate infinite looping
@@ -213,7 +212,6 @@ void DetachNTHooks()
     DETACH(NtOpenFile);
     DETACH(NtFreeVirtualMemory);
     DETACH(NtAllocateVirtualMemory);
-
     DETACH(NtProtectVirtualMemory);
 
     // _TODO: investigate infinite looping
