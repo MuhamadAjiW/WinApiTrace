@@ -11,7 +11,7 @@ Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "syelogd", "projects\syelogd
 EndProject
 Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "withdll", "projects\withdll\withdll.vcxproj", "{4828FABE-34BB-4239-9D98-BFA9BFE5FBF2}"
 EndProject
-Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "syelog", "projects\syelog\syelog\syelog.vcxproj", "{D95A617B-1F60-46EA-B616-62926BC49B8B}"
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "syelog", "projects\syelog\syelog.vcxproj", "{D95A617B-1F60-46EA-B616-62926BC49B8B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
