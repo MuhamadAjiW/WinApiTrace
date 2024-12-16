@@ -104,40 +104,40 @@ VOID fetchNTFunc(PVOID * ppvReal, const CHAR * psz, const WCHAR * lib) {
 extern "C" {
     //  Trampolines for SYELOG library.
     //
-    //extern HANDLE(WINAPI* Real_CreateFileW)(LPCWSTR a0, DWORD a1, DWORD a2,
-    //    LPSECURITY_ATTRIBUTES a3, DWORD a4, DWORD a5,
-    //    HANDLE a6);
-    //extern BOOL(WINAPI* Real_WriteFile)(HANDLE hFile,
-    //    LPCVOID lpBuffer,
-    //    DWORD nNumberOfBytesToWrite,
-    //    LPDWORD lpNumberOfBytesWritten,
-    //    LPOVERLAPPED lpOverlapped);
-    //extern BOOL(WINAPI* Real_FlushFileBuffers)(HANDLE hFile);
-    //extern BOOL(WINAPI* Real_CloseHandle)(HANDLE hObject);
-    //extern BOOL(WINAPI* Real_WaitNamedPipeW)(LPCWSTR lpNamedPipeName, DWORD nTimeOut);
-    //extern BOOL(WINAPI* Real_SetNamedPipeHandleState)(HANDLE hNamedPipe,
-    //    LPDWORD lpMode,
-    //    LPDWORD lpMaxCollectionCount,
-    //    LPDWORD lpCollectDataTimeout);
-    //extern DWORD(WINAPI* Real_GetCurrentProcessId)(VOID);
-    //extern VOID(WINAPI* Real_GetSystemTimeAsFileTime)(LPFILETIME lpSystemTimeAsFileTime);
-    //extern NTSTATUS(WINAPI* Real_NtWriteFile)(
-    //    HANDLE FileHandle,
-    //    HANDLE Event,
-    //    PIO_APC_ROUTINE ApcRoutine,
-    //    PVOID ApcContext,
-    //    PIO_STATUS_BLOCK IoStatusBlock,
-    //    PVOID Buffer,
-    //    ULONG Length,
-    //    PLARGE_INTEGER ByteOffset,
-    //    PULONG Key);
+    extern HANDLE(WINAPI* Real_CreateFileW)(LPCWSTR a0, DWORD a1, DWORD a2,
+        LPSECURITY_ATTRIBUTES a3, DWORD a4, DWORD a5,
+        HANDLE a6);
+    extern BOOL(WINAPI* Real_WriteFile)(HANDLE hFile,
+        LPCVOID lpBuffer,
+        DWORD nNumberOfBytesToWrite,
+        LPDWORD lpNumberOfBytesWritten,
+        LPOVERLAPPED lpOverlapped);
+    extern BOOL(WINAPI* Real_FlushFileBuffers)(HANDLE hFile);
+    extern BOOL(WINAPI* Real_CloseHandle)(HANDLE hObject);
+    extern BOOL(WINAPI* Real_WaitNamedPipeW)(LPCWSTR lpNamedPipeName, DWORD nTimeOut);
+    extern BOOL(WINAPI* Real_SetNamedPipeHandleState)(HANDLE hNamedPipe,
+        LPDWORD lpMode,
+        LPDWORD lpMaxCollectionCount,
+        LPDWORD lpCollectDataTimeout);
+    extern DWORD(WINAPI* Real_GetCurrentProcessId)(VOID);
+    extern VOID(WINAPI* Real_GetSystemTimeAsFileTime)(LPFILETIME lpSystemTimeAsFileTime);
+    extern NTSTATUS(WINAPI* Real_NtWriteFile)(
+        HANDLE FileHandle,
+        HANDLE Event,
+        PIO_APC_ROUTINE ApcRoutine,
+        PVOID ApcContext,
+        PIO_STATUS_BLOCK IoStatusBlock,
+        PVOID Buffer,
+        ULONG Length,
+        PLARGE_INTEGER ByteOffset,
+        PULONG Key);
 
-    //VOID(WINAPI* Real_InitializeCriticalSection)(LPCRITICAL_SECTION lpSection)
-    //    = InitializeCriticalSection;
-    //VOID(WINAPI* Real_EnterCriticalSection)(LPCRITICAL_SECTION lpSection)
-    //    = EnterCriticalSection;
-    //VOID(WINAPI* Real_LeaveCriticalSection)(LPCRITICAL_SECTION lpSection)
-    //    = LeaveCriticalSection;
+    VOID(WINAPI* Real_InitializeCriticalSection)(LPCRITICAL_SECTION lpSection)
+        = InitializeCriticalSection;
+    VOID(WINAPI* Real_EnterCriticalSection)(LPCRITICAL_SECTION lpSection)
+        = EnterCriticalSection;
+    VOID(WINAPI* Real_LeaveCriticalSection)(LPCRITICAL_SECTION lpSection)
+        = LeaveCriticalSection;
 }
 
 ////////////////////////////////////////////////////////////// Logging System.

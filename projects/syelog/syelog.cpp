@@ -10,8 +10,8 @@
 #include <stdarg.h>
 #include <stddef.h>
 #include <stdlib.h>
-#include "detours.h"
-#include "syelog.h"
+#include <detours/syelog.h>
+#include <detours/detours.h>
 
 #include <stdio.h>
 
