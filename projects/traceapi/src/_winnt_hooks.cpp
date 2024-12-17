@@ -104,7 +104,7 @@ typedef enum _FILE_INFO_BY_HANDLE_CLASS {
 } FILE_INFO_BY_HANDLE_CLASS, * PFILE_INFO_BY_HANDLE_CLASS;
 
 // --Real-Paper-Functions--
-LSTATUS(__stdcall* Real_RegEnumKeyExW)(
+LSTATUS(WINAPI* Real_RegEnumKeyExW)(
     HKEY      hKey,
     DWORD     dwIndex,
     LPWSTR    lpName,
@@ -114,11 +114,11 @@ LSTATUS(__stdcall* Real_RegEnumKeyExW)(
     LPDWORD   lpcchClass,
     PFILETIME lpftLastWriteTime) = RegEnumKeyExW;
 
-BOOL(__stdcall* Real_CreateDirectoryW)(
+BOOL(WINAPI* Real_CreateDirectoryW)(
     LPCWSTR lpPathName,
     LPSECURITY_ATTRIBUTES lpSecurityAttributes) = CreateDirectoryW;
 
-int(__stdcall* Real_DrawTextExW)(
+int(WINAPI* Real_DrawTextExW)(
     HDC hdc,
     LPWSTR lpchText,
     int cchText,
@@ -126,33 +126,33 @@ int(__stdcall* Real_DrawTextExW)(
     UINT format,
     LPDRAWTEXTPARAMS lpdtp) = DrawTextExW;
 
-HRESULT(__stdcall* Real_CoInitializeEx)(
+HRESULT(WINAPI* Real_CoInitializeEx)(
     LPVOID pvReserved,
     DWORD  dwCoInit);
 
-NTSTATUS(__stdcall* Real_NtDeleteKey)(
+NTSTATUS(WINAPI* Real_NtDeleteKey)(
     HANDLE KeyHandle);
 
-HRESULT(__stdcall* Real_SHGetFolderPathW)(
+HRESULT(WINAPI* Real_SHGetFolderPathW)(
     HWND hwnd,
     int csidl,
     HANDLE hToken,
     DWORD dwFlags,
     LPWSTR pszPath) = SHGetFolderPathW;
 
-BOOL(__stdcall* Real_GetFileInformationByHandleEx)(
+BOOL(WINAPI* Real_GetFileInformationByHandleEx)(
     HANDLE hFile,
     FILE_INFO_BY_HANDLE_CLASS FileInformationClass,
     LPVOID lpFileInformation,
     DWORD dwBufferSize);
 
-HWND(__stdcall* Real_GetForegroundWindow)(VOID) = GetForegroundWindow;
+HWND(WINAPI* Real_GetForegroundWindow)(VOID) = GetForegroundWindow;
 
-NTSTATUS(__stdcall* Real_NtQueryAttributesFile)(
+NTSTATUS(WINAPI* Real_NtQueryAttributesFile)(
     POBJECT_ATTRIBUTES      ObjectAttributes,
     PFILE_BASIC_INFORMATION FileInformation);
 
-BOOL(__stdcall* Real_DeviceIoControl)(
+BOOL(WINAPI* Real_DeviceIoControl)(
     HANDLE hDevice,
     DWORD dwIoControlCode,
     LPVOID lpInBuffer,
@@ -162,7 +162,7 @@ BOOL(__stdcall* Real_DeviceIoControl)(
     LPDWORD lpBytesReturned,
     LPOVERLAPPED lpOverlapped) = DeviceIoControl;
 
-DWORD(__stdcall* Real_SearchPathW)(
+DWORD(WINAPI* Real_SearchPathW)(
     LPCWSTR lpPath,
     LPCWSTR lpFileName,
     LPCWSTR lpExtension,
@@ -170,25 +170,25 @@ DWORD(__stdcall* Real_SearchPathW)(
     LPWSTR lpBuffer,
     LPWSTR* lpFilePart) = SearchPathW;
 
-BOOL(__stdcall* Real_SetFileTime)(
+BOOL(WINAPI* Real_SetFileTime)(
     HANDLE hFile,
     const FILETIME* lpCreationTime,
     const FILETIME* lpLastAccessTime,
     const FILETIME* lpLastWriteTime) = SetFileTime;
 
-BOOL(__stdcall* Real_SendNotifyMessageW)(
+BOOL(WINAPI* Real_SendNotifyMessageW)(
     HWND hWnd,
     UINT Msg,
     WPARAM wParam,
     LPARAM lParam) = SendNotifyMessageW;
 
-int(__stdcall* Real_GetSystemMetrics)(
+int(WINAPI* Real_GetSystemMetrics)(
     int nIndex) = GetSystemMetrics;
 
-SHORT(__stdcall* Real_GetKeyState)(
+SHORT(WINAPI* Real_GetKeyState)(
     int nVirtKey) = GetKeyState;
 
-NTSTATUS(__stdcall* Real_NtCreateKey)(
+NTSTATUS(WINAPI* Real_NtCreateKey)(
     PHANDLE pKeyHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes,
@@ -197,35 +197,35 @@ NTSTATUS(__stdcall* Real_NtCreateKey)(
     ULONG CreateOptions,
     PULONG Disposition);
 
-HGLOBAL(__stdcall* Real_LoadResource)(
+HGLOBAL(WINAPI* Real_LoadResource)(
     HMODULE hModule,
     HRSRC hResInfo) = LoadResource;
 
-BOOL(__stdcall* Real_GetDiskFreeSpaceExW)(
+BOOL(WINAPI* Real_GetDiskFreeSpaceExW)(
     LPCWSTR lpDirectoryName,
     PULARGE_INTEGER lpFreeBytesAvailableToCaller,
     PULARGE_INTEGER lpTotalNumberOfBytes,
     PULARGE_INTEGER lpTotalNumberOfFreeBytes) = GetDiskFreeSpaceExW;
 
-BOOL(__stdcall* Real_EnumWindows)(
+BOOL(WINAPI* Real_EnumWindows)(
     WNDENUMPROC lpEnumFunc,
     LPARAM lParam) = EnumWindows;
 
-LSTATUS(__stdcall* Real_RegOpenKeyExW)(
+LSTATUS(WINAPI* Real_RegOpenKeyExW)(
     HKEY hKey,
     LPCWSTR lpSubKey,
     DWORD ulOptions,
     REGSAM samDesired,
     PHKEY phkResult) = RegOpenKeyExW;
 
-NTSTATUS(__stdcall* Real_NtQueryKey)(
+NTSTATUS(WINAPI* Real_NtQueryKey)(
     HANDLE KeyHandle,
     KEY_INFORMATION_CLASS KeyInformationClass,
     PVOID KeyInformation,
     ULONG Length,
     PULONG ResultLength);
 
-NTSTATUS(__stdcall* Real_NtQueryValueKey)(
+NTSTATUS(WINAPI* Real_NtQueryValueKey)(
     HANDLE KeyHandle,
     PUNICODE_STRING ValueName,
     KEY_VALUE_INFORMATION_CLASS KeyValueInformationClass,
@@ -233,7 +233,7 @@ NTSTATUS(__stdcall* Real_NtQueryValueKey)(
     ULONG Length,
     PULONG ResultLength);
 
-NTSTATUS(__stdcall* Real_NtSetValueKey)(
+NTSTATUS(WINAPI* Real_NtSetValueKey)(
     HANDLE KeyHandle,
     PUNICODE_STRING ValueName,
     ULONG TitleIndex,
@@ -241,36 +241,36 @@ NTSTATUS(__stdcall* Real_NtSetValueKey)(
     PVOID Data,
     ULONG DataSize);
 
-HANDLE(__stdcall* Real_CreateActCtxW)(
+HANDLE(WINAPI* Real_CreateActCtxW)(
     PCACTCTXW pActCtx) = CreateActCtxW;
 
-void(__stdcall* Real_GetSystemTimeAsFileTime)(
+void(WINAPI* Real_GetSystemTimeAsFileTime)(
     LPFILETIME lpSystemTimeAsFileTime) = GetSystemTimeAsFileTime;
 
-UINT(__stdcall* Real_GetSystemWindowsDirectoryW)(
+UINT(WINAPI* Real_GetSystemWindowsDirectoryW)(
     LPWSTR lpBuffer,
     UINT uSize) = GetSystemWindowsDirectoryW;
 
-UINT(__stdcall* Real_SetErrorMode)(
+UINT(WINAPI* Real_SetErrorMode)(
     UINT uMode) = SetErrorMode;
 
-DWORD(__stdcall* Real_GetFileVersionInfoSizeW)(
+DWORD(WINAPI* Real_GetFileVersionInfoSizeW)(
     LPCWSTR lptstrFilename,
     LPDWORD lpdwHandle);
 
-NTSTATUS(__stdcall* Real_NtOpenMutant)(
+NTSTATUS(WINAPI* Real_NtOpenMutant)(
     PHANDLE MutantHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes);
 
 
 // --Real-Additional-Functions--
-NTSTATUS(__stdcall* Real_NtOpenKey)(
+NTSTATUS(WINAPI* Real_NtOpenKey)(
     PHANDLE pKeyHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes);
 
-NTSTATUS(__stdcall* Real_NtCreateFile)(
+NTSTATUS(WINAPI* Real_NtCreateFile)(
     PHANDLE FileHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes,
@@ -283,7 +283,7 @@ NTSTATUS(__stdcall* Real_NtCreateFile)(
     PVOID EaBuffer,
     ULONG EaLength);
 
-NTSTATUS(__stdcall* Real_NtReadFile)(
+NTSTATUS(WINAPI* Real_NtReadFile)(
     HANDLE FileHandle,
     HANDLE Event,
     PIO_APC_ROUTINE ApcRoutine,
@@ -294,19 +294,19 @@ NTSTATUS(__stdcall* Real_NtReadFile)(
     PLARGE_INTEGER ByteOffset,
     PULONG Key);
 
-NTSTATUS(__stdcall* Real_LdrGetDllHandle)(
+NTSTATUS(WINAPI* Real_LdrGetDllHandle)(
     PWORD pwPath,
     PVOID Unused,
     PUNICODE_STRING ModuleFileName,
     PHANDLE pHModule);
 
-NTSTATUS(__stdcall* Real_NtFreeVirtualMemory)(
+NTSTATUS(WINAPI* Real_NtFreeVirtualMemory)(
     HANDLE ProcessHandle,
     CONST VOID** BaseAddress,
     SIZE_T* RegionSize,
     ULONG FreeType);
 
-NTSTATUS(__stdcall* Real_NtAllocateVirtualMemory)(
+NTSTATUS(WINAPI* Real_NtAllocateVirtualMemory)(
     HANDLE ProcessHandle,
     VOID** BaseAddress,
     ULONG_PTR ZeroBits,
@@ -314,27 +314,27 @@ NTSTATUS(__stdcall* Real_NtAllocateVirtualMemory)(
     ULONG AllocationType,
     ULONG Protect);
 
-NTSTATUS(__stdcall* Real_NtProtectVirtualMemory)(
+NTSTATUS(WINAPI* Real_NtProtectVirtualMemory)(
     HANDLE ProcessHandle,
     CONST VOID** BaseAddress,
     SIZE_T* NumberOfBytesToProtect,
     ULONG NewAccessProtection,
     ULONG* OldAccessProtection);
 
-NTSTATUS(__stdcall* Real_LdrLoadDll)(
+NTSTATUS(WINAPI* Real_LdrLoadDll)(
     PWCHAR PathToFile,
     ULONG Flags,
     PUNICODE_STRING ModuleFileName,
     PHANDLE ModuleHandle);
 
-NTSTATUS(__stdcall* Real_NtQueryInformationFile)(
+NTSTATUS(WINAPI* Real_NtQueryInformationFile)(
     HANDLE FileHandle,
     PIO_STATUS_BLOCK IoStatusBlock,
     PVOID FileInformation,
     ULONG Length,
     FILE_INFORMATION_CLASS FileInformationClass);
 
-NTSTATUS(__stdcall* Real_NtQueryDirectoryFile)(
+NTSTATUS(WINAPI* Real_NtQueryDirectoryFile)(
     HANDLE FileHandle,
     HANDLE Event,
     PIO_APC_ROUTINE ApcRoutine,
@@ -352,7 +352,7 @@ NTSTATUS(__stdcall* Real_NtQueryDirectoryFile)(
 #include "data_piping.cpp"
 
 // --Hooked-Paper-Functions--
-LSTATUS Mine_RegEnumKeyExW(
+LSTATUS WINAPI Mine_RegEnumKeyExW(
     HKEY      hKey,
     DWORD     dwIndex,
     LPWSTR    lpName,
@@ -376,7 +376,7 @@ LSTATUS Mine_RegEnumKeyExW(
     );
 }
 
-BOOL Mine_CreateDirectoryW(
+BOOL WINAPI Mine_CreateDirectoryW(
     LPCWSTR lpPathName,
     LPSECURITY_ATTRIBUTES lpSecurityAttributes)
 {
@@ -388,7 +388,7 @@ BOOL Mine_CreateDirectoryW(
     );
 }
 
-int Mine_DrawTextExW(
+int WINAPI Mine_DrawTextExW(
     HDC hdc,
     LPWSTR lpchText,
     int cchText,
@@ -408,7 +408,7 @@ int Mine_DrawTextExW(
     );
 }
 
-HRESULT Mine_CoInitializeEx(
+HRESULT WINAPI Mine_CoInitializeEx(
     LPVOID pvReserved,
     DWORD  dwCoInit)
 {
@@ -420,7 +420,7 @@ HRESULT Mine_CoInitializeEx(
     );
 }
 
-NTSTATUS Mine_NtDeleteKey(
+NTSTATUS WINAPI Mine_NtDeleteKey(
     HANDLE KeyHandle)
 {
     LOG_HOOK_INT(
@@ -430,7 +430,7 @@ NTSTATUS Mine_NtDeleteKey(
     );
 }
 
-HRESULT Mine_SHGetFolderPathW(
+HRESULT WINAPI Mine_SHGetFolderPathW(
     HWND hwnd,
     int csidl,
     HANDLE hToken,
@@ -448,7 +448,7 @@ HRESULT Mine_SHGetFolderPathW(
     );
 }
 
-BOOL Mine_GetFileInformationByHandleEx(
+BOOL WINAPI Mine_GetFileInformationByHandleEx(
     HANDLE hFile,
     FILE_INFO_BY_HANDLE_CLASS FileInformationClass,
     LPVOID lpFileInformation,
@@ -464,7 +464,7 @@ BOOL Mine_GetFileInformationByHandleEx(
     );
 }
 
-HWND Mine_GetForegroundWindow(VOID)
+HWND WINAPI Mine_GetForegroundWindow(VOID)
 {
     LOG_HOOK_HWND(
         GetForegroundWindow,
@@ -472,7 +472,7 @@ HWND Mine_GetForegroundWindow(VOID)
     );
 }
 
-NTSTATUS Mine_NtQueryAttributesFile(
+NTSTATUS WINAPI Mine_NtQueryAttributesFile(
     POBJECT_ATTRIBUTES      ObjectAttributes,
     PFILE_BASIC_INFORMATION FileInformation)
 {
@@ -484,7 +484,7 @@ NTSTATUS Mine_NtQueryAttributesFile(
     );
 }
 
-BOOL Mine_DeviceIoControl(
+BOOL WINAPI Mine_DeviceIoControl(
     HANDLE hDevice,
     DWORD dwIoControlCode,
     LPVOID lpInBuffer,
@@ -508,7 +508,7 @@ BOOL Mine_DeviceIoControl(
     );
 }
 
-DWORD Mine_SearchPathW(
+DWORD WINAPI Mine_SearchPathW(
     LPCWSTR lpPath,
     LPCWSTR lpFileName,
     LPCWSTR lpExtension,
@@ -528,7 +528,7 @@ DWORD Mine_SearchPathW(
     );
 }
 
-BOOL Mine_SetFileTime(
+BOOL WINAPI Mine_SetFileTime(
     HANDLE hFile,
     const FILETIME* lpCreationTime,
     const FILETIME* lpLastAccessTime,
@@ -544,7 +544,7 @@ BOOL Mine_SetFileTime(
     );
 }
 
-BOOL Mine_SendNotifyMessageW(
+BOOL WINAPI Mine_SendNotifyMessageW(
     HWND hWnd,
     UINT Msg,
     WPARAM wParam,
@@ -560,7 +560,7 @@ BOOL Mine_SendNotifyMessageW(
     );
 }
 
-int Mine_GetSystemMetrics(
+int WINAPI Mine_GetSystemMetrics(
     int nIndex)
 {
     LOG_HOOK_INT(
@@ -570,7 +570,7 @@ int Mine_GetSystemMetrics(
     );
 }
 
-SHORT Mine_GetKeyState(
+SHORT WINAPI Mine_GetKeyState(
     int nVirtKey)
 {
     LOG_HOOK_INT(
@@ -580,7 +580,7 @@ SHORT Mine_GetKeyState(
     );
 }
 
-NTSTATUS Mine_NtCreateKey(
+NTSTATUS WINAPI Mine_NtCreateKey(
     PHANDLE pKeyHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes,
@@ -602,7 +602,7 @@ NTSTATUS Mine_NtCreateKey(
     );
 }
 
-HGLOBAL Mine_LoadResource(
+HGLOBAL WINAPI Mine_LoadResource(
     HMODULE hModule,
     HRSRC hResInfo)
 {
@@ -614,7 +614,7 @@ HGLOBAL Mine_LoadResource(
     );
 }
 
-BOOL Mine_GetDiskFreeSpaceExW(
+BOOL WINAPI Mine_GetDiskFreeSpaceExW(
     LPCWSTR lpDirectoryName,
     PULARGE_INTEGER lpFreeBytesAvailableToCaller,
     PULARGE_INTEGER lpTotalNumberOfBytes,
@@ -630,7 +630,7 @@ BOOL Mine_GetDiskFreeSpaceExW(
     );
 }
 
-BOOL Mine_EnumWindows(
+BOOL WINAPI Mine_EnumWindows(
     WNDENUMPROC lpEnumFunc,
     LPARAM lParam)
 {
@@ -642,7 +642,7 @@ BOOL Mine_EnumWindows(
     );
 }
 
-LSTATUS Mine_RegOpenKeyExW(
+LSTATUS WINAPI Mine_RegOpenKeyExW(
     HKEY hKey,
     LPCWSTR lpSubKey,
     DWORD ulOptions,
@@ -660,7 +660,7 @@ LSTATUS Mine_RegOpenKeyExW(
     );
 }
 
-NTSTATUS Mine_NtQueryKey(
+NTSTATUS WINAPI Mine_NtQueryKey(
     HANDLE KeyHandle,
     KEY_INFORMATION_CLASS KeyInformationClass,
     PVOID KeyInformation,
@@ -678,7 +678,7 @@ NTSTATUS Mine_NtQueryKey(
     );
 }
 
-NTSTATUS Mine_NtQueryValueKey(
+NTSTATUS WINAPI Mine_NtQueryValueKey(
     HANDLE KeyHandle,
     PUNICODE_STRING ValueName,
     KEY_VALUE_INFORMATION_CLASS KeyValueInformationClass,
@@ -698,7 +698,7 @@ NTSTATUS Mine_NtQueryValueKey(
     );
 }
 
-NTSTATUS Mine_NtSetValueKey(
+NTSTATUS WINAPI Mine_NtSetValueKey(
     HANDLE KeyHandle,
     PUNICODE_STRING ValueName,
     ULONG TitleIndex,
@@ -718,7 +718,7 @@ NTSTATUS Mine_NtSetValueKey(
     );
 }
 
-HANDLE Mine_CreateActCtxW(
+HANDLE WINAPI Mine_CreateActCtxW(
     PCACTCTXW pActCtx)
 {
     LOG_HOOK_PTR(
@@ -728,7 +728,7 @@ HANDLE Mine_CreateActCtxW(
     );
 }
 
-void Mine_GetSystemTimeAsFileTime(
+void WINAPI Mine_GetSystemTimeAsFileTime(
     LPFILETIME lpSystemTimeAsFileTime)
 {
     LOG_HOOK_VOID(
@@ -738,7 +738,7 @@ void Mine_GetSystemTimeAsFileTime(
     );
 }
 
-UINT Mine_GetSystemWindowsDirectoryW(
+UINT WINAPI Mine_GetSystemWindowsDirectoryW(
     LPWSTR lpBuffer,
     UINT uSize)
 {
@@ -750,7 +750,7 @@ UINT Mine_GetSystemWindowsDirectoryW(
     );
 }
 
-UINT Mine_SetErrorMode(
+UINT WINAPI Mine_SetErrorMode(
     UINT uMode)
 {
     LOG_HOOK_INT(
@@ -760,7 +760,7 @@ UINT Mine_SetErrorMode(
     );
 }
 
-DWORD Mine_GetFileVersionInfoSizeW(
+DWORD WINAPI Mine_GetFileVersionInfoSizeW(
     LPCWSTR lptstrFilename,
     LPDWORD lpdwHandle)
 {
@@ -772,7 +772,7 @@ DWORD Mine_GetFileVersionInfoSizeW(
     );
 }
 
-NTSTATUS Mine_NtOpenMutant(
+NTSTATUS WINAPI Mine_NtOpenMutant(
     PHANDLE MutantHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes)
@@ -788,7 +788,7 @@ NTSTATUS Mine_NtOpenMutant(
 
 
 // --Hooked-Additional-Functions--
-NTSTATUS Mine_NtOpenKey(
+NTSTATUS WINAPI Mine_NtOpenKey(
     PHANDLE pKeyHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes)
@@ -802,7 +802,7 @@ NTSTATUS Mine_NtOpenKey(
     );
 }
 
-NTSTATUS Mine_NtClose(
+NTSTATUS WINAPI Mine_NtClose(
     HANDLE Handle)
 {
     LOG_HOOK_INT(
@@ -812,7 +812,7 @@ NTSTATUS Mine_NtClose(
     );
 }
 
-NTSTATUS Mine_NtCreateFile(
+NTSTATUS WINAPI Mine_NtCreateFile(
     PHANDLE FileHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes,
@@ -842,7 +842,7 @@ NTSTATUS Mine_NtCreateFile(
     );
 }
 
-NTSTATUS Mine_NtReadFile(
+NTSTATUS WINAPI Mine_NtReadFile(
     HANDLE FileHandle,
     HANDLE Event,
     PIO_APC_ROUTINE ApcRoutine,
@@ -868,7 +868,7 @@ NTSTATUS Mine_NtReadFile(
     );
 }
 
-NTSTATUS Mine_NtWriteFile(
+NTSTATUS WINAPI Mine_NtWriteFile(
     HANDLE FileHandle,
     HANDLE Event,
     PIO_APC_ROUTINE ApcRoutine,
@@ -894,7 +894,7 @@ NTSTATUS Mine_NtWriteFile(
     );
 }
 
-NTSTATUS Mine_LdrGetDllHandle(
+NTSTATUS WINAPI Mine_LdrGetDllHandle(
     PWORD pwPath,
     PVOID Unused,
     PUNICODE_STRING ModuleFileName,
@@ -910,7 +910,7 @@ NTSTATUS Mine_LdrGetDllHandle(
     );
 }
 
-NTSTATUS Mine_NtOpenFile(
+NTSTATUS WINAPI Mine_NtOpenFile(
     PHANDLE FileHandle,
     ACCESS_MASK DesiredAccess,
     POBJECT_ATTRIBUTES ObjectAttributes,
@@ -930,7 +930,7 @@ NTSTATUS Mine_NtOpenFile(
     );
 }
 
-NTSTATUS Mine_NtFreeVirtualMemory(
+NTSTATUS WINAPI Mine_NtFreeVirtualMemory(
     HANDLE ProcessHandle,
     CONST VOID** BaseAddress,
     SIZE_T* RegionSize,
@@ -946,7 +946,7 @@ NTSTATUS Mine_NtFreeVirtualMemory(
     );
 }
 
-NTSTATUS Mine_NtAllocateVirtualMemory(
+NTSTATUS WINAPI Mine_NtAllocateVirtualMemory(
     HANDLE ProcessHandle,
     VOID** BaseAddress,
     ULONG_PTR ZeroBits,
@@ -966,7 +966,7 @@ NTSTATUS Mine_NtAllocateVirtualMemory(
     );
 }
 
-NTSTATUS Mine_NtProtectVirtualMemory(
+NTSTATUS WINAPI Mine_NtProtectVirtualMemory(
     HANDLE ProcessHandle,
     CONST VOID** BaseAddress,
     SIZE_T* NumberOfBytesToProtect,
@@ -984,7 +984,7 @@ NTSTATUS Mine_NtProtectVirtualMemory(
     );
 }
 
-NTSTATUS Mine_LdrLoadDll(
+NTSTATUS WINAPI Mine_LdrLoadDll(
     PWCHAR PathToFile,
     ULONG Flags,
     PUNICODE_STRING ModuleFileName,
@@ -1000,7 +1000,7 @@ NTSTATUS Mine_LdrLoadDll(
     );
 }
 
-NTSTATUS Mine_NtQueryInformationFile(
+NTSTATUS WINAPI Mine_NtQueryInformationFile(
     HANDLE FileHandle,
     PIO_STATUS_BLOCK IoStatusBlock,
     PVOID FileInformation,
@@ -1018,7 +1018,7 @@ NTSTATUS Mine_NtQueryInformationFile(
     );
 }
 
-NTSTATUS Mine_NtQueryDirectoryFile(
+NTSTATUS WINAPI Mine_NtQueryDirectoryFile(
     HANDLE FileHandle,
     HANDLE Event,
     PIO_APC_ROUTINE ApcRoutine,
