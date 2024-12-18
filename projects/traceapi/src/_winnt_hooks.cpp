@@ -1,5 +1,3 @@
-// _TODO: Work on hooking NT API's
-
 #define SECURITY_WIN32
 
 #include <iostream>
