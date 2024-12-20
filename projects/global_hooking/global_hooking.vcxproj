@@ -136,11 +136,10 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="global_hooking.cpp" />
-    <ClCompile Include="wmi_libs.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CProcessCreationSink.hpp" />
-    <ClInclude Include="wmi_libs.h" />
+    <ClInclude Include="WMIWrapper.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

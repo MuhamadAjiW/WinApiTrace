@@ -18,15 +18,12 @@
     <ClCompile Include="global_hooking.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="wmi_libs.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CProcessCreationSink.hpp">
       <Filter>include</Filter>
     </ClInclude>
-    <ClInclude Include="wmi_libs.h">
+    <ClInclude Include="WMIWrapper.hpp">
       <Filter>include</Filter>
     </ClInclude>
   </ItemGroup>

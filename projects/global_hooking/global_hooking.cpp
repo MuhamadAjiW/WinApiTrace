@@ -8,28 +8,24 @@
 #include <windows.h>
 #include <atlbase.h>
 
-#include "wmi_libs.h"
+#include "WMIWrapper.hpp"
+#include "CProcessCreationSink.hpp"
 
 #pragma comment(lib, "wbemuuid.lib")
 
-///////////////////////////////////////////////////////////////// End of File.
+/////////////////////////////////////////////////////////////////
 //  Main
 
-int main(){
+int main() {
     std::cout << "Starting program\n";
-
-    if (InitializeWMI()) {
-        std::cout << "Failed to initialize WMI";
-        return 1;
-    }
-
+    WMIWrapper wmi = WMIWrapper();
 
     std::cout << "Process creation monitoring started" << std::endl;
-    CComPtr<IWbemObjectSink> pSink = MonitorProcessCreation();
+    CComPtr<IWbemObjectSink> pSink = wmi.MonitorProcessCreation();
 
     while (true);
 
-    UnInitializeWMI();
+    wmi.StopMonitoring(pSink);
     std::cout << "Program Finished\n";
 
     return 0;

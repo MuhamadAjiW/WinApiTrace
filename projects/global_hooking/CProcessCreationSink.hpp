@@ -61,7 +61,6 @@ public:
         return ulRefCount;
     }
 
-
     HRESULT STDMETHODCALLTYPE Indicate(
         long lObjectCount,
         __RPC__in_ecount_full(lObjectCount) IWbemClassObject** ppObjArray
@@ -75,7 +74,7 @@ public:
             pObj->Get(L"TargetInstance", 0, &var, 0, 0);  // Get the TargetInstance property
             IWbemClassObject* pProcess = (IWbemClassObject*)var.punkVal;
 
-            this->callback(pProcess);
+            callback(pProcess);
 
             VariantClear(&var);
         }
