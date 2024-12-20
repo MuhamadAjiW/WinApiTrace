@@ -1,4 +1,4 @@
-#pragma once
+    #pragma once
 
 #include <iostream>
 
@@ -10,13 +10,13 @@
 class CProcessCreationSink : public IWbemObjectSink {
 private:
     long m_refCount;
-    PVOID(*callback)(IWbemClassObject* pProcess);
+    VOID(*callback)(IWbemClassObject* pProcess);
 
 public:
     CProcessCreationSink() : m_refCount(1), callback(&DefaultCallback) {}
-    CProcessCreationSink(PVOID(*customCallback)(IWbemClassObject* pProcess)) : m_refCount(1), callback(customCallback) {}
+    CProcessCreationSink(VOID(*customCallback)(IWbemClassObject* pProcess)) : m_refCount(1), callback(customCallback) {}
 
-    static PVOID DefaultCallback(IWbemClassObject* pProcess) {
+    static VOID DefaultCallback(IWbemClassObject* pProcess) {
         VARIANT nameVar;
         VARIANT pidVar;
 
@@ -32,7 +32,8 @@ public:
             std::cout << "Failed to fetch process name and pid" << std::endl;
         }
 
-        return NULL;
+        VariantClear(&nameVar);
+        VariantClear(&pidVar);
     }
 
     HRESULT STDMETHODCALLTYPE QueryInterface(

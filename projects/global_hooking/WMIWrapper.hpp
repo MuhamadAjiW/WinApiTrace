@@ -162,9 +162,15 @@ public:
         return 0;
     }
 
-    CComPtr<IWbemObjectSink> MonitorProcessCreation() {
+    CComPtr<IWbemObjectSink> MonitorProcessCreation(){
+        return MonitorProcessCreation(&CProcessCreationSink::DefaultCallback);
+    }
+
+    CComPtr<IWbemObjectSink> MonitorProcessCreation(
+        VOID(*callback)(IWbemClassObject* pProcess)
+    ) {
         HRESULT hres;
-        CComPtr<IWbemObjectSink> pSink = new CProcessCreationSink();
+        CComPtr<IWbemObjectSink> pSink = new CProcessCreationSink(callback);
 
         hres = pSvc->ExecNotificationQueryAsync(
             _bstr_t(L"WQL"),
